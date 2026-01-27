@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Management Simulation - Spotify Freemium Challenge</title>
-    <meta name="description" content="Test your product management skills with this executive simulation based on real product challenges.">
+    <title>Week 1: PM Fundamentals - Airbnb Platform Evolution</title>
+    <meta name="description" content="Test your product management fundamentals with this Airbnb case study simulation.">
     
     <!-- Open Graph for LinkedIn sharing -->
-    <meta property="og:title" content="PM Simulation: Spotify's Freemium Challenge">
-    <meta property="og:description" content="Can you score 90%+? Test your product leadership skills.">
+    <meta property="og:title" content="Week 1: PM Fundamentals - Airbnb Simulation">
+    <meta property="og:description" content="Can you navigate Airbnb's early growth decisions? Test your PM skills.">
     <meta property="og:type" content="website">
     
     <!-- Tailwind CSS -->
@@ -88,11 +88,11 @@
                 
                 if (resetMode) {
                     // Creator mode: Clear the attempt flag and allow retaking
-                    localStorage.removeItem('pm_simulation_attempted');
+                    localStorage.removeItem('pm_simulation_week1_attempted');
                     setHasAttempted(false);
                 } else {
                     // Normal mode: Check if already attempted
-                    const attempted = localStorage.getItem('pm_simulation_attempted');
+                    const attempted = localStorage.getItem('pm_simulation_week1_attempted');
                     if (attempted) {
                         setHasAttempted(true);
                     }
@@ -100,115 +100,279 @@
             }, []);
 
             const simulation = {
-                title: "Spotify's Freemium Conversion Challenge",
-                company: "Spotify",
-                description: "You're the PM leading the conversion optimization team. Premium subscribers have plateaued. Make critical decisions to boost conversion.",
+                title: "Airbnb's Platform Evolution: PM Fundamentals",
+                company: "Airbnb",
+                week: "Week 1",
+                year: "2009",
+                description: "You're a PM at early-stage Airbnb. The company started by renting air mattresses during a design conference. Now you need to scale to a global platform. Make critical decisions that will define what product management means at Airbnb.",
                 questions: [
                     {
                         id: 1,
-                        scenario: "Data shows that 68% of free users abandon the app after hitting the 6-skip limit on mobile. Your team proposes three solutions:",
-                        question: "What's your decision?",
+                        scenario: "The founders want to know: What's the difference between a Product Manager and a Project Manager? Your answer will shape your role.",
+                        question: "How do you explain your role as a PM?",
                         options: [
                             {
-                                text: "Remove skip limit entirely to improve retention, bet on increased engagement leading to eventual conversion",
-                                points: 15,
-                                feedback: "Risky move. While retention might improve, you've removed a key pain point that drives premium conversion. Netflix tried unlimited features and saw conversion drop 23%."
+                                text: "I manage timelines, coordinate teams, and ensure projects ship on time. I'm the glue that keeps everyone aligned.",
+                                points: 20,
+                                feedback: "This describes a Project Manager, not a Product Manager. PMs focus on the 'what' and 'why' (product strategy, user value), while Project Managers focus on the 'when' and 'how' (execution, timelines). You're confusing the two roles."
                             },
                             {
-                                text: "Keep limit but offer 'earn extra skips by watching ads' feature",
-                                points: 35,
-                                feedback: "Strong product thinking! This creates a middle ground, generates ad revenue, and maintains conversion pressure. Similar to LinkedIn's InMail credits model."
+                                text: "I define what to build based on user needs and business goals. I own the product vision and prioritize features. Project Managers handle execution.",
+                                points: 45,
+                                feedback: "Excellent! This captures the essence of product management. PMs are the 'CEO of the product' - they own the vision, strategy, and prioritization. Project/Program Managers then execute that vision. This is the correct distinction."
                             },
                             {
-                                text: "Reduce limit to 3 skips but add prominent 'Unlimited Skips' upgrade CTA",
+                                text: "I write user stories for engineers and attend standups. I make sure the backlog is prioritized.",
                                 points: 25,
-                                feedback: "Aggressive approach. Might boost short-term conversions but risks alienating free users. Dropbox saw 15% user churn with similar restrictions."
+                                feedback: "This describes a Product Owner in Scrum, not a strategic Product Manager. While PMs do write user stories, that's just one small part. You're missing the strategic thinking, user research, business analysis, and vision-setting aspects."
                             },
                             {
-                                text: "A/B test: Personalized skip limits based on user listening patterns",
-                                points: 40,
-                                feedback: "Excellent PM decision! Data-driven, user-centric, and reduces risk. This mirrors Amazon Prime's personalized trial approach that lifted conversions 31%."
+                                text: "I do whatever needs to be done - sometimes strategy, sometimes execution, sometimes both. The role is fluid.",
+                                points: 15,
+                                feedback: "While startup PMs do wear many hats, this answer shows unclear role definition. Without clarity on what a PM uniquely does, you'll be pulled in every direction and won't add strategic value. Even in startups, PMs must own product decisions, not just 'help out.'"
                             }
                         ]
                     },
                     {
                         id: 2,
-                        scenario: "Your analytics reveal that users who create 3+ playlists convert at 4.2x the rate of others. But only 12% of free users create playlists.",
-                        question: "How do you drive playlist creation?",
+                        scenario: "Airbnb has two customer types: hosts (supply) and guests (demand). Your engineering team can only focus on one this quarter. Both are critical to the marketplace.",
+                        question: "Who do you prioritize?",
                         options: [
                             {
-                                text: "Gamify it: 'Create 3 playlists, unlock 1 week Premium trial'",
-                                points: 30,
-                                feedback: "Good engagement tactic. Duolingo uses similar mechanics successfully. Risk: Artificial behavior that doesn't stick post-trial."
+                                text: "Prioritize guests. More guests = more bookings = more revenue. Hosts will come if there's demand.",
+                                points: 25,
+                                feedback: "Demand-side thinking, but risky for a marketplace. Without quality supply (hosts), guest experience suffers and they don't return. Uber learned this - without drivers, riders churn. You need to balance both sides of the marketplace."
                             },
                             {
-                                text: "Build AI-assisted playlist creator that analyzes listening history and suggests personalized playlists",
-                                points: 40,
-                                feedback: "Product excellence! Reduces friction and adds value. Similar to how Canva's template suggestions drove 40% more user creations."
-                            },
-                            {
-                                text: "Make playlist creation mandatory before accessing certain features",
-                                points: 10,
-                                feedback: "Poor UX decision. Forced actions create resentment. LinkedIn saw backlash when forcing profile completion for job applications."
-                            },
-                            {
-                                text: "Launch collaborative playlist feature with social sharing to Instagram/Twitter",
+                                text: "Prioritize hosts. Great listings attract guests organically. Supply quality drives demand.",
                                 points: 35,
-                                feedback: "Smart viral loop thinking! Adds social value and drives organic growth. Similar to Spotify Wrapped's success. May not directly impact conversion though."
+                                feedback: "Strong supply-side focus. This mirrors Airbnb's actual strategy - they invested heavily in professional photography for hosts, which dramatically improved conversion. Supply quality is often the constraint in marketplaces. Good answer, though you should acknowledge the risk of ignoring guests."
+                            },
+                            {
+                                text: "Split resources 50/50. Both sides are important, so divide the team equally.",
+                                points: 15,
+                                feedback: "This sounds fair but is strategically weak. Splitting resources means you won't move the needle on either side. PMs must make tough choices. As the saying goes, 'If everything is important, nothing is important.' Pick the constraint and go all-in."
+                            },
+                            {
+                                text: "Analyze data: Which side has lower satisfaction scores or higher churn? Fix the bottleneck first.",
+                                points: 45,
+                                feedback: "Excellent product thinking! You're using data to identify the constraint in the marketplace. This is exactly what strong PMs do - let metrics guide prioritization, not opinions. Airbnb used this approach: when host signups lagged, they focused there. When booking conversion was the issue, they optimized guest experience."
                             }
                         ]
                     },
                     {
                         id: 3,
-                        scenario: "Your team can only ship ONE feature this quarter. Which has the highest conversion impact?",
-                        question: "What do you prioritize?",
+                        scenario: "Your CEO wants Airbnb to expand to 10 new cities this quarter. Your engineer lead says the platform has critical technical debt that needs fixing. Both are escalating to you.",
+                        question: "How do you resolve this conflict?",
                         options: [
                             {
-                                text: "Offline listening for Premium (currently only on Premium family plan)",
-                                points: 35,
-                                feedback: "Solid feature differentiation. YouTube Premium saw 28% conversion lift when they emphasized offline viewing. But Spotify already has some offline - incremental gain."
+                                text: "Side with the CEO. Growth is the priority at a startup. Technical debt can wait.",
+                                points: 20,
+                                feedback: "Short-term thinking that creates long-term problems. Ignoring tech debt leads to slower development, more bugs, and eventually a re-platform. Twitter and Friendster both collapsed under tech debt. PMs must balance short-term growth with long-term sustainability."
                             },
                             {
-                                text: "High-quality audio streaming (320kbps vs current 160kbps for free)",
-                                points: 30,
-                                feedback: "Appeals to audiophiles but limited market. Tidal tried this positioning and captured only 1% market share. Niche value proposition."
-                            },
-                            {
-                                text: "Smart 'Continue Listening' that works across all devices with one-tap sync",
-                                points: 40,
-                                feedback: "Brilliant! Addresses a real pain point and showcases premium's ecosystem value. Apple's Continuity features drove significant ecosystem lock-in and upsells."
-                            },
-                            {
-                                text: "Ad-free podcasts (currently ads exist even for Premium)",
+                                text: "Side with engineering. Technical debt will slow us down eventually. Fix it now before it's worse.",
                                 points: 25,
-                                feedback: "Timely given podcast growth, but complex due to creator economics. Spotify's revenue model depends on podcast ads. Could alienate creators."
+                                feedback: "Engineering-first thinking, but you're ignoring business reality. In startups, perfect code doesn't matter if you run out of cash before finding product-market fit. Instagram famously had terrible technical debt but kept shipping features to grow. Balance is key."
+                            },
+                            {
+                                text: "Negotiate a compromise: Launch 5 cities (not 10) and dedicate 30% of eng time to critical tech debt.",
+                                points: 45,
+                                feedback: "Excellent stakeholder management! You're showing PM leadership by making a tough call that neither side wanted but both can live with. This is exactly what PMs do - balance competing priorities with data and rationale. You're demonstrating that you understand both business urgency and technical sustainability."
+                            },
+                            {
+                                text: "Escalate to the founders. This is above my pay grade.",
+                                points: 10,
+                                feedback: "You're abdicating responsibility. PMs are hired precisely to make these hard trade-off decisions. If you escalate every conflict, you're not adding value. The founders hired you to own these calls. Make a recommendation with your reasoning, then get their input if needed."
                             }
                         ]
                     },
                     {
                         id: 4,
-                        scenario: "Your pricing team wants to test a price increase from $9.99 to $10.99/month. Finance projects $120M additional annual revenue. You have final veto.",
-                        question: "What's your call?",
+                        scenario: "A competitor (VRBO) has more listings than Airbnb. Your VP Sales wants you to copy their features. Your designer wants to differentiate with a unique experience.",
+                        question: "What's your product strategy?",
                         options: [
                             {
-                                text: "Approve immediately - it's only $1, users won't notice",
-                                points: 10,
-                                feedback: "Dangerous assumption. Netflix lost 200K subscribers after $1 increase. Never underestimate price sensitivity, especially in competitive markets."
+                                text: "Copy VRBO's features. They're winning, so they must be doing something right. Fast-follow strategy.",
+                                points: 15,
+                                feedback: "Dangerous strategy. Fast-following makes you a perpetual #2. Instagram didn't copy Facebook, they focused on mobile-first photos. Zoom didn't copy Skype, they focused on reliability. Airbnb won by emphasizing 'belonging' and unique stays, not by copying VRBO's vacation rentals."
                             },
                             {
-                                text: "Reject - focus on growing subscriber base first, not squeezing existing users",
+                                text: "Ignore competitors. Focus on our users and what they need. Competition is a distraction.",
                                 points: 25,
-                                feedback: "Conservative approach. Valid concern, but might leave money on table if users are willing to pay. Amazon Prime increased 30% without significant churn."
+                                feedback: "Admirable customer focus, but naive. You can't ignore competitive dynamics. Airbnb studied VRBO extensively but chose to differentiate on trust (reviews, verified photos) and experience (unique homes, not just vacation rentals). Know your competition, then consciously choose to zig while they zag."
                             },
                             {
-                                text: "Approve BUT grandfather existing users at $9.99 for 12 months",
-                                points: 40,
-                                feedback: "Excellent balance! Protects current relationship while capturing higher value from new users. Adobe's Creative Cloud used this successfully during transition."
-                            },
-                            {
-                                text: "Counter-propose: Keep $9.99 but introduce $14.99 'Premium Plus' tier with offline podcasts + audiobooks",
+                                text: "Analyze what VRBO does well, but find gaps where we can differentiate and win. Competitive advantage.",
                                 points: 45,
-                                feedback: "Strategic genius! Decoy pricing anchors the $9.99 tier as good value while capturing willingness-to-pay from high-value users. Classic Apple playbook."
+                                feedback: "Perfect strategic thinking! This is exactly what Airbnb did. They saw VRBO focused on vacation rentals (beach houses, cabins) but missed urban apartments and unique experiences (treehouses, castles). Airbnb found whitespace in the market. Great PMs know their competition but find where they can uniquely win."
+                            },
+                            {
+                                text: "Let's differentiate with design. Make our app beautiful. Design-led strategy.",
+                                points: 20,
+                                feedback: "Design matters, but it's not a strategy. Beautiful design on the wrong product is lipstick on a pig. Airbnb did eventually become design-forward, but only after solving core trust issues (verified photos, reviews, insurance). Strategy first, design second."
+                            }
+                        ]
+                    },
+                    {
+                        id: 5,
+                        scenario: "Your first hire decision. You can hire: (A) A senior engineer to build faster, (B) A data analyst to make better decisions, or (C) A designer to improve UX. Budget for one hire only.",
+                        question: "Who do you hire?",
+                        options: [
+                            {
+                                text: "Senior engineer. Speed of execution is critical at our stage. We need to ship faster.",
+                                points: 25,
+                                feedback: "Reasonable for an early-stage startup focused on product-market fit. More engineering velocity helps you test hypotheses faster. However, you're assuming you know what to build. Without data or design thinking, you might ship the wrong things faster."
+                            },
+                            {
+                                text: "Data analyst. We're making gut decisions without data. Let's be more analytical.",
+                                points: 35,
+                                feedback: "Strong choice for a marketplace. Airbnb's early data hires helped them understand that professional photography increased bookings 2-3x. Data helps you prioritize ruthlessly. Good answer, though some might argue design/trust is more critical at this stage."
+                            },
+                            {
+                                text: "Designer. Trust is our biggest barrier. Users won't book without confidence. Design builds trust.",
+                                points: 45,
+                                feedback: "Excellent strategic thinking! This was Airbnb's actual insight. Their breakthrough came when they sent photographers to hosts' homes for free professional photos. Design wasn't just aesthetics - it was trust-building. Great PMs understand what the true constraint is, not just what's most urgent."
+                            },
+                            {
+                                text: "None. I'll split my time across eng, data, and design. Generalist PM approach.",
+                                points: 10,
+                                feedback: "You're trying to do everything and will excel at nothing. PMs aren't experts in eng, data, AND design. You need specialists. Your job is to orchestrate specialists, not replace them. This answer shows poor understanding of PM leverage and team building."
+                            }
+                        ]
+                    },
+                    {
+                        id: 6,
+                        scenario: "A host reports that a guest trashed their home. The guest disputes it. This is the first major trust incident. Your response will set precedent for how Airbnb handles conflicts.",
+                        question: "What do you do?",
+                        options: [
+                            {
+                                text: "Side with the host. Hosts are our supply - we can't lose them. Refund the host, ban the guest.",
+                                points: 20,
+                                feedback: "Supply-focused but unbalanced. What if the host is lying? Marketplace platforms must be fair arbiters, not take sides reflexively. Uber learned this - if drivers felt empowered to ban riders unfairly, it would be chaos. You need a fair process, not a default stance."
+                            },
+                            {
+                                text: "Create a neutral investigation process. Gather evidence (photos, messages) before deciding. Build a precedent for fairness.",
+                                points: 45,
+                                feedback: "Excellent! This is exactly what Airbnb did. They built a Host Guarantee program and a resolution center with evidence-based processes. Great PMs think in systems, not one-off decisions. You're setting up infrastructure that scales. This shows maturity in thinking about product lifecycle - from launch to operations."
+                            },
+                            {
+                                text: "Offer a small goodwill gesture to both sides ($100 credit each). Move on quickly.",
+                                points: 15,
+                                feedback: "Band-aid solution that doesn't solve the underlying problem. What happens at the next conflict? And the 100th? You're avoiding the hard work of building proper trust and safety systems. This is reactive PM thinking, not strategic."
+                            },
+                            {
+                                text: "Escalate to the founders. Trust & safety should be their call, not mine.",
+                                points: 10,
+                                feedback: "You're ducking responsibility. This is exactly the kind of product decision PMs are hired to make. Founders can't resolve every conflict. You need to propose a solution (with options and trade-offs), then get their input. Own the problem."
+                            }
+                        ]
+                    },
+                    {
+                        id: 7,
+                        scenario: "You have data on user behavior but it conflicts with what users say in interviews. Users say they want 'cheap prices' but data shows they book mid-priced listings with great photos. Which do you trust?",
+                        question: "How do you reconcile this?",
+                        options: [
+                            {
+                                text: "Trust the data. Users don't know what they want. Ignore what they say, watch what they do.",
+                                points: 35,
+                                feedback: "Strong data-driven thinking. You're right that behavior > words. This is a classic PM insight. However, you're missing nuance. Qualitative research helps you understand WHY users behave certain ways. The best PMs combine both. Airbnb learned users wanted 'cheap' because they didn't trust hosts enough to pay premium prices. Solution: Build trust (reviews, photos), then users willingly pay more."
+                            },
+                            {
+                                text: "Trust the users. They're telling us price is the issue. Let's focus on making listings cheaper.",
+                                points: 15,
+                                feedback: "You're falling for the classic user research trap: Users say one thing but do another. Henry Ford's famous quote: 'If I asked people what they wanted, they'd say faster horses.' Your job as PM is to understand the underlying need (I need to get somewhere faster), not the stated solution (faster horses)."
+                            },
+                            {
+                                text: "Dig deeper. Users say 'cheap' but maybe they mean 'good value.' Test hypothesis: Do great photos/reviews justify higher prices?",
+                                points: 45,
+                                feedback: "Perfect! You're combining qual and quant insights. This is exactly what Airbnb discovered - users wanted confidence in their purchase, not just low prices. When trust signals were strong (photos, reviews), they'd pay more. Great PMs don't just collect data, they synthesize it into insights. You're showing the analytical rigor that separates good PMs from great ones."
+                            },
+                            {
+                                text: "Run an A/B test. Show one group low-price listings, another group high-quality listings. See what converts better.",
+                                points: 30,
+                                feedback: "Good instinct to test, but you're oversimplifying. A/B tests work best when you have a clear hypothesis. What are you learning from this test? That users prefer quality over price? You could have deduced that from existing data. Better to test specific interventions (e.g., 'Does adding professional photos increase willingness to pay 20% more?')."
+                            }
+                        ]
+                    },
+                    {
+                        id: 8,
+                        scenario: "Your roadmap has 20 features. Realistically you can ship 5 this quarter. Stakeholders (marketing, sales, support, founders) are all lobbying for their priorities.",
+                        question: "How do you prioritize?",
+                        options: [
+                            {
+                                text: "Build a scoring framework (impact, effort, strategic value). Score all 20 features. Ship top 5.",
+                                points: 45,
+                                feedback: "Excellent! This is the RICE framework (Reach, Impact, Confidence, Effort) or similar prioritization methodology. You're bringing structure to what could be an emotional debate. Scoring forces stakeholders to justify their requests with data. This is exactly how top PMs (at Intercom, Airbnb, Stripe) make prioritization transparent and defensible."
+                            },
+                            {
+                                text: "Let stakeholders vote. Highest votes win. Democratic approach.",
+                                points: 15,
+                                feedback: "Democracy doesn't work in product management. The loudest voices win, not the best ideas. Also, stakeholders are biased toward their own goals. Marketing always wants growth features, support wants bug fixes, sales wants enterprise features. Your job as PM is to weigh all inputs but make the final call based on user value and business impact."
+                            },
+                            {
+                                text: "Ask founders to prioritize. They have the vision and context I don't have.",
+                                points: 20,
+                                feedback: "You're deferring too much. Yes, get founder input on strategy, but they hired you to make prioritization calls. If founders have to decide every feature, you're not adding PM value. Bring them a recommendation (with rationale and alternatives), then align on direction."
+                            },
+                            {
+                                text: "Focus on features that unblock revenue. We need to survive. Everything else is a distraction.",
+                                points: 25,
+                                feedback: "Short-term thinking with some merit. Yes, startups need revenue to survive. But obsessing over monetization too early can kill user growth. Instagram didn't monetize for years. Airbnb initially focused on trust and supply quality, not immediate revenue optimization. Balance short-term survival with long-term value creation."
+                            }
+                        ]
+                    },
+                    {
+                        id: 9,
+                        scenario: "You shipped a feature that's technically working but users are confused. Support tickets are up 3x. Engineering says 'it works as designed.' What does 'working' mean?",
+                        question: "How do you define success?",
+                        options: [
+                            {
+                                text: "Working = feature is live and functional. The code does what the spec said. Success.",
+                                points: 10,
+                                feedback: "This is an engineering definition of success, not a product definition. If users can't figure out how to use the feature, it's not successful - it's technical debt masquerading as a feature. This answer shows you don't understand the PM role: Your job is user value, not feature output."
+                            },
+                            {
+                                text: "Working = users can complete their task without confusion. Success = lower support tickets and high user satisfaction.",
+                                points: 45,
+                                feedback: "Perfect! You understand that 'working' means working for users, not just working in code. This is the shift from feature factory to outcome-oriented PM. Melissa Perri's 'Escaping the Build Trap' is all about this mindset. You're measuring success by user behavior and satisfaction, not just 'is it live?'"
+                            },
+                            {
+                                text: "Working = users adopt it. If 3x support tickets but usage is up, that's a win. Short-term pain for long-term gain.",
+                                points: 25,
+                                feedback: "You're half-right. Yes, usage matters more than support tickets sometimes. But 3x support load is unsustainable and suggests poor UX. Good products are intuitive. If you need this much hand-holding, the design is wrong. Better answer: 'Let's fix the UX so users don't need support.'"
+                            },
+                            {
+                                text: "Working = meets the business goal. Did bookings increase? Did revenue go up? That's the only metric that matters.",
+                                points: 30,
+                                feedback: "Business-outcome focus is good, but you're ignoring user experience. A feature can drive short-term revenue while eroding long-term trust. Dark patterns (e.g., hidden fees, confusing cancellation) boost revenue initially but kill brand loyalty. Great PMs balance business outcomes with user satisfaction."
+                            }
+                        ]
+                    },
+                    {
+                        id: 10,
+                        scenario: "It's been 6 months. You've shipped features, but you're not sure if you're a good PM. No one has given you feedback. How do you know if you're succeeding?",
+                        question: "How do you self-assess as a PM?",
+                        options: [
+                            {
+                                text: "Look at team output: Features shipped, velocity, hitting deadlines. More output = better PM.",
+                                points: 15,
+                                feedback: "You're measuring activity, not impact. This is the 'feature factory' trap. Shipping 20 features that users don't care about is worse than shipping 2 features that solve real problems. Output is easy to measure but meaningless without outcome. Reframe: Are users better off because of what you shipped?"
+                            },
+                            {
+                                text: "Look at product metrics: User growth, engagement, retention. If metrics are up, I'm doing well.",
+                                points: 35,
+                                feedback: "Much better - you're measuring outcomes! However, metrics can be misleading. Growth could be due to marketing spend, not product quality. Engagement could be addiction, not value. The best self-assessment combines: (1) Are metrics improving? (2) Are we solving real user problems? (3) Is the team operating well? (4) Am I learning and growing?"
+                            },
+                            {
+                                text: "Ask for feedback from stakeholders: founders, engineers, designers. Do they think I'm effective?",
+                                points: 40,
+                                feedback: "Great instinct to seek feedback! Strong PMs are self-aware and actively seek input. However, don't wait 6 months - build feedback loops into your workflow (weekly 1:1s, monthly retros, quarterly PM reviews). Also, ask specific questions: 'How can I communicate better?' not 'Am I doing well?'"
+                            },
+                            {
+                                text: "Reflect on: Am I making the team more effective? Are we building the right things? Am I improving as a PM? These are my measures.",
+                                points: 45,
+                                feedback: "Excellent self-assessment framework! You're asking the right questions. (1) Team effectiveness = Are you removing blockers, clarifying priorities, fostering collaboration? (2) Right things = Are you validating with users, measuring impact? (3) Personal growth = Are you learning frameworks, building domain expertise, improving stakeholder management? This is mature PM thinking. You're assessing both impact (what you deliver) and effectiveness (how you operate)."
                             }
                         ]
                     }
@@ -233,7 +397,7 @@
             const handleEmailSubmit = (e) => {
                 e.preventDefault();
                 if (email && email.includes('@')) {
-                    sendToGoogleSheets({ email, status: 'started' });
+                    sendToGoogleSheets({ email, simulation: 'Week 1 - PM Fundamentals', status: 'started' });
                     setHasStarted(true);
                 }
             };
@@ -257,13 +421,14 @@
                     
                     sendToGoogleSheets({ 
                         email, 
+                        simulation: 'Week 1 - PM Fundamentals',
                         score: totalPoints,
                         percentage,
                         tier
                     });
                     
                     setShowResults(true);
-                    localStorage.setItem('pm_simulation_attempted', 'true');
+                    localStorage.setItem('pm_simulation_week1_attempted', 'true');
                 }
             };
 
@@ -277,25 +442,25 @@
                 if (percentage >= 90) {
                     return {
                         title: "Strategic Mastery",
-                        text: "You demonstrated exceptional command of product frameworks, balancing user value, business metrics, and strategic thinking. Your decisions show deep understanding of freemium dynamics, competitive positioning, and data-driven decision-making. Keep applying these strategic patterns to complex product challenges.",
+                        text: "Outstanding! You demonstrated exceptional understanding of PM fundamentals. Your answers show you grasp the strategic nature of product management - balancing user needs, business goals, and team dynamics. You understand that PMs are decision-makers who use frameworks, data, and judgment to drive outcomes. You're thinking like a seasoned PM who knows when to lead, when to listen, and when to dig deeper. This level of product intuition typically takes years to develop.",
                         tier: "Strategic Mastery"
                     };
                 } else if (percentage >= 75) {
                     return {
                         title: "Applied Proficiency",
-                        text: "You showed strong product instincts with solid grasp of conversion mechanics and user psychology. Your decisions reflect good framework application and balanced thinking. A few choices leaned too aggressive or conservative - continue calibrating your risk assessment with real-world case studies.",
+                        text: "Strong performance! You showed solid grasp of PM core competencies. You understand the PM role is about making tough trade-off decisions with incomplete information. Your answers reflect good judgment on prioritization, stakeholder management, and user-centric thinking. A few decisions leaned too heavily on one dimension (execution vs strategy, or data vs intuition). The best PMs balance all aspects. Keep practicing framework-driven decision making and study real PM case studies to sharpen your instincts.",
                         tier: "Applied Proficiency"
                     };
                 } else if (percentage >= 60) {
                     return {
                         title: "Core Competency",
-                        text: "You demonstrated good foundational product skills. Some decisions could benefit from deeper framework application and systems thinking. Focus on practicing trade-off analysis and considering second-order effects. Study case studies from companies like Spotify, Netflix, and Amazon to build pattern recognition.",
+                        text: "You're building a solid foundation in product management. You understand some key concepts - PMs make decisions, use data, balance stakeholders - but missed opportunities to apply structured thinking. Several answers confused PM with Project Manager or Product Owner roles, or showed tactical thinking where strategic thinking was needed. Focus on learning frameworks like RICE prioritization, Jobs-to-be-Done, and the distinction between outputs (features) and outcomes (user value). Read 'Inspired' by Marty Cagan and study how top PMs think.",
                         tier: "Core Competency"
                     };
                 } else {
                     return {
                         title: "Foundational Understanding",
-                        text: "You're building your product intuition. Several decisions would benefit from applying structured frameworks like RICE, JTBD, or OKRs. Continue learning through case studies and practice applying frameworks to everyday product decisions. Your PM journey is just beginning - keep practicing!",
+                        text: "You're at the beginning of your PM journey. Several answers suggest you're still learning what product management fundamentally is - it's not project management, not product ownership, and not just shipping features. PMs are strategic decision-makers who discover what users need, prioritize ruthlessly, and drive business outcomes. Start with fundamentals: Read 'Inspired' by Marty Cagan, study the product lifecycle, and learn prioritization frameworks. Watch PM interviews and case study breakdowns. The good news: These are all learnable skills. Keep studying and practicing!",
                         tier: "Foundational Understanding"
                     };
                 }
@@ -304,7 +469,7 @@
             const shareToLinkedIn = () => {
                 const score = calculateScore();
                 const narrative = getNarrative(score.percentage);
-                const text = `I just scored ${score.percentage}% on the "${simulation.title}" PM Simulation! 🎯\n\nResult: ${narrative.tier}\n\nThink you can beat my score? Test your product leadership skills:\n\n#ProductManagement #ProductStrategy #Leadership`;
+                const text = `I just scored ${score.percentage}% on "${simulation.title}" (Week 1)! 🎯\n\nResult: ${narrative.tier}\n\nTested: PM vs Project Manager, stakeholder management, prioritization, and strategic thinking.\n\nThink you can beat my score?\n\n#ProductManagement #PMFundamentals #CareerGrowth`;
                 const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&summary=${encodeURIComponent(text)}`;
                 window.open(url, '_blank');
             };
@@ -316,8 +481,8 @@
                             h(TrophyIcon)
                         ),
                         h('h2', { className: 'text-2xl font-bold text-gray-900 mb-4' }, 'Already Completed!'),
-                        h('p', { className: 'text-gray-600 mb-6' }, "You've already taken this simulation. Each executive gets one attempt to ensure fair competition and thoughtful decision-making."),
-                        h('p', { className: 'text-sm text-gray-500' }, 'Want more simulations? Connect with me on LinkedIn for upcoming challenges!')
+                        h('p', { className: 'text-gray-600 mb-6' }, "You've already taken this simulation. Each learner gets one attempt to ensure thoughtful decision-making and fair competition."),
+                        h('p', { className: 'text-sm text-gray-500' }, 'Want more PM simulations? Follow the course for upcoming modules!')
                     )
                 );
             }
@@ -331,13 +496,20 @@
                                     h(TrendingUpIcon)
                                 ),
                                 h('div', null,
+                                    h('div', { className: 'text-sm text-blue-100 mb-1' }, simulation.week + ' • ' + simulation.year),
                                     h('h1', { className: 'text-2xl font-bold' }, simulation.title),
-                                    h('p', { className: 'text-blue-100' }, `Executive PM Simulation • ${simulation.company}`)
+                                    h('p', { className: 'text-blue-100' }, 'PM Fundamentals • ' + simulation.company)
                                 )
                             )
                         ),
                         h('div', { className: 'p-8' },
                             h('p', { className: 'text-lg text-gray-700 mb-6' }, simulation.description),
+                            h('div', { className: 'bg-amber-50 border-l-4 border-amber-500 p-4 mb-6' },
+                                h('p', { className: 'text-sm text-amber-800' },
+                                    h('strong', null, '⚡ Learning Focus: '),
+                                    'PM vs Project Manager, stakeholder management, prioritization frameworks, data-driven decisions, and defining success metrics.'
+                                )
+                            ),
                             h('div', { className: 'grid grid-cols-3 gap-4 mb-8' },
                                 h('div', { className: 'text-center p-4 bg-gray-50 rounded-lg' },
                                     h(UsersIcon, { className: 'w-6 h-6 text-indigo-600 mx-auto mb-2' }),
@@ -357,7 +529,7 @@
                             ),
                             h('form', { onSubmit: handleEmailSubmit, className: 'space-y-4' },
                                 h('div', null,
-                                    h('label', { className: 'block text-sm font-medium text-gray-700 mb-2' }, 'Executive Email (Required for Results & Future Simulations)'),
+                                    h('label', { className: 'block text-sm font-medium text-gray-700 mb-2' }, 'Your Email (Required for Certificate & Results)'),
                                     h('div', { className: 'relative' },
                                         h(MailIcon, { className: 'absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400' }),
                                         h('input', {
@@ -373,8 +545,8 @@
                                 h('button', {
                                     type: 'submit',
                                     className: 'w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl'
-                                }, 'Start Simulation →'),
-                                h('p', { className: 'text-xs text-gray-500 text-center' }, "Your email is used only for results delivery and future PM simulation notifications. No spam, ever.")
+                                }, 'Start Module 1 →'),
+                                h('p', { className: 'text-xs text-gray-500 text-center' }, "Your email is used only for results delivery and course notifications. No spam.")
                             )
                         )
                     )
@@ -390,13 +562,14 @@
                         h('div', { className: 'bg-white rounded-2xl shadow-xl overflow-hidden mb-6' },
                             h('div', { className: 'bg-gradient-to-r from-indigo-600 to-blue-600 p-8 text-white text-center' },
                                 h(TrophyIcon, { className: 'w-16 h-16 mx-auto mb-4' }),
+                                h('div', { className: 'text-sm text-blue-100 mb-2' }, simulation.week + ' Complete'),
                                 h('h2', { className: 'text-3xl font-bold mb-2' }, narrative.tier),
                                 h('div', { className: 'text-5xl font-bold mb-2' }, `${score.percentage}%`),
                                 h('div', { className: 'text-blue-100' }, `Score: ${score.totalPoints} / ${score.maxPoints} points`)
                             ),
                             h('div', { className: 'p-8' },
                                 h('h3', { className: 'text-xl font-bold text-gray-900 mb-3' }, narrative.title),
-                                h('p', { className: 'text-gray-700 mb-6' }, narrative.text),
+                                h('p', { className: 'text-gray-700 mb-6 leading-relaxed' }, narrative.text),
                                 h('button', {
                                     onClick: shareToLinkedIn,
                                     className: 'w-full bg-[#0A66C2] text-white py-3 rounded-lg font-semibold hover:bg-[#004182] transition-all flex items-center justify-center gap-2'
@@ -421,7 +594,7 @@
                                                     h('span', { className: 'text-sm font-medium text-gray-700' }, 'Points Earned'),
                                                     h('span', { className: 'text-lg font-bold text-indigo-600' }, `${answers[idx].points}/${Math.max(...q.options.map(o => o.points))}`)
                                                 ),
-                                                h('p', { className: 'text-sm text-gray-600' }, answers[idx].feedback)
+                                                h('p', { className: 'text-sm text-gray-600 leading-relaxed' }, answers[idx].feedback)
                                             )
                                         )
                                     )
@@ -429,7 +602,7 @@
                             )
                         ),
                         h('div', { className: 'text-center mt-8' },
-                            h('p', { className: 'text-gray-600 mb-2' }, 'Want more PM simulations? Follow me on LinkedIn for weekly challenges!'),
+                            h('p', { className: 'text-gray-600 mb-2' }, 'Ready for Week 2? Continue the PM course to master product discovery & validation!'),
                             h('p', { className: 'text-sm text-gray-500' }, '© 2025 Mohan. All Rights Reserved.')
                         )
                     )
@@ -484,7 +657,7 @@
                             )
                         )
                     ),
-                    h('div', { className: 'text-center mt-6 text-sm text-gray-500' }, '💡 Choose carefully - you only get one attempt at this simulation')
+                    h('div', { className: 'text-center mt-6 text-sm text-gray-500' }, '💡 Choose carefully - you only get one attempt at this module')
                 )
             );
         }
