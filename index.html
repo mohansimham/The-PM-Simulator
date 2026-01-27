@@ -509,51 +509,69 @@
                     action: 'SHARED_ON_LINKEDIN'
                 });
                 
-                // Create shareable text
-                const shareText = `🎯 Just completed PM Simulation 1/20!
+                // Create shareable text with simulation URL
+                const simulationUrl = window.location.href.split('?')[0];
+                
+                const shareText = `🎯 I just completed PM Simulation 1/20!
 
-Score: ${score.percentage}% - ${narrative.tier}
+My Result: ${score.percentage}% - ${narrative.tier}
 
-"${simulation.title}"
+Challenge: "${simulation.title}"
 
-Tested: PM fundamentals, stakeholder management, prioritization frameworks, and strategic thinking.
+What I was tested on:
+• PM vs Project Manager role clarity
+• Stakeholder management & prioritization
+• Data-driven decision making
+• Defining product success metrics
 
-What I was tested on:\n• PM vs Project Manager role clarity\n• Stakeholder management & prioritization\n• Data-driven decision making\n• Defining product success metrics\n\nThis simulation tests real-world PM thinking through Airbnb'''s early-stage growth decisions.\n\nThink you can beat my score?\nTake the free simulation: ' + window.location.href.split('?')[0] + '
+This simulation tests real-world PM thinking through Airbnb's early-stage growth decisions.
 
-#ProductManagement #PMSkills #CareerGrowth #Leadership\n#ProductStrategy #TechCareers\n\n👉 Follow for 20 PM simulations: linkedin.com/in/mohansimham
+Think you can beat my score?
+Take the free simulation: ${simulationUrl}
 
-Curated by Mohan Simham | linkedin.com/in/mohansimham`;
+#ProductManagement #PMSkills #CareerGrowth #Leadership
+#ProductStrategy #TechCareers
+
+👉 Follow for 20 PM simulations: linkedin.com/in/mohansimham`;
 
                 // Show modal with instructions
                 const modal = document.createElement('div');
                 modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px;';
                 
                 const card = document.createElement('div');
-                card.style.cssText = 'background: white; border-radius: 16px; padding: 32px; max-width: 600px; width: 100%;';
+                card.style.cssText = 'background: white; border-radius: 16px; padding: 32px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;';
                 
                 card.innerHTML = `
                     <div style="text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
-                        <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 16px; color: #1f2937;">Ready to Share on LinkedIn!</h2>
-                        <p style="color: #6b7280; margin-bottom: 24px; line-height: 1.6;">Your achievement text is ready. Click the button below to:</p>
+                        <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 16px; color: #1f2937;">Ready to Share Your Achievement!</h2>
+                        <p style="color: #6b7280; margin-bottom: 24px; line-height: 1.6;">Share your PM assessment results on LinkedIn in 3 easy steps:</p>
                         <ol style="text-align: left; color: #6b7280; margin-bottom: 24px; line-height: 1.8; padding-left: 24px;">
-                            <li>Text will be copied to your clipboard</li>
-                            <li>LinkedIn will open in a new tab</li>
-                            <li>Click "Start a post" on LinkedIn</li>
-                            <li>Paste (Ctrl+V or Cmd+V) your achievement</li>
-                            <li>Hit Post! 🚀</li>
+                            <li><strong>Click</strong> the button below (copies text + opens LinkedIn)</li>
+                            <li><strong>Click "Start a post"</strong> on LinkedIn</li>
+                            <li><strong>Paste</strong> (Ctrl+V or Cmd+V) and click Post! 🚀</li>
                         </ol>
-                        <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left; max-height: 200px; overflow-y: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; color: #374151;">${shareText}</div>
+                        <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left; max-height: 250px; overflow-y: auto; font-size: 13px; line-height: 1.6; white-space: pre-wrap; color: #374151; font-family: monospace;">${shareText}</div>
                         <button onclick="
-                            navigator.clipboard.writeText(\`${shareText.replace(/`/g, '\\`')}\`);
+                            navigator.clipboard.writeText(\`${shareText.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`);
                             window.open('https://www.linkedin.com/feed/', '_blank');
                             this.innerHTML = '✅ Copied! LinkedIn Opening...';
                             this.style.background = '#10b981';
-                            setTimeout(() => document.body.removeChild(this.closest('div').parentElement), 2000);
-                        " style="width: 100%; background: #0A66C2; color: white; padding: 16px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 12px;">
-                            📋 Copy Text & Open LinkedIn
+                            setTimeout(() => {
+                                const modal = this.closest('div').parentElement;
+                                if (modal && modal.parentElement) {
+                                    modal.parentElement.removeChild(modal);
+                                }
+                            }, 2000);
+                        " style="width: 100%; background: #0A66C2; color: white; padding: 16px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 12px; transition: all 0.3s;">
+                            📋 Copy & Open LinkedIn
                         </button>
-                        <button onclick="document.body.removeChild(this.closest('div').parentElement)" style="width: 100%; background: #e5e7eb; color: #374151; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;">
+                        <button onclick="
+                            const modal = this.closest('div').parentElement;
+                            if (modal && modal.parentElement) {
+                                modal.parentElement.removeChild(modal);
+                            }
+                        " style="width: 100%; background: #e5e7eb; color: #374151; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;">
                             Cancel
                         </button>
                     </div>
