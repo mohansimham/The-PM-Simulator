@@ -541,6 +541,8 @@ Take the free simulation: ${simulationUrl}
                 const card = document.createElement('div');
                 card.style.cssText = 'background: white; border-radius: 16px; padding: 32px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;';
                 
+                const previewText = shareText.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                
                 card.innerHTML = `
                     <div style="text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
@@ -551,27 +553,11 @@ Take the free simulation: ${simulationUrl}
                             <li><strong>Click "Start a post"</strong> on LinkedIn</li>
                             <li><strong>Paste</strong> (Ctrl+V or Cmd+V) and click Post! 🚀</li>
                         </ol>
-                        <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left; max-height: 250px; overflow-y: auto; font-size: 13px; line-height: 1.6; white-space: pre-wrap; color: #374151; font-family: monospace;">${shareText}</div>
-                        <button onclick="
-                            navigator.clipboard.writeText(\`${shareText.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`);
-                            window.open('https://www.linkedin.com/feed/', '_blank');
-                            this.innerHTML = '✅ Copied! LinkedIn Opening...';
-                            this.style.background = '#10b981';
-                            setTimeout(() => {
-                                const modal = this.closest('div').parentElement;
-                                if (modal && modal.parentElement) {
-                                    modal.parentElement.removeChild(modal);
-                                }
-                            }, 2000);
-                        " style="width: 100%; background: #0A66C2; color: white; padding: 16px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 12px; transition: all 0.3s;">
+                        <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left; max-height: 250px; overflow-y: auto; font-size: 13px; line-height: 1.6; white-space: pre-wrap; color: #374151; font-family: monospace;">${previewText}</div>
+                        <button id="copyShareBtn" style="width: 100%; background: #0A66C2; color: white; padding: 16px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 12px; transition: all 0.3s;">
                             📋 Copy & Open LinkedIn
                         </button>
-                        <button onclick="
-                            const modal = this.closest('div').parentElement;
-                            if (modal && modal.parentElement) {
-                                modal.parentElement.removeChild(modal);
-                            }
-                        " style="width: 100%; background: #e5e7eb; color: #374151; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;">
+                        <button id="cancelBtn" style="width: 100%; background: #e5e7eb; color: #374151; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;">
                             Cancel
                         </button>
                     </div>
@@ -580,12 +566,38 @@ Take the free simulation: ${simulationUrl}
                 modal.appendChild(card);
                 document.body.appendChild(modal);
                 
+                // Add event listeners
+                const copyBtn = document.getElementById('copyShareBtn');
+                const cancelBtn = document.getElementById('cancelBtn');
+                
+                copyBtn.addEventListener('click', () => {
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        window.open('https://www.linkedin.com/feed/', '_blank');
+                        copyBtn.innerHTML = '✅ Copied! LinkedIn Opening...';
+                        copyBtn.style.background = '#10b981';
+                        setTimeout(() => {
+                            if (modal.parentElement) {
+                                document.body.removeChild(modal);
+                            }
+                        }, 2000);
+                    }).catch(() => {
+                        alert('Please copy manually:\n\n' + shareText);
+                        window.open('https://www.linkedin.com/feed/', '_blank');
+                    });
+                });
+                
+                cancelBtn.addEventListener('click', () => {
+                    if (modal.parentElement) {
+                        document.body.removeChild(modal);
+                    }
+                });
+                
                 // Close on background click
-                modal.onclick = (e) => {
+                modal.addEventListener('click', (e) => {
                     if (e.target === modal) {
                         document.body.removeChild(modal);
                     }
-                };
+                });
             };
 
             const downloadBadge = () => {
