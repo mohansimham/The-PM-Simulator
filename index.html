@@ -239,10 +239,10 @@
                     const percentage = Math.round((totalPoints / maxPoints) * 100);
                     
                     let tier = '';
-                    if (percentage >= 90) tier = 'Elite PM';
-                    else if (percentage >= 75) tier = 'Senior PM';
-                    else if (percentage >= 60) tier = 'Mid-Level PM';
-                    else tier = 'Associate PM';
+                    if (percentage >= 90) tier = 'Strategic Mastery';
+                    else if (percentage >= 75) tier = 'Applied Proficiency';
+                    else if (percentage >= 60) tier = 'Core Competency';
+                    else tier = 'Foundational Understanding';
                     
                     sendToGoogleSheets({ 
                         email, 
@@ -265,27 +265,27 @@
             const getNarrative = (percentage) => {
                 if (percentage >= 90) {
                     return {
-                        title: "Product Leadership Excellence",
-                        text: "You demonstrated exceptional product judgment, balancing user value, business metrics, and strategic thinking. Your decisions reflect deep understanding of freemium dynamics, competitive positioning, and data-driven decision making. You're ready for VP/CPO roles at top product companies.",
-                        tier: "Elite PM"
+                        title: "Strategic Mastery",
+                        text: "You demonstrated exceptional command of product frameworks, balancing user value, business metrics, and strategic thinking. Your decisions show deep understanding of freemium dynamics, competitive positioning, and data-driven decision-making. Keep applying these strategic patterns to complex product challenges.",
+                        tier: "Strategic Mastery"
                     };
                 } else if (percentage >= 75) {
                     return {
-                        title: "Senior PM Caliber",
-                        text: "Strong product instincts with solid grasp of conversion mechanics and user psychology. You made several strategic choices that show maturity in balancing short-term metrics with long-term value creation. A few decisions leaned too aggressive or conservative - calibrate your risk tolerance.",
-                        tier: "Senior PM"
+                        title: "Applied Proficiency",
+                        text: "You showed strong product instincts with solid grasp of conversion mechanics and user psychology. Your decisions reflect good framework application and balanced thinking. A few choices leaned too aggressive or conservative - continue calibrating your risk assessment with real-world case studies.",
+                        tier: "Applied Proficiency"
                     };
                 } else if (percentage >= 60) {
                     return {
-                        title: "Mid-Level PM Thinking",
-                        text: "You show good foundational product skills but missed opportunities to leverage data and think systemically. Some choices optimized for one metric at the expense of holistic product health. Focus on developing frameworks for complex tradeoffs and multi-stakeholder decision-making.",
-                        tier: "Mid-Level PM"
+                        title: "Core Competency",
+                        text: "You demonstrated good foundational product skills. Some decisions could benefit from deeper framework application and systems thinking. Focus on practicing trade-off analysis and considering second-order effects. Study case studies from companies like Spotify, Netflix, and Amazon to build pattern recognition.",
+                        tier: "Core Competency"
                     };
                 } else {
                     return {
-                        title: "Developing PM Skills",
-                        text: "Your decisions suggest you're still building intuition for product strategy at scale. Several choices prioritized features over user value or missed competitive dynamics. Study case studies from Spotify, Netflix, and other consumer subscription businesses to build pattern recognition.",
-                        tier: "Associate PM"
+                        title: "Foundational Understanding",
+                        text: "You're building your product intuition. Several decisions would benefit from applying structured frameworks like RICE, JTBD, or OKRs. Continue learning through case studies and practice applying frameworks to everyday product decisions. Your PM journey is just beginning - keep practicing!",
+                        tier: "Foundational Understanding"
                     };
                 }
             };
@@ -484,4 +484,3 @@
     </script>
 </body>
 </html>
-
