@@ -35,6 +35,28 @@
         .border-indigo-500 { border-color: #c084fc !important; }
         .from-indigo-600 { --tw-gradient-from: #a78bfa !important; }
         .to-blue-600 { --tw-gradient-to: #f0abfc !important; } /* Pastel pink */
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -477,57 +499,191 @@
                 const score = calculateScore();
                 const narrative = getNarrative(score.percentage);
                 
-                // Method 1: LinkedIn's new sharing method with pre-filled text
-                const shareText = `🎯 I just completed PM Simulation 1/20!
+                // Track share event in Google Sheets
+                sendToGoogleSheets({ 
+                    email, 
+                    simulation: 'Week 1 - PM Fundamentals',
+                    score: score.totalPoints,
+                    percentage: score.percentage,
+                    tier: narrative.tier,
+                    action: 'SHARED_ON_LINKEDIN'
+                });
+                
+                // Create shareable text
+                const shareText = `🎯 Just completed PM Simulation 1/20!
 
 Score: ${score.percentage}% - ${narrative.tier}
 
 "${simulation.title}"
-Tested: PM vs Project Manager, stakeholder management, prioritization frameworks, and strategic thinking.
 
-Think you can beat my score? Try it yourself!
+Tested: PM fundamentals, stakeholder management, prioritization frameworks, and strategic thinking.
 
-#ProductManagement #PMFundamentals #CareerDevelopment #LeadershipSkills
+What I was tested on:\n• PM vs Project Manager role clarity\n• Stakeholder management & prioritization\n• Data-driven decision making\n• Defining product success metrics\n\nThis simulation tests real-world PM thinking through Airbnb'''s early-stage growth decisions.\n\nThink you can beat my score?\nTake the free simulation: ' + window.location.href.split('?')[0] + '
 
-Curated by Mohan Simham
-https://linkedin.com/in/mohansimham`;
+#ProductManagement #PMSkills #CareerGrowth #Leadership\n#ProductStrategy #TechCareers\n\n👉 Follow for 20 PM simulations: linkedin.com/in/mohansimham
 
-                // Copy to clipboard first
-                navigator.clipboard.writeText(shareText).then(() => {
-                    // Show success message
-                    alert('✅ Your achievement text has been copied to clipboard!\n\nNow opening LinkedIn - just paste (Ctrl+V or Cmd+V) to share your result!');
-                    
-                    // Open LinkedIn create post page
-                    window.open('https://www.linkedin.com/feed/?shareActive=true', '_blank');
-                }).catch(() => {
-                    // Fallback if clipboard fails
-                    alert('Share this on LinkedIn:\n\n' + shareText);
-                    window.open('https://www.linkedin.com/feed/?shareActive=true', '_blank');
-                });
+Curated by Mohan Simham | linkedin.com/in/mohansimham`;
+
+                // Show modal with instructions
+                const modal = document.createElement('div');
+                modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px;';
+                
+                const card = document.createElement('div');
+                card.style.cssText = 'background: white; border-radius: 16px; padding: 32px; max-width: 600px; width: 100%;';
+                
+                card.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
+                        <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 16px; color: #1f2937;">Ready to Share on LinkedIn!</h2>
+                        <p style="color: #6b7280; margin-bottom: 24px; line-height: 1.6;">Your achievement text is ready. Click the button below to:</p>
+                        <ol style="text-align: left; color: #6b7280; margin-bottom: 24px; line-height: 1.8; padding-left: 24px;">
+                            <li>Text will be copied to your clipboard</li>
+                            <li>LinkedIn will open in a new tab</li>
+                            <li>Click "Start a post" on LinkedIn</li>
+                            <li>Paste (Ctrl+V or Cmd+V) your achievement</li>
+                            <li>Hit Post! 🚀</li>
+                        </ol>
+                        <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left; max-height: 200px; overflow-y: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; color: #374151;">${shareText}</div>
+                        <button onclick="
+                            navigator.clipboard.writeText(\`${shareText.replace(/`/g, '\\`')}\`);
+                            window.open('https://www.linkedin.com/feed/', '_blank');
+                            this.innerHTML = '✅ Copied! LinkedIn Opening...';
+                            this.style.background = '#10b981';
+                            setTimeout(() => document.body.removeChild(this.closest('div').parentElement), 2000);
+                        " style="width: 100%; background: #0A66C2; color: white; padding: 16px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 12px;">
+                            📋 Copy Text & Open LinkedIn
+                        </button>
+                        <button onclick="document.body.removeChild(this.closest('div').parentElement)" style="width: 100%; background: #e5e7eb; color: #374151; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;">
+                            Cancel
+                        </button>
+                    </div>
+                `;
+                
+                modal.appendChild(card);
+                document.body.appendChild(modal);
+                
+                // Close on background click
+                modal.onclick = (e) => {
+                    if (e.target === modal) {
+                        document.body.removeChild(modal);
+                    }
+                };
             };
 
-            const copyResultText = () => {
+            const downloadBadge = () => {
                 const score = calculateScore();
                 const narrative = getNarrative(score.percentage);
                 
-                const shareText = `🎯 I just completed PM Simulation 1/20!
-
-Score: ${score.percentage}% - ${narrative.tier}
-
-"${simulation.title}"
-Tested: PM vs Project Manager, stakeholder management, prioritization frameworks, and strategic thinking.
-
-Think you can beat my score? Try it yourself!
-
-#ProductManagement #PMFundamentals #CareerDevelopment #LeadershipSkills
-
-Curated by Mohan Simham
-https://linkedin.com/in/mohansimham`;
-
-                navigator.clipboard.writeText(shareText).then(() => {
-                    alert('✅ Copied to clipboard! Now paste it anywhere to share your achievement.');
-                }).catch(() => {
-                    alert('Share text:\n\n' + shareText);
+                // Track badge download event in Google Sheets
+                sendToGoogleSheets({ 
+                    email, 
+                    simulation: 'Week 1 - PM Fundamentals',
+                    score: score.totalPoints,
+                    percentage: score.percentage,
+                    tier: narrative.tier,
+                    action: 'DOWNLOADED_BADGE'
+                });
+                
+                // Create a canvas for the badge
+                const canvas = document.createElement('canvas');
+                canvas.width = 1200;
+                canvas.height = 675; // LinkedIn optimal image size (16:9)
+                const ctx = canvas.getContext('2d');
+                
+                // Background - Purple to Pink gradient
+                const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                gradient.addColorStop(0, '#a78bfa'); // Pastel purple
+                gradient.addColorStop(0.5, '#c084fc'); // Medium purple
+                gradient.addColorStop(1, '#f0abfc'); // Pastel pink
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Add subtle pattern/texture
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                for (let i = 0; i < 20; i++) {
+                    ctx.beginPath();
+                    ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 100, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                
+                // White container box
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                ctx.roundRect = function(x, y, w, h, r) {
+                    this.beginPath();
+                    this.moveTo(x + r, y);
+                    this.lineTo(x + w - r, y);
+                    this.quadraticCurveTo(x + w, y, x + w, y + r);
+                    this.lineTo(x + w, y + h - r);
+                    this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                    this.lineTo(x + r, y + h);
+                    this.quadraticCurveTo(x, y + h, x, y + h - r);
+                    this.lineTo(x, y + r);
+                    this.quadraticCurveTo(x, y, x + r, y);
+                    this.closePath();
+                    this.fill();
+                };
+                ctx.roundRect(100, 100, 1000, 475, 30);
+                
+                // Top badge indicator
+                ctx.fillStyle = '#a78bfa';
+                ctx.roundRect(420, 80, 360, 60, 30);
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 32px Arial, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('🎯 PM SIMULATION 1/20', 600, 122);
+                
+                // Trophy emoji or icon at top
+                ctx.font = '80px Arial';
+                ctx.fillText('🏆', 600, 220);
+                
+                // Score percentage - BIG
+                ctx.fillStyle = '#1f2937';
+                ctx.font = 'bold 120px Arial, sans-serif';
+                ctx.fillText(score.percentage + '%', 600, 340);
+                
+                // Tier name
+                ctx.fillStyle = '#a78bfa';
+                ctx.font = 'bold 42px Arial, sans-serif';
+                ctx.fillText(narrative.tier.toUpperCase(), 600, 400);
+                
+                // Simulation title
+                ctx.fillStyle = '#4b5563';
+                ctx.font = '28px Arial, sans-serif';
+                ctx.fillText('Airbnb Platform Evolution', 600, 450);
+                ctx.font = '24px Arial, sans-serif';
+                ctx.fillText('PM Fundamentals Assessment', 600, 485);
+                
+                // Bottom section - Curator info
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'italic 20px Arial, sans-serif';
+                ctx.fillText('Curated by Mohan Simham', 600, 530);
+                
+                ctx.fillStyle = '#a78bfa';
+                ctx.font = 'bold 22px Arial, sans-serif';
+                ctx.fillText('linkedin.com/in/mohansimham', 600, 560);
+                
+                // Download with timestamp
+                canvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    const timestamp = new Date().toISOString().split('T')[0];
+                    a.download = `PM-Simulation-1-Achievement-${score.percentage}pct-${timestamp}.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    // Show success message
+                    const successMsg = document.createElement('div');
+                    successMsg.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 16px 24px; border-radius: 8px; font-weight: 600; z-index: 10000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); animation: slideIn 0.3s ease;';
+                    successMsg.innerHTML = '✅ Achievement badge downloaded!<br><span style="font-size: 14px; font-weight: normal;">Add it to your LinkedIn post</span>';
+                    document.body.appendChild(successMsg);
+                    
+                    setTimeout(() => {
+                        successMsg.style.animation = 'slideOut 0.3s ease';
+                        setTimeout(() => document.body.removeChild(successMsg), 300);
+                    }, 3000);
                 });
             };
 
@@ -691,20 +847,21 @@ https://linkedin.com/in/mohansimham`;
                                 h('div', { className: 'space-y-3' },
                                     h('button', {
                                         onClick: shareToLinkedIn,
-                                        className: 'w-full bg-[#0A66C2] text-white py-3 rounded-lg font-semibold hover:bg-[#004182] transition-all flex items-center justify-center gap-2'
+                                        className: 'w-full bg-[#0A66C2] text-white py-4 rounded-lg font-semibold hover:bg-[#004182] transition-all flex items-center justify-center gap-2 shadow-lg'
                                     },
                                         h(Share2Icon),
-                                        'Share on LinkedIn (Auto-Copy & Open)'
+                                        'Share Achievement on LinkedIn'
                                     ),
                                     h('button', {
-                                        onClick: copyResultText,
-                                        className: 'w-full bg-purple-400 text-white py-3 rounded-lg font-semibold hover:bg-purple-500 transition-all flex items-center justify-center gap-2'
+                                        onClick: downloadBadge,
+                                        className: 'w-full bg-gradient-to-r from-purple-400 to-pink-400 text-white py-4 rounded-lg font-semibold hover:from-purple-500 hover:to-pink-500 transition-all flex items-center justify-center gap-2 shadow-lg'
                                     },
                                         h('svg', { className: 'w-5 h-5', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' },
-                                            h('path', { strokeLinecap: 'round', strokeLinejoin: 'round', strokeWidth: 2, d: 'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z' })
+                                            h('path', { strokeLinecap: 'round', strokeLinejoin: 'round', strokeWidth: 2, d: 'M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4' })
                                         ),
-                                        'Copy Achievement Text'
-                                    )
+                                        'Download Achievement Badge Image'
+                                    ),
+                                    h('p', { className: 'text-center text-sm text-gray-500 mt-2' }, '💡 Pro tip: Download the badge image to add to your LinkedIn post for extra impact!')
                                 )
                             )
                         ),
