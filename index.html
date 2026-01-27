@@ -82,9 +82,20 @@
             const [hasAttempted, setHasAttempted] = useState(false);
 
             useEffect(() => {
-                const attempted = localStorage.getItem('pm_simulation_attempted');
-                if (attempted) {
-                    setHasAttempted(true);
+                // Creator backdoor: Check if URL has ?reset=true parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const resetMode = urlParams.get('reset') === 'true';
+                
+                if (resetMode) {
+                    // Creator mode: Clear the attempt flag and allow retaking
+                    localStorage.removeItem('pm_simulation_attempted');
+                    setHasAttempted(false);
+                } else {
+                    // Normal mode: Check if already attempted
+                    const attempted = localStorage.getItem('pm_simulation_attempted');
+                    if (attempted) {
+                        setHasAttempted(true);
+                    }
                 }
             }, []);
 
