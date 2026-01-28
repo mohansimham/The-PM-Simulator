@@ -129,11 +129,6 @@
                 }
             }, []);
 
-            // Reset selected answer when question changes
-            useEffect(() => {
-                setSelectedAnswerIndex(null);
-            }, [currentQuestion]);
-
             const simulation = {
                 title: "Airbnb's Platform Evolution: PM Fundamentals",
                 company: "Airbnb",
@@ -143,271 +138,271 @@
                 questions: [
                     {
                         id: 1,
-                        scenario: "San Francisco, October 2008. You're sitting in a cramped apartment with Brian Chesky and Joe Gebbia. They just launched 'Air Bed & Breakfast' - people can rent air mattresses in strangers' homes during conferences. It's quirky. It's weird. And it's barely working. You have $20,000 left in the bank. Brian looks at you: 'We need to decide - do we stick with the air mattress thing, or pivot?'",
-                        question: "What's your call?",
+                        scenario: "The founders want to know: What's the difference between a Product Manager and a Project Manager? Your answer will shape your role.",
+                        question: "How do you explain your role as a PM?",
                         options: [
                             {
-                                text: "Pivot to full apartments and rooms. Nobody wants to sleep on an air mattress long-term. The real opportunity is spare bedrooms and entire homes.",
+                                text: "I manage timelines, coordinate teams, and ensure projects ship on time. I'm the glue that keeps everyone aligned.",
+                                points: 20,
+                                feedback: "This describes a Project Manager, not a Product Manager. PMs focus on the 'what' and 'why' (product strategy, user value), while Project Managers focus on the 'when' and 'how' (execution, timelines). You're confusing the two roles."
+                            },
+                            {
+                                text: "I define what to build based on user needs and business goals. I own the product vision and prioritize features. Project Managers handle execution.",
                                 points: 45,
-                                feedback: "EXACTLY RIGHT. This is the pivot that made Airbnb worth $100B. You saw past the surface-level product to the underlying job-to-be-done: affordable, authentic accommodations. Air mattresses were a feature, not the vision. Great PMs see the forest, not just the trees. This shows strategic thinking - you're solving for the market need, not falling in love with your first solution."
+                                feedback: "Excellent! This captures the essence of product management. PMs are the 'CEO of the product' - they own the vision, strategy, and prioritization. Project/Program Managers then execute that vision. This is the correct distinction."
                             },
                             {
-                                text: "Double down on air mattresses. We're 'Air Bed & Breakfast' - it's in our name! Let's improve the air mattress experience - better pumps, premium mattresses, breakfast partnerships.",
-                                points: 10,
-                                feedback: "You just killed a unicorn. Kodak did this - they invented the digital camera but stuck with film because 'we're Kodak, we do film.' The market doesn't care about your original idea; it cares about solving real problems. Air mattresses were a constraint of early adopters (broke conference-goers), not the product vision. This is feature-focused thinking, not strategic PM work."
-                            },
-                            {
-                                text: "Run an A/B test. List 50% air mattresses, 50% rooms. Let data decide after 3 months.",
+                                text: "I write user stories for engineers and attend standups. I make sure the backlog is prioritized.",
                                 points: 25,
-                                feedback: "Data-driven, but dangerously slow. In October 2008, you have $20K left. In 3 months, you'll be bankrupt. A/B testing is great for optimization, not existential pivots. When your startup is on life support, you need conviction and speed, not statistical significance. This shows PM rigor but poor judgment about when to use which tool."
+                                feedback: "This describes a Product Owner in Scrum, not a strategic Product Manager. While PMs do write user stories, that's just one small part. You're missing the strategic thinking, user research, business analysis, and vision-setting aspects."
                             },
                             {
-                                text: "Expand to new cities first, then worry about the product. Growth solves everything.",
-                                points: 5,
-                                feedback: "Classic 'pour water into a leaky bucket' mistake. You haven't proven product-market fit yet. Scaling a broken product just burns money faster. Uber, Facebook, Airbnb - they all nailed one city first, THEN scaled. This answer shows you don't understand the difference between growth stage and validation stage. Dangerous for any PM."
+                                text: "I do whatever needs to be done - sometimes strategy, sometimes execution, sometimes both. The role is fluid.",
+                                points: 15,
+                                feedback: "While startup PMs do wear many hats, this answer shows unclear role definition. Without clarity on what a PM uniquely does, you'll be pulled in every direction and won't add strategic value. Even in startups, PMs must own product decisions, not just 'help out.'"
                             }
                         ]
                     },
                     {
                         id: 2,
-                        scenario: "Early 2009. You've pivoted to rooms and apartments. But there's a problem: listings look terrible. Blurry phone photos of unmade beds, cluttered rooms, bad lighting. Conversion rates are abysmal - only 1 in 50 viewers book. Paul Graham from Y Combinator gives you harsh advice: 'Go to New York. Photograph the apartments yourself. Do things that don't scale.' Your engineering team is frustrated: 'We're a tech company, not photographers!' Your burn rate gives you 3 months.",
-                        question: "It's Friday. The team wants a decision by Monday. What do you do?",
+                        scenario: "Airbnb has two customer types: hosts (supply) and guests (demand). Your engineering team can only focus on one this quarter. Both are critical to the marketplace.",
+                        question: "Who do you prioritize?",
                         options: [
                             {
-                                text: "Build an automated photo quality filter. Use AI to reject blurry photos and send hosts tips for better photography. Scale this solution globally.",
+                                text: "Prioritize guests. More guests = more bookings = more revenue. Hosts will come if there's demand.",
+                                points: 25,
+                                feedback: "Demand-side thinking, but risky for a marketplace. Without quality supply (hosts), guest experience suffers and they don't return. Uber learned this - without drivers, riders churn. You need to balance both sides of the marketplace."
+                            },
+                            {
+                                text: "Prioritize hosts. Great listings attract guests organically. Supply quality drives demand.",
+                                points: 35,
+                                feedback: "Strong supply-side focus. This mirrors Airbnb's actual strategy - they invested heavily in professional photography for hosts, which dramatically improved conversion. Supply quality is often the constraint in marketplaces. Good answer, though you should acknowledge the risk of ignoring guests."
+                            },
+                            {
+                                text: "Split resources 50/50. Both sides are important, so divide the team equally.",
                                 points: 15,
-                                feedback: "Too clever by half. It's 2009 - consumer AI photo recognition barely exists. And even if it did, you're solving the wrong problem. Hosts don't know how to take professional photos; a filter won't teach them. You're building a technical solution to a service problem. This is a very common PM trap - defaulting to 'build something' when the answer might be 'do something manual.'"
+                                feedback: "This sounds fair but is strategically weak. Splitting resources means you won't move the needle on either side. PMs must make tough choices. As the saying goes, 'If everything is important, nothing is important.' Pick the constraint and go all-in."
                             },
                             {
-                                text: "Book a flight to New York tonight. Spend the weekend photographing 20 apartments personally. Measure the conversion rate difference. If it works, we'll build a photographer program in every city.",
+                                text: "Analyze data: Which side has lower satisfaction scores or higher churn? Fix the bottleneck first.",
                                 points: 45,
-                                feedback: "BRILLIANT. This is exactly what Airbnb did - and it changed everything. Those photographed listings got 2-3x more bookings. You did something that didn't scale to prove what would scale. This shows elite PM judgment: you're willing to get your hands dirty, you're focused on the right metric (conversion rate), and you have a plan to scale (photographer program). Paul Graham still tells this story as the definitive example of founder/PM hustle."
-                            },
-                            {
-                                text: "Hire a professional photographer in every major city. Launch 'Airbnb Pro Photography' as a premium service for hosts.",
-                                points: 30,
-                                feedback: "You're on the right track - professional photos are the answer. But you're skipping the validation step and burning precious cash. What if professional photos DON'T improve conversion? What if hosts don't use the service? You're scaling before proving. The PM principle here: validate small, scale big. Your instinct is good, but your execution is premature."
-                            },
-                            {
-                                text: "Send an email to all hosts with photography tips and best practices. Include examples of great listings. This is a communication problem, not a product problem.",
-                                points: 20,
-                                feedback: "Low-effort solution, but it won't move the needle. Hosts know their photos are bad - they don't know HOW to make them better or don't have the time/skills. Sending tips is like telling someone to 'just learn design' - it's not actionable. You're underestimating the problem. Great PMs know when education is enough and when you need to do it FOR the user."
+                                feedback: "Excellent product thinking! You're using data to identify the constraint in the marketplace. This is exactly what strong PMs do - let metrics guide prioritization, not opinions. Airbnb used this approach: when host signups lagged, they focused there. When booking conversion was the issue, they optimized guest experience."
                             }
                         ]
                     },
                     {
                         id: 3,
-                        scenario: "Summer 2009. Traction is building, but you're bleeding money on customer support. Every booking has 10+ emails - payment disputes, check-in confusion, host questions, guest complaints. Your two support people are drowning. Brian wants to hire 5 more support staff ($250K/year). Your engineering lead says 'Let me build automation - chatbots, FAQ bots, auto-responses.' Your only designer wants to redesign the booking flow to reduce confusion. You can only fund ONE of these for the next 6 months.",
-                        question: "The board meeting is in 2 hours. What's your recommendation?",
+                        scenario: "Your CEO wants Airbnb to expand to 10 new cities this quarter. Your engineer lead says the platform has critical technical debt that needs fixing. Both are escalating to you.",
+                        question: "How do you resolve this conflict?",
                         options: [
                             {
-                                text: "Hire the support staff. We're a marketplace - trust is everything. Human touch matters. Automation can wait until we're bigger.",
-                                points: 30,
-                                feedback: "You're right that trust matters, but you're missing the opportunity to SCALE trust. Zappos and Chewy won on support too, but they also used systems to handle routine stuff while humans handled the complex. Hiring 5 people gives you 7 total support people; fixing the product once could eliminate 50% of tickets forever. Think in terms of leverage - what investment has the biggest multiplier effect?"
-                            },
-                            {
-                                text: "Build the automation. Engineers are expensive, but they're one-time cost. Support staff is ongoing cost that grows with users.",
+                                text: "Side with the CEO. Growth is the priority at a startup. Technical debt can wait.",
                                 points: 20,
-                                feedback: "Financially logical, but strategically risky. Chatbots in 2009 are terrible - you'll frustrate users during your critical growth phase. Plus, you're optimizing for cost when you should be optimizing for trust and conversion. Early-stage startups should focus on delighting users, not saving money. Also, your engineer is guessing what to automate - you need data on what's actually broken."
+                                feedback: "Short-term thinking that creates long-term problems. Ignoring tech debt leads to slower development, more bugs, and eventually a re-platform. Twitter and Friendster both collapsed under tech debt. PMs must balance short-term growth with long-term sustainability."
                             },
                             {
-                                text: "Fund the redesign. If the booking flow is confusing, fix the root cause. Fewer confused users = fewer support tickets. Then hire support staff if needed.",
+                                text: "Side with engineering. Technical debt will slow us down eventually. Fix it now before it's worse.",
+                                points: 25,
+                                feedback: "Engineering-first thinking, but you're ignoring business reality. In startups, perfect code doesn't matter if you run out of cash before finding product-market fit. Instagram famously had terrible technical debt but kept shipping features to grow. Balance is key."
+                            },
+                            {
+                                text: "Negotiate a compromise: Launch 5 cities (not 10) and dedicate 30% of eng time to critical tech debt.",
                                 points: 45,
-                                feedback: "EXACTLY. This is strategic PM thinking - solve the problem upstream, not downstream. Airbnb did redesign their flow, adding clearer check-in instructions, payment transparency, and host-guest messaging. Support tickets dropped by 40%. You're thinking in systems: bad UX creates support load, so fix UX. This is the difference between a PM and a project manager - you're solving the real problem, not just resourcing the symptom."
+                                feedback: "Excellent stakeholder management! You're showing PM leadership by making a tough call that neither side wanted but both can live with. This is exactly what PMs do - balance competing priorities with data and rationale. You're demonstrating that you understand both business urgency and technical sustainability."
                             },
                             {
-                                text: "Split the budget: hire 2 support staff, give engineering 2 months to build FAQ automation, give design 1 month to improve booking flow.",
-                                points: 15,
-                                feedback: "The classic 'make everyone happy' compromise. Sounds reasonable, fails miserably. You've now funded 3 half-baked solutions instead of 1 great one. Your 2 support people are still overwhelmed, your engineer can't build good automation in 2 months, and your designer can't meaningfully improve the flow in 1 month. Great PMs make hard choices. Splitting resources is almost always wrong in startups."
+                                text: "Escalate to the founders. This is above my pay grade.",
+                                points: 10,
+                                feedback: "You're abdicating responsibility. PMs are hired precisely to make these hard trade-off decisions. If you escalate every conflict, you're not adding value. The founders hired you to own these calls. Make a recommendation with your reasoning, then get their input if needed."
                             }
                         ]
                     },
                     {
                         id: 4,
-                        scenario: "December 2009. You're in New York during the holidays. Something magical is happening: bookings are surging because hotels are sold out and expensive. Your platform works! But you notice something disturbing in the support queue - a pattern of cancellations. Hosts are accepting bookings, then canceling last-minute when they get better offers (longer stays, higher prices). Guests are stranded. This is a catastrophic trust violation, but hosts are your supply - you can't afford to lose them. One angry guest just tweeted: '@airbnb left me homeless in NYC on Christmas Eve.' It's getting retweeted.",
-                        question: "The founders are panicking. This could kill the company. Your move?",
+                        scenario: "A competitor (VRBO) has more listings than Airbnb. Your VP Sales wants you to copy their features. Your designer wants to differentiate with a unique experience.",
+                        question: "What's your product strategy?",
                         options: [
                             {
-                                text: "Immediately implement a strict cancellation penalty: hosts who cancel pay a $500 fine + guest rebooking costs. Post this publicly to show we're serious about trust.",
+                                text: "Copy VRBO's features. They're winning, so they must be doing something right. Fast-follow strategy.",
+                                points: 15,
+                                feedback: "Dangerous strategy. Fast-following makes you a perpetual #2. Instagram didn't copy Facebook, they focused on mobile-first photos. Zoom didn't copy Skype, they focused on reliability. Airbnb won by emphasizing 'belonging' and unique stays, not by copying VRBO's vacation rentals."
+                            },
+                            {
+                                text: "Ignore competitors. Focus on our users and what they need. Competition is a distraction.",
                                 points: 25,
-                                feedback: "You're prioritizing guests over hosts - understandable but dangerous. Penalties alone will make hosts angry without solving the root cause (better price discovery). Some hosts will leave your platform entirely. You needed to do something, but going straight to punishment without understanding why hosts are canceling is reactive. Good PMs investigate before legislating."
+                                feedback: "Admirable customer focus, but naive. You can't ignore competitive dynamics. Airbnb studied VRBO extensively but chose to differentiate on trust (reviews, verified photos) and experience (unique homes, not just vacation rentals). Know your competition, then consciously choose to zig while they zag."
                             },
                             {
-                                text: "Build a 'host commitment' system: hosts can't cancel without major cause (emergency, safety issue). If they do, they're suspended for 30 days. But also fix the pricing tools so hosts can price correctly upfront.",
+                                text: "Analyze what VRBO does well, but find gaps where we can differentiate and win. Competitive advantage.",
                                 points: 45,
-                                feedback: "BRILLIANT. This is the Airbnb playbook - carrots AND sticks. You're addressing the symptom (cancellations) with penalties, but also the root cause (bad pricing) with better tools. This is systems thinking: hosts are canceling because they mispriced, so give them dynamic pricing suggestions. Plus, 30-day suspension is harsh but fair. This answer shows you understand marketplace dynamics - you need both sides to win."
+                                feedback: "Perfect strategic thinking! This is exactly what Airbnb did. They saw VRBO focused on vacation rentals (beach houses, cabins) but missed urban apartments and unique experiences (treehouses, castles). Airbnb found whitespace in the market. Great PMs know their competition but find where they can uniquely win."
                             },
                             {
-                                text: "Do nothing. Cancellations are a small percentage of bookings. Don't over-react to one tweet. Focus on growth - more bookings will drown out the noise.",
-                                points: 5,
-                                feedback: "You just learned nothing from United Airlines' dragging incident. One viral tweet can destroy your brand, especially for a trust-based marketplace. 'Small percentage' doesn't matter if it's an existential issue to the affected users. Great PMs know when to ignore metrics and when to obsess over edge cases. Trust is fragile - lose it once, and users never come back."
-                            },
-                            {
-                                text: "Personally call the guest who tweeted, find them a new place to stay, give them $500 credit, and document it publicly. Then work on long-term policy.",
-                                points: 35,
-                                feedback: "Great customer service, but you're putting out fires, not preventing them. Airbnb DID do this for early incidents - Brian Chesky was famous for calling stranded guests at 2am. But it's not scalable. You've handled one crisis; you haven't built the system that prevents the next 100 crises. This shows you care, but it doesn't show you're thinking like a PM - it shows you're thinking like a support manager."
+                                text: "Let's differentiate with design. Make our app beautiful. Design-led strategy.",
+                                points: 20,
+                                feedback: "Design matters, but it's not a strategy. Beautiful design on the wrong product is lipstick on a pig. Airbnb did eventually become design-forward, but only after solving core trust issues (verified photos, reviews, insurance). Strategy first, design second."
                             }
                         ]
                     },
                     {
                         id: 5,
-                        scenario: "Spring 2010. You've got momentum. 10,000 listings. $1M in bookings per month. But your engineering team is overwhelmed - they're firefighting bugs, scaling issues, and maintenance. No time for new features. Meanwhile, your competitors (VRBO, HomeAway) are launching new stuff weekly. Your CTO pulls you aside: 'We need to hire. I need 10 more engineers. But recruiting takes 6 months. What should I do - hire fast (lower bar) or hire slow (high bar but we fall behind)?'",
-                        question: "What do you tell her?",
+                        scenario: "Your first hire decision. You can hire: (A) A senior engineer to build faster, (B) A data analyst to make better decisions, or (C) A designer to improve UX. Budget for one hire only.",
+                        question: "Who do you hire?",
                         options: [
                             {
-                                text: "Hire fast. We need bodies to build features and compete. We can always replace low performers later. Speed matters more than perfect team composition right now.",
-                                points: 10,
-                                feedback: "This is how startups die a slow death. Bad hires don't just underperform - they create bugs, drag down the team, and take 6 months to fire (because you'll agonize over it). Airbnb, Stripe, Google - elite companies are religious about bar-raising. One great engineer is worth 10 mediocre ones. You're thinking tactically (fill seats) instead of strategically (build a championship team)."
+                                text: "Senior engineer. Speed of execution is critical at our stage. We need to ship faster.",
+                                points: 25,
+                                feedback: "Reasonable for an early-stage startup focused on product-market fit. More engineering velocity helps you test hypotheses faster. However, you're assuming you know what to build. Without data or design thinking, you might ship the wrong things faster."
                             },
                             {
-                                text: "Hire slow. Maintain high bar. In the meantime, ruthlessly prioritize - cut 80% of the roadmap. Ship only what matters for retention and booking conversion.",
+                                text: "Data analyst. We're making gut decisions without data. Let's be more analytical.",
+                                points: 35,
+                                feedback: "Strong choice for a marketplace. Airbnb's early data hires helped them understand that professional photography increased bookings 2-3x. Data helps you prioritize ruthlessly. Good answer, though some might argue design/trust is more critical at this stage."
+                            },
+                            {
+                                text: "Designer. Trust is our biggest barrier. Users won't book without confidence. Design builds trust.",
                                 points: 45,
-                                feedback: "CORRECT. This is what Airbnb did. Brian Chesky interviewed hundreds of candidates before making early hires. And they cut features ruthlessly - no social features, no fancy search, just: can you find a place, book it, and have a good experience? This is elite PM discipline: quality over quantity in hiring AND shipping. You're protecting culture and focus - the two things that die first in hyper-growth."
+                                feedback: "Excellent strategic thinking! This was Airbnb's actual insight. Their breakthrough came when they sent photographers to hosts' homes for free professional photos. Design wasn't just aesthetics - it was trust-building. Great PMs understand what the true constraint is, not just what's most urgent."
                             },
                             {
-                                text: "Outsource to a development agency in India. Get 10 contractors for the price of 3 engineers. Use them for non-critical features and maintenance.",
-                                points: 15,
-                                feedback: "You've just created a two-tier engineering culture that will poison your team. Your best engineers will resent the contractors, contractors will build buggy code (because they don't own it), and you'll spend more time managing the contractors than if you'd just hired properly. Outsourcing works for mature companies with clear specs; for startups, it's usually a disaster. This shows you don't understand team dynamics."
-                            },
-                            {
-                                text: "Hire 5 great engineers (high bar, slower) and 5 good-enough contractors (fast). Best of both worlds.",
-                                points: 20,
-                                feedback: "A compromise, but you're still diluting culture. The 5 great engineers will see the 5 contractors as second-class citizens, or worse, will spend time fixing their bugs. You've created a talent hierarchy. Airbnb and Stripe succeed because EVERY engineer is world-class and treated equally. Your job as PM is to protect the quality bar, not to optimize for short-term velocity."
+                                text: "None. I'll split my time across eng, data, and design. Generalist PM approach.",
+                                points: 10,
+                                feedback: "You're trying to do everything and will excel at nothing. PMs aren't experts in eng, data, AND design. You need specialists. Your job is to orchestrate specialists, not replace them. This answer shows poor understanding of PM leverage and team building."
                             }
                         ]
                     },
                     {
                         id: 6,
-                        scenario: "June 2010. A host in Oakland reports that a guest trashed their home - broken furniture, stolen electronics, graffiti on walls. Damages: $25,000. The guest disputes it: 'The place was already a mess. The host is scamming.' You have no photos, no proof, just he-said-she-said. The host is threatening to sue Airbnb and go to the media. This is your first major trust & safety incident - how you handle it will set precedent for thousands of future disputes. The host is screaming on the phone: 'You put criminals in my home!'",
-                        question: "You have to decide in the next hour. What do you do?",
+                        scenario: "A host reports that a guest trashed their home. The guest disputes it. This is the first major trust incident. Your response will set precedent for how Airbnb handles conflicts.",
+                        question: "What do you do?",
                         options: [
                             {
-                                text: "Side with the host. Refund them $25K, ban the guest. We can't lose hosts - they're our supply. Guests are easier to replace.",
-                                points: 15,
-                                feedback: "Supply-focused thinking, but terrible precedent. What if the host is lying? What's stopping every host from claiming fake damages to get free money? You've just created a moral hazard. Uber learned this - if drivers could ban riders with no evidence, it's chaos. Marketplaces must be neutral arbiters. This answer shows you're thinking tactically (save the host) instead of strategically (build a fair system)."
+                                text: "Side with the host. Hosts are our supply - we can't lose them. Refund the host, ban the guest.",
+                                points: 20,
+                                feedback: "Supply-focused but unbalanced. What if the host is lying? Marketplace platforms must be fair arbiters, not take sides reflexively. Uber learned this - if drivers felt empowered to ban riders unfairly, it would be chaos. You need a fair process, not a default stance."
                             },
                             {
-                                text: "Create an evidence-based investigation process: require photos before check-in, photos after, messages between host/guest. Build a 'Resolution Center' where disputes are mediated with evidence. Start a $1M Host Guarantee fund for proven damages.",
+                                text: "Create a neutral investigation process. Gather evidence (photos, messages) before deciding. Build a precedent for fairness.",
                                 points: 45,
-                                feedback: "EXACTLY what Airbnb did. They built the Host Guarantee (now up to $3M), created the Resolution Center, and mandated photo documentation. This is strategic PM thinking: you're not solving one dispute, you're building infrastructure that scales to millions of disputes. You're also sending a clear signal - Airbnb backs hosts but requires proof. This is the difference between firefighting and building systems."
+                                feedback: "Excellent! This is exactly what Airbnb did. They built a Host Guarantee program and a resolution center with evidence-based processes. Great PMs think in systems, not one-off decisions. You're setting up infrastructure that scales. This shows maturity in thinking about product lifecycle - from launch to operations."
                             },
                             {
-                                text: "Offer both sides $5K to go away. Sign NDAs. Move on quietly. We can't afford bad press right now.",
-                                points: 5,
-                                feedback: "This is how scandals metastasize. Uber tried to bury problems with money and NDAs - it destroyed them. Your NDA will leak (it always does), and now you look like you're covering up. Plus, you haven't solved the problem - the next damaged property is coming tomorrow. This is cowardly PM work - you're managing PR instead of building product."
+                                text: "Offer a small goodwill gesture to both sides ($100 credit each). Move on quickly.",
+                                points: 15,
+                                feedback: "Band-aid solution that doesn't solve the underlying problem. What happens at the next conflict? And the 100th? You're avoiding the hard work of building proper trust and safety systems. This is reactive PM thinking, not strategic."
                             },
                             {
-                                text: "Escalate to Brian and Joe. This is a founder-level decision about company values and legal liability. I'll implement whatever they decide.",
+                                text: "Escalate to the founders. Trust & safety should be their call, not mine.",
                                 points: 10,
-                                feedback: "You're abdicating responsibility. This is EXACTLY the type of decision PMs are hired to make. Founders can't resolve every dispute - you need to build systems they can trust. If you escalate every hard call, you're not a PM, you're a project coordinator. Own the decision, build the framework, get founder buy-in on the framework. That's the job."
+                                feedback: "You're ducking responsibility. This is exactly the kind of product decision PMs are hired to make. Founders can't resolve every conflict. You need to propose a solution (with options and trade-offs), then get their input. Own the problem."
                             }
                         ]
                     },
                     {
                         id: 7,
-                        scenario: "August 2010. You're analyzing booking data and discover something surprising: 60% of bookings are in just 3 cities (NYC, SF, LA). The other 40% is spread across 200+ cities with only 1-5 listings each. Your growth team wants to expand to 50 new cities. Your operations team wants to double down on the big 3 cities. Your finance team says you're burning $200K/month and need profitability in 12 months. Each new city costs $50K to launch (marketing, photographers, local team). The board wants a decision: focus or expand?",
-                        question: "It's Monday morning. You're presenting to the board in 3 hours. What's your strategy?",
+                        scenario: "You have data on user behavior but it conflicts with what users say in interviews. Users say they want 'cheap prices' but data shows they book mid-priced listings with great photos. Which do you trust?",
+                        question: "How do you reconcile this?",
                         options: [
                             {
-                                text: "Expand to 50 new cities. We're a network effects business - more cities = more value. Spend $2.5M to launch everywhere. Profitability can wait.",
-                                points: 10,
-                                feedback: "You just bet the company on unproven markets. Network effects require density IN each market, not breadth across markets. Uber learned this - they owned San Francisco THEN expanded, not the other way around. $2.5M is your entire runway. If those 50 cities don't work, you're bankrupt. This is reckless growth-hacking, not strategic PM work."
+                                text: "Trust the data. Users don't know what they want. Ignore what they say, watch what they do.",
+                                points: 35,
+                                feedback: "Strong data-driven thinking. You're right that behavior > words. This is a classic PM insight. However, you're missing nuance. Qualitative research helps you understand WHY users behave certain ways. The best PMs combine both. Airbnb learned users wanted 'cheap' because they didn't trust hosts enough to pay premium prices. Solution: Build trust (reviews, photos), then users willingly pay more."
                             },
                             {
-                                text: "Double down on NYC, SF, LA. Launch pro photography, local customer support, and host meetups in each city. Own the top markets completely before expanding.",
+                                text: "Trust the users. They're telling us price is the issue. Let's focus on making listings cheaper.",
+                                points: 15,
+                                feedback: "You're falling for the classic user research trap: Users say one thing but do another. Henry Ford's famous quote: 'If I asked people what they wanted, they'd say faster horses.' Your job as PM is to understand the underlying need (I need to get somewhere faster), not the stated solution (faster horses)."
+                            },
+                            {
+                                text: "Dig deeper. Users say 'cheap' but maybe they mean 'good value.' Test hypothesis: Do great photos/reviews justify higher prices?",
                                 points: 45,
-                                feedback: "BRILLIANT. This is the Airbnb strategy. They saturated top markets first - 80% of hosts in NYC had professional photos by end of 2010. This created density, liquidity, and word-of-mouth. When they DID expand, they had a playbook that worked. You're thinking like Bezos: 'Your margin is my opportunity' - own the profitable segments before chasing growth. This is strategic patience."
+                                feedback: "Perfect! You're combining qual and quant insights. This is exactly what Airbnb discovered - users wanted confidence in their purchase, not just low prices. When trust signals were strong (photos, reviews), they'd pay more. Great PMs don't just collect data, they synthesize it into insights. You're showing the analytical rigor that separates good PMs from great ones."
                             },
                             {
-                                text: "Hybrid approach: go deep in the big 3 cities, but also launch in 10 'next tier' cities (Austin, Seattle, Boston, etc.) to test expansion playbook.",
+                                text: "Run an A/B test. Show one group low-price listings, another group high-quality listings. See what converts better.",
                                 points: 30,
-                                feedback: "Not terrible, but you're spreading resources thin. Your $500K investment ($50K × 10 cities) would be better spent absolutely dominating NYC. You're trying to de-risk expansion, but you're actually just delaying the focus decision. Great PMs pick a strategy and execute it fully. Half-measures rarely work in startups."
-                            },
-                            {
-                                text: "Pause all expansion. Cut burn rate to $100K/month. Focus on profitability in existing markets. Survive first, grow second.",
-                                points: 25,
-                                feedback: "You're optimizing for survival, not winning. Yes, runway matters. But Airbnb had investors ready to fund them IF they showed momentum. By pausing growth, you're signaling fear. Your competitors will eat your lunch. Sometimes the riskiest move is playing it safe. You needed to balance growth and efficiency, not choose one."
+                                feedback: "Good instinct to test, but you're oversimplifying. A/B tests work best when you have a clear hypothesis. What are you learning from this test? That users prefer quality over price? You could have deduced that from existing data. Better to test specific interventions (e.g., 'Does adding professional photos increase willingness to pay 20% more?')."
                             }
                         ]
                     },
                     {
                         id: 8,
-                        scenario: "October 2010. Your search algorithm is broken. It ranks listings by 'most recent' - so new listings appear first, even if they're terrible (1-star reviews, bad photos, high prices). Result: new users book bad listings, have bad experiences, and never come back. Your data scientist says: 'Give me 3 months to build a machine learning ranking algorithm - reviews, price, photos, location, etc.' Your engineer says: 'I can ship a simple ranking by price+reviews in 2 weeks, no ML needed.' Your designer says: 'Just let users filter and sort however they want.' Retention is 25%. You need 60% to hit your next funding milestone.",
-                        question: "You're on a plane to a board meeting. WiFi is out. You need to decide now. What's your call?",
+                        scenario: "Your roadmap has 20 features. Realistically you can ship 5 this quarter. Stakeholders (marketing, sales, support, founders) are all lobbying for their priorities.",
+                        question: "How do you prioritize?",
                         options: [
                             {
-                                text: "Build the ML algorithm. It's the right long-term solution. 3 months is worth it for a world-class ranking system.",
-                                points: 15,
-                                feedback: "You're over-engineering. ML in 2010 requires tons of data you probably don't have yet. And in 3 months, your retention is still broken, users are still churning, and you might miss your funding milestone. This is the PM trap of 'perfect solution' over 'good enough now.' Google search didn't start with ML - they started with PageRank (simple algorithm), THEN added ML years later."
-                            },
-                            {
-                                text: "Ship the simple ranking (price + reviews) in 2 weeks. Measure retention. If it works, great. If not, then build ML. Always ship fast and iterate.",
+                                text: "Build a scoring framework (impact, effort, strategic value). Score all 20 features. Ship top 5.",
                                 points: 45,
-                                feedback: "CORRECT. This is elite PM judgment - solve 80% of the problem with 20% of the effort. Airbnb did exactly this - simple heuristic ranking first, ML later. Your retention will improve immediately (bad listings drop in ranking), and you'll learn what users actually value. Then you can build smart ML. This is the 'crawl, walk, run' philosophy that wins."
+                                feedback: "Excellent! This is the RICE framework (Reach, Impact, Confidence, Effort) or similar prioritization methodology. You're bringing structure to what could be an emotional debate. Scoring forces stakeholders to justify their requests with data. This is exactly how top PMs (at Intercom, Airbnb, Stripe) make prioritization transparent and defensible."
                             },
                             {
-                                text: "Let users filter/sort however they want. Give them control. This empowers users and requires minimal engineering.",
+                                text: "Let stakeholders vote. Highest votes win. Democratic approach.",
+                                points: 15,
+                                feedback: "Democracy doesn't work in product management. The loudest voices win, not the best ideas. Also, stakeholders are biased toward their own goals. Marketing always wants growth features, support wants bug fixes, sales wants enterprise features. Your job as PM is to weigh all inputs but make the final call based on user value and business impact."
+                            },
+                            {
+                                text: "Ask founders to prioritize. They have the vision and context I don't have.",
                                 points: 20,
-                                feedback: "Users don't know what they want. Amazon, Netflix, Spotify - they win on curation, not control. If you make users do the work (filter by 20 criteria), they'll bounce. This is the 'paradox of choice' - too many options paralyze users. Your job as PM is to do the thinking FOR the user. Filters are great for power users, terrible for first-time users. And you need first-time users to survive."
+                                feedback: "You're deferring too much. Yes, get founder input on strategy, but they hired you to make prioritization calls. If founders have to decide every feature, you're not adding PM value. Bring them a recommendation (with rationale and alternatives), then align on direction."
                             },
                             {
-                                text: "Focus on getting better listings instead of better ranking. Fix supply quality, not demand-side ranking.",
-                                points: 10,
-                                feedback: "You're solving the wrong problem. Yes, better listings matter. But you already have good listings - they're just buried under bad ones. Fixing supply is a 6-month project (recruit hosts, train them, photo them). Fixing ranking is a 2-week project. When your house is on fire, you grab the extinguisher, not remodel the kitchen."
+                                text: "Focus on features that unblock revenue. We need to survive. Everything else is a distraction.",
+                                points: 25,
+                                feedback: "Short-term thinking with some merit. Yes, startups need revenue to survive. But obsessing over monetization too early can kill user growth. Instagram didn't monetize for years. Airbnb initially focused on trust and supply quality, not immediate revenue optimization. Balance short-term survival with long-term value creation."
                             }
                         ]
                     },
                     {
                         id: 9,
-                        scenario: "January 2011. Your payment system is hemorrhaging money. Hosts are complaining about delayed payouts (currently 3-5 days after guest check-out). Guests are annoyed by holds on their credit cards. Your payment processor charges 3.5% + $0.30 per transaction. On a $1,000 booking, you're paying $35.30 in fees. At $5M bookings/month, that's $176K/month in payment fees. Your CFO says: 'Build our own payment system. Stripe doesn't exist yet. We'll save millions.' Your CTO says: 'That's insane - payments are hard, fraud-prone, and regulated. It'll take 18 months and might fail.' Your growth PM says: 'Who cares about fees? Faster payouts will get us more hosts. Focus on that.'",
-                        question: "The leadership team is split. You're the tiebreaker. What do you recommend?",
+                        scenario: "You shipped a feature that's technically working but users are confused. Support tickets are up 3x. Engineering says 'it works as designed.' What does 'working' mean?",
+                        question: "How do you define success?",
                         options: [
                             {
-                                text: "Build our own payment system. $2M/year in savings is worth it. Hire a payments expert, get the licenses, build it right.",
+                                text: "Working = feature is live and functional. The code does what the spec said. Success.",
                                 points: 10,
-                                feedback: "This is the 'not invented here' trap that kills startups. PayPal spent YEARS getting payments right. You'll spend 18 months building, hit regulatory roadblocks, deal with fraud you didn't anticipate, and distract your best engineers from core product. Airbnb did NOT build their own payments - they used existing processors until Stripe existed, THEN switched. This is strategic recklessness."
+                                feedback: "This is an engineering definition of success, not a product definition. If users can't figure out how to use the feature, it's not successful - it's technical debt masquerading as a feature. This answer shows you don't understand the PM role: Your job is user value, not feature output."
                             },
                             {
-                                text: "Negotiate with the payment processor for better rates (target 2.5%) and faster payouts. Use our booking volume as leverage. Solve the problem commercially, not technically.",
+                                text: "Working = users can complete their task without confusion. Success = lower support tickets and high user satisfaction.",
                                 points: 45,
-                                feedback: "BRILLIANT. This is the PM skill no one teaches - sometimes the best product solution is a business solution. Airbnb negotiated better rates with their processors by showing volume and growth. They got to 2.5% and 24-hour payouts without building anything. You're thinking like Bezos - 'your margin is my opportunity.' Save the engineering time for differentiation, not commoditized infrastructure."
+                                feedback: "Perfect! You understand that 'working' means working for users, not just working in code. This is the shift from feature factory to outcome-oriented PM. Melissa Perri's 'Escaping the Build Trap' is all about this mindset. You're measuring success by user behavior and satisfaction, not just 'is it live?'"
                             },
                             {
-                                text: "Keep current processor but build 'instant payout' feature - hosts can get paid in 24 hours for a 2% fee (vs 3-5 days for free). Let hosts choose speed vs cost.",
-                                points: 35,
-                                feedback: "Good product thinking - give users options and let them optimize. Uber did this with instant pay for drivers. But you're adding complexity (two payout flows) and still paying high processor fees. This solves the host pain (slow payouts) but not the company pain (fees). It's a decent option, but there's a better one that solves both."
-                            },
-                            {
-                                text: "Ignore payment fees for now. Focus on growth. If we 10x bookings, we can negotiate better rates later from a position of strength.",
+                                text: "Working = users adopt it. If 3x support tickets but usage is up, that's a win. Short-term pain for long-term gain.",
                                 points: 25,
-                                feedback: "You're right that scale brings leverage, but wrong to ignore the pain. Slow payouts ARE a growth problem - hosts churn because of it. You can both negotiate better rates AND improve payout speed NOW. Great PMs don't defer solvable problems - they bundle solutions. This answer shows good instincts but incomplete thinking."
+                                feedback: "You're half-right. Yes, usage matters more than support tickets sometimes. But 3x support load is unsustainable and suggests poor UX. Good products are intuitive. If you need this much hand-holding, the design is wrong. Better answer: 'Let's fix the UX so users don't need support.'"
+                            },
+                            {
+                                text: "Working = meets the business goal. Did bookings increase? Did revenue go up? That's the only metric that matters.",
+                                points: 30,
+                                feedback: "Business-outcome focus is good, but you're ignoring user experience. A feature can drive short-term revenue while eroding long-term trust. Dark patterns (e.g., hidden fees, confusing cancellation) boost revenue initially but kill brand loyalty. Great PMs balance business outcomes with user satisfaction."
                             }
                         ]
                     },
                     {
                         id: 10,
-                        scenario: "March 2011. You've got product-market fit. Bookings are growing 20% month-over-month. But you're drowning in feature requests. Hosts want: calendar sync with other platforms, multi-listing management, dynamic pricing tools, tax reporting, insurance verification. Guests want: wishlists, trip planning, group bookings, travel guides, social features. Your CEO says: 'Build everything. We need to move fast.' Your designer says: 'We can't - the product will become bloated and confusing.' You have 8 engineers. If you build everything, each feature will be mediocre. If you focus, some stakeholders will be angry.",
-                        question: "It's Sunday night. Tomorrow you're presenting the Q2 roadmap to the entire company. What's your prioritization framework?",
+                        scenario: "It's been 6 months. You've shipped features, but you're not sure if you're a good PM. No one has given you feedback. How do you know if you're succeeding?",
+                        question: "How do you self-assess as a PM?",
                         options: [
                             {
-                                text: "Build everything, but in phases. Q2: multi-listing management + wishlists. Q3: calendar sync + trip planning. Q4: pricing + tax tools. Keep everyone happy.",
-                                points: 20,
-                                feedback: "You're trying to please everyone and will delight no one. 8 features across 9 months means each gets 1 month of work - barely enough to ship, let alone polish. Airbnb succeeded by shipping FEWER features but making them magical. Multi-listing management took them 6 months to get right. Your roadmap is a mile wide, inch deep. This is weak PM prioritization."
-                            },
-                            {
-                                text: "Focus on power users: multi-listing management for hosts (20% of hosts drive 80% of bookings). Ignore casual hosts and most guest features. Own the power user segment completely.",
-                                points: 35,
-                                feedback: "Strong prioritization - you're focusing on the 20% that drives 80% of value. Airbnb DID build for power users first. But you're missing the growth opportunity - wishlists for guests actually drives more bookings (viral sharing, planning ahead). This is good business thinking but incomplete product thinking. You optimized for retention, not growth."
-                            },
-                            {
-                                text: "Run an internal scoring exercise: every feature rated on (Impact × Confidence) / Effort. Build top 3 scorers only. Kill the rest ruthlessly. Communicate the framework transparently.",
-                                points: 45,
-                                feedback: "EXACTLY. This is ICE scoring (Impact, Confidence, Effort) - the framework top PMs use. You've made prioritization data-driven, transparent, and defensible. More importantly, you've built a repeatable process for future roadmaps. And by killing features explicitly, you're managing stakeholder expectations. This is strategic PM leadership - you're not just planning Q2, you're teaching the company how to prioritize."
-                            },
-                            {
-                                text: "Ask users what they want most via survey. Build the top 3 requested features. Let the market decide.",
+                                text: "Look at team output: Features shipped, velocity, hitting deadlines. More output = better PM.",
                                 points: 15,
-                                feedback: "Users are terrible at knowing what they want. Henry Ford: 'If I asked people what they wanted, they'd say faster horses.' Users will request incremental improvements, not transformational features. Airbnb's best features (professional photography, Superhost, Experiences) were NOT top survey requests. This answer abdicates your PM judgment to the crowd. Your job is to synthesize user needs, not run popularity contests."
+                                feedback: "You're measuring activity, not impact. This is the 'feature factory' trap. Shipping 20 features that users don't care about is worse than shipping 2 features that solve real problems. Output is easy to measure but meaningless without outcome. Reframe: Are users better off because of what you shipped?"
+                            },
+                            {
+                                text: "Look at product metrics: User growth, engagement, retention. If metrics are up, I'm doing well.",
+                                points: 35,
+                                feedback: "Much better - you're measuring outcomes! However, metrics can be misleading. Growth could be due to marketing spend, not product quality. Engagement could be addiction, not value. The best self-assessment combines: (1) Are metrics improving? (2) Are we solving real user problems? (3) Is the team operating well? (4) Am I learning and growing?"
+                            },
+                            {
+                                text: "Ask for feedback from stakeholders: founders, engineers, designers. Do they think I'm effective?",
+                                points: 40,
+                                feedback: "Great instinct to seek feedback! Strong PMs are self-aware and actively seek input. However, don't wait 6 months - build feedback loops into your workflow (weekly 1:1s, monthly retros, quarterly PM reviews). Also, ask specific questions: 'How can I communicate better?' not 'Am I doing well?'"
+                            },
+                            {
+                                text: "Reflect on: Am I making the team more effective? Are we building the right things? Am I improving as a PM? These are my measures.",
+                                points: 45,
+                                feedback: "Excellent self-assessment framework! You're asking the right questions. (1) Team effectiveness = Are you removing blockers, clarifying priorities, fostering collaboration? (2) Right things = Are you validating with users, measuring impact? (3) Personal growth = Are you learning frameworks, building domain expertise, improving stakeholder management? This is mature PM thinking. You're assessing both impact (what you deliver) and effectiveness (how you operate)."
                             }
                         ]
                     }
@@ -450,10 +445,10 @@
                 
                 const newAnswers = [...answers, { question: currentQuestion, points: selectedOption.points, feedback: selectedOption.feedback }];
                 setAnswers(newAnswers);
+                setSelectedAnswerIndex(null); // Reset selection for next question
 
                 if (currentQuestion < simulation.questions.length - 1) {
                     setCurrentQuestion(currentQuestion + 1);
-                    // selectedAnswerIndex will be reset by useEffect
                 } else {
                     const totalPoints = newAnswers.reduce((sum, answer) => sum + answer.points, 0);
                     const maxPoints = simulation.questions.reduce((sum, q) => sum + Math.max(...q.options.map(o => o.points)), 0);
@@ -1030,7 +1025,7 @@ Take the free simulation: ${simulationUrl}
                                     // Explanation and Learning
                                     h('div', { className: 'bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r' },
                                         h('div', { className: 'text-xs font-bold text-blue-900 uppercase tracking-wide mb-2' }, 
-                                            '📚 Expert Analysis & Learning'
+                                            '💬 Mohan Simham\'s Comments'
                                         ),
                                         h('p', { className: 'text-sm text-gray-700 leading-relaxed mb-3' }, userAnswer.feedback),
                                         !isCorrect && h('div', { className: 'mt-3 pt-3 border-t border-blue-200' },
