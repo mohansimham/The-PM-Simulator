@@ -129,6 +129,11 @@
                 }
             }, []);
 
+            // Reset selected answer when question changes
+            useEffect(() => {
+                setSelectedAnswerIndex(null);
+            }, [currentQuestion]);
+
             const simulation = {
                 title: "Airbnb's Platform Evolution: PM Fundamentals",
                 company: "Airbnb",
@@ -445,10 +450,10 @@
                 
                 const newAnswers = [...answers, { question: currentQuestion, points: selectedOption.points, feedback: selectedOption.feedback }];
                 setAnswers(newAnswers);
-                setSelectedAnswerIndex(null); // Reset selection for next question
 
                 if (currentQuestion < simulation.questions.length - 1) {
                     setCurrentQuestion(currentQuestion + 1);
+                    // selectedAnswerIndex will be reset by useEffect
                 } else {
                     const totalPoints = newAnswers.reduce((sum, answer) => sum + answer.points, 0);
                     const maxPoints = simulation.questions.reduce((sum, q) => sum + Math.max(...q.options.map(o => o.points)), 0);
