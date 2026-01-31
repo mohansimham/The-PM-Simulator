@@ -14,10 +14,6 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- React and ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
     <style>
         body {
             margin: 0;
@@ -146,7 +142,17 @@
 <body>
     <div id="root"></div>
     
+    <!-- Load React libraries BEFORE our script -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
     <script>
+        // Verify React loaded
+        if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
+            document.getElementById('root').innerHTML = '<div style="padding: 40px; text-align: center;"><h1>Loading Error</h1><p>React libraries failed to load. Please refresh the page.</p></div>';
+            throw new Error('React libraries not loaded');
+        }
+        
         const { useState, useEffect } = React;
         const { createElement: h } = React;
 
