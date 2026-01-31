@@ -672,12 +672,34 @@
             const formatText = (text) => {
                 if (!text) return '';
                 const paragraphs = text.split('\n\n').filter(p => p.trim());
-                return paragraphs.map((para, index) => 
-                    h('p', { 
+                return paragraphs.map((para, index) => {
+                    const trimmed = para.trim();
+                    // Check if the entire paragraph is a **bold header**
+                    const headerMatch = trimmed.match(/^\*\*(.+)\*\*$/);
+                    if (headerMatch) {
+                        return h('p', { 
+                            key: index,
+                            className: 'mb-1 mt-4 first:mt-0',
+                            style: { fontWeight: 600, color: '#1e40af', fontSize: '15px' }
+                        }, headerMatch[1]);
+                    }
+                    // Check for lines like "**Label:**\nBody text"
+                    const labelMatch = trimmed.match(/^\*\*(.+?)\*\*\n(.+)$/s);
+                    if (labelMatch) {
+                        return h('p', { 
+                            key: index,
+                            className: 'mb-4 last:mb-0'
+                        },
+                            h('span', { style: { fontWeight: 600, color: '#1e40af', fontSize: '15px' } }, labelMatch[1]),
+                            h('span', null, ' ' + labelMatch[2])
+                        );
+                    }
+                    // Plain paragraph
+                    return h('p', { 
                         key: index,
                         className: 'mb-4 last:mb-0'
-                    }, para.trim())
-                );
+                    }, trimmed);
+                });
             };
 
             const shareToLinkedIn = () => {
