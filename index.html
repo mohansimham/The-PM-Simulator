@@ -863,7 +863,7 @@ Take the free simulation: ${simulationUrl}
                 ctx.fillRect(0, 0, 1200, 675);
 
                 // --- Subtle grid pattern overlay ---
-                ctx.strokeStyle = 'rgba(148,163,184,0.06)';
+                ctx.strokeStyle = 'rgba(148,163,184,0.12)';
                 ctx.lineWidth = 1;
                 for (let x = 0; x <= 1200; x += 60) {
                     ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 675); ctx.stroke();
@@ -878,10 +878,10 @@ Take the free simulation: ${simulationUrl}
 
                 // --- Right side: abstract decorative circles ---
                 const circles = [
-                    { x: 980, y: 120, r: 140, alpha: 0.07 },
-                    { x: 1060, y: 300, r: 90,  alpha: 0.05 },
-                    { x: 920,  y: 420, r: 60,  alpha: 0.08 },
-                    { x: 1100, y: 520, r: 110, alpha: 0.04 }
+                    { x: 980, y: 120, r: 140, alpha: 0.15 },
+                    { x: 1060, y: 300, r: 90,  alpha: 0.12 },
+                    { x: 920,  y: 420, r: 60,  alpha: 0.18 },
+                    { x: 1100, y: 520, r: 110, alpha: 0.1 }
                 ];
                 circles.forEach(c => {
                     ctx.beginPath();
@@ -902,7 +902,7 @@ Take the free simulation: ${simulationUrl}
                 const scoreW = ctx.measureText(scoreStr).width;
                 // glow blob
                 const glowRgb = hexToRgb(t.glow);
-                ctx.fillStyle = `rgba(${glowRgb.r},${glowRgb.g},${glowRgb.b},0.2)`;
+                ctx.fillStyle = `rgba(${glowRgb.r},${glowRgb.g},${glowRgb.b},0.35)`;
                 ctx.beginPath();
                 ctx.ellipse(80 + scoreW * 0.5, 270, scoreW * 0.55, 72, 0, 0, Math.PI * 2);
                 ctx.fill();
@@ -920,7 +920,7 @@ Take the free simulation: ${simulationUrl}
                 const pillY = 335;
                 // pill background
                 const pillRgb = hexToRgb(t.color);
-                ctx.fillStyle = `rgba(${pillRgb.r},${pillRgb.g},${pillRgb.b},0.13)`;
+                ctx.fillStyle = `rgba(${pillRgb.r},${pillRgb.g},${pillRgb.b},0.25)`;
                 drawRoundRect(ctx, pillX, pillY, pillW, pillH, 22);
                 ctx.fill();
                 // pill border
@@ -935,11 +935,11 @@ Take the free simulation: ${simulationUrl}
 
                 // --- Quip: italic, muted, below pill ---
                 ctx.font = 'italic 24px Arial, sans-serif';
-                ctx.fillStyle = 'rgba(148,163,184,0.85)';
+                ctx.fillStyle = 'rgba(203,213,225,0.9)';
                 ctx.fillText('"' + t.quip + '"', 72, 430);
 
                 // --- Divider line: subtle, short ---
-                ctx.strokeStyle = 'rgba(148,163,184,0.15)';
+                ctx.strokeStyle = 'rgba(148,163,184,0.25)';
                 ctx.lineWidth = 1;
                 ctx.beginPath();
                 ctx.moveTo(72, 475);
@@ -948,19 +948,19 @@ Take the free simulation: ${simulationUrl}
 
                 // --- Bottom-left: simulation info ---
                 ctx.font = '20px Arial, sans-serif';
-                ctx.fillStyle = 'rgba(148,163,184,0.6)';
+                ctx.fillStyle = 'rgba(148,163,184,0.8)';
                 ctx.textAlign = 'left';
                 ctx.fillText('Simulation 1 of 20', 72, 520);
                 ctx.font = 'bold 26px Arial, sans-serif';
-                ctx.fillStyle = 'rgba(226,232,240,0.9)';
+                ctx.fillStyle = 'rgba(241,245,249,0.95)';
                 ctx.fillText('Airbnb: Platform Evolution', 72, 555);
                 ctx.font = '18px Arial, sans-serif';
-                ctx.fillStyle = 'rgba(148,163,184,0.5)';
+                ctx.fillStyle = 'rgba(148,163,184,0.7)';
                 ctx.fillText('PM Fundamentals • Strategic Decision Making', 72, 585);
 
                 // --- Bottom-right: subtle handle ---
                 ctx.font = '17px Arial, sans-serif';
-                ctx.fillStyle = 'rgba(148,163,184,0.35)';
+                ctx.fillStyle = 'rgba(148,163,184,0.5)';
                 ctx.textAlign = 'right';
                 ctx.fillText('linkedin.com/in/mohansimham', 1130, 650);
 
