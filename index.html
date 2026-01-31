@@ -29,28 +29,18 @@
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* ========================================
-           READABILITY OPTIMIZATION
-           Based on research from:
-           - Nielsen Norman Group
-           - U.S. Web Design System (USWDS)
-           - WCAG Guidelines
-           - Cognitive Load Theory
-           ======================================== */
-        
-        /* Optimal typography for scenarios */
+        /* READABILITY OPTIMIZATION */
         .scenario-content {
             font-size: 16px;
             line-height: 1.6;
+            max-width: 65ch;
             color: #1f2937;
-            max-width: 65ch; /* Research: 50-75 characters optimal */
         }
         
         .scenario-content p {
-            margin-bottom: 1.25em; /* Generous spacing between paragraphs */
+            margin-bottom: 1.25em;
         }
         
-        /* Visual hierarchy for section headers */
         .scenario-content strong {
             display: block;
             color: #1e40af;
@@ -58,34 +48,24 @@
             font-size: 15px;
             margin-top: 1.5em;
             margin-bottom: 0.5em;
-            letter-spacing: 0.01em;
         }
         
-        /* First paragraph special handling */
-        .scenario-content p:first-of-type {
-            font-weight: 500;
-            color: #111827;
-        }
-        
-        /* Optimal typography for feedback */
         .feedback-content {
             font-size: 15px;
-            line-height: 1.65; /* Slightly higher for extended reading */
-            color: #374151;
+            line-height: 1.65;
             max-width: 62ch;
+            color: #374151;
         }
         
         .feedback-content p {
             margin-bottom: 1.15em;
         }
         
-        /* Emphasis within feedback */
         .feedback-content p:first-child {
             font-weight: 500;
             color: #1f2937;
         }
         
-        /* Question text optimization */
         .question-text {
             font-size: 17px;
             line-height: 1.5;
@@ -94,14 +74,12 @@
             max-width: 60ch;
         }
         
-        /* Option text optimization */
         .option-text {
             font-size: 15px;
             line-height: 1.5;
             color: #1f2937;
         }
         
-        /* Reduce cognitive load with subtle visual cues */
         .section-label {
             font-size: 13px;
             font-weight: 600;
@@ -119,7 +97,6 @@
         .from-indigo-600 { --tw-gradient-from: #1e40af !important; }
         .to-blue-600 { --tw-gradient-to: #3b82f6 !important; }
         
-        /* Smooth animations */
         @keyframes slideIn {
             from {
                 transform: translateX(400px);
@@ -153,7 +130,7 @@
         // Google Apps Script Web App URL for email collection
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz6E8UJUn5xhilm2pLWjdvaip_6MnSCf-XRVPv5u4hOttjr0SNCu9I10q2ESLKGQ04_mQ/exec';
 
-        // Icon components
+        // Icon components as simple SVGs
         const Share2Icon = () => h('svg', { width: 20, height: 20, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2 },
             h('path', { d: 'M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8' }),
             h('polyline', { points: '16 6 12 2 8 6' }),
@@ -197,11 +174,14 @@
 
             // SNIPPET 1: Session Persistence - Restore email on page load
             useEffect(() => {
+                // Check for saved email on page load
                 const storedEmail = localStorage.getItem('pmSimEmail');
                 const storedStartTime = localStorage.getItem('pmSimStartTime');
                 
                 if (storedEmail) {
                     setEmail(storedEmail);
+                    
+                    // If they started within last 24 hours, let them continue
                     const hoursSinceStart = (Date.now() - new Date(storedStartTime)) / (1000 * 60 * 60);
                     if (hoursSinceStart < 24) {
                         setHasStarted(true);
@@ -210,13 +190,16 @@
             }, []);
 
             useEffect(() => {
+                // Creator backdoor: Check if URL has ?reset=true parameter
                 const urlParams = new URLSearchParams(window.location.search);
                 const resetMode = urlParams.get('reset') === 'true';
                 
                 if (resetMode) {
+                    // Creator mode: Clear the attempt flag and allow retaking
                     localStorage.removeItem('pm_simulation_week1_attempted');
                     setHasAttempted(false);
                 } else {
+                    // Normal mode: Check if already attempted
                     const attempted = localStorage.getItem('pm_simulation_week1_attempted');
                     if (attempted) {
                         setHasAttempted(true);
@@ -230,274 +213,275 @@
                 week: "Week 1",
                 year: "2026",
                 description: "You're a PM at early-stage Airbnb. The company started by renting air mattresses during a design conference. Now you need to scale to a global platform. Make critical decisions that will define what product management means at Airbnb.",
-                questions: [
+                questions: 
+[
                     {
                         id: 1,
-                        scenario: "**July 2009 – The NYC Photo Crisis**\n\n**The Situation:**\nYou're a PM at Airbnb with 4 months of runway left. Revenue is $200/week. The team is eating leftover cereal from a desperate fundraising stunt.\n\n**The Discovery:**\nBrian Chesky just visited 24 NYC listings. Every single one has terrible photos—blurry shots, bad lighting, cropped furniture.\n\n**The Reality:**\nHosts aren't photographers. They're teachers and nurses trying to make rent.\n\n**Paul Graham's Proposal:**\n"Fly to NYC, rent a $5,000 camera, photograph every listing yourselves. It won't scale, but it might save the company."\n\n**The Conflict:**\nNathan (CTO): "This is a waste of time. We should build scalable features—algorithms, better search, payment improvements."\n\nThe burn rate calculator blinks: 4 months left.",
+                        scenario: "It's July 2009. You're a PM at Airbnb, and the company is burning through its tiny Y Combinator runway. You have ~2,500 listings, but bookings in New York City—your second-biggest market after SF—are abysmal. Revenue is around $200/week total. The team is living off leftover Cap'n McCain's cereal boxes from last year's desperate fundraising stunt. Brian Chesky just returned from spending a week visiting 24 NYC Airbnb listings personally. He's discovered something: every single listing has terrible photos—blurry smartphone shots, bad lighting, cropped furniture, dated Craigslist-quality images. Hosts aren't photographers. They're just people trying to make rent. Paul Graham from Y Combinator proposes something crazy: \"What if you three fly to NYC, rent a $5,000 camera, and personally photograph every listing? It won't scale, but it might save the company.\" Your co-founders are divided. Nathan (CTO) thinks it's a waste of precious engineering time. \"We should be building features that scale—recommendation algorithms, better search, payment improvements.\" The burn rate calculator shows you have 4 months of runway left.",
                         question: "How do you make the case for or against this \"unscalable\" photography intervention?",
                         options: [
                             {
                                 text: "Decline the trip and prioritize building scalable technology features instead",
                                 points: 2,
-                                feedback: "Here's what separates theory from practice: you're optimizing for hypothetical scale before you've proven Product-Market Fit.\n\nIn early-stage products, \"scalable solutions\" mean nothing if you have zero customers. Premature scaling kills more startups than failed experiments.\n\nAirbnb proved this when their revenue literally doubled from $200 to $400/week after the photo intervention.\n\nSometimes the right answer is doing things that don't scale—because that's how you learn what actually matters.\n\nReid Hoffman said it best: \"If you're not embarrassed by your first product, you launched too late.\" This applies to strategies too."
+                                feedback: "Here's what separates theory from practice: you're optimizing for hypothetical scale before you've proven Product-Market Fit. In early-stage products, \"scalable solutions\" mean nothing if you have zero customers. Premature scaling kills more startups than failed experiments. Airbnb proved this when their revenue literally doubled from $200 to $400/week after the photo intervention. Sometimes the right answer is doing things that don't scale—because that's how you learn what actually matters. Reid Hoffman said it best: \"If you're not embarrassed by your first product, you launched too late.\" This applies to strategies too."
                             },
                             {
                                 text: "Execute the NYC photo experiment immediately—test the hypothesis that photos drive bookings",
                                 points: 10,
-                                feedback: "Perfect. This is how real PMs think when survival is on the line.\n\nYou identified the actual constraint (trust/visual clarity), proposed a falsifiable hypothesis (better photos = more bookings), and designed the cheapest possible experiment to test it.\n\nCost: $5K camera + 3 plane tickets + 1 week. When revenue doubled in one week, you had your answer.\n\nThen—and only then—you figured out how to scale it (photography program launched summer 2010).\n\nThis is Lean Startup done right: learn fast, iterate faster. The lesson isn't \"ignore scale forever.\" It's \"learn what works before you scale what doesn't.\""
+                                feedback: "Perfect. This is how real PMs think when survival is on the line. You identified the actual constraint (trust/visual clarity), proposed a falsifiable hypothesis (better photos = more bookings), and designed the cheapest possible experiment to test it ($5K camera rental + 3 plane tickets + 1 week of time). When it doubled revenue in one week, you had your answer. Then—and only then—you figured out how to scale it (photography program launched summer 2010). This is Lean Startup done right: learn fast, iterate faster. The lesson here isn't \"ignore scale forever.\" It's \"learn what works before you scale what doesn't.\""
                             },
                             {
                                 text: "Hire a professional photography agency to shoot all listings nationwide immediately",
                                 points: 4,
-                                feedback: "You're solving the right problem but skipping the learning phase.\n\nWith 4 months of runway, you can't afford to spend $50K+ on an unvalidated hypothesis.\n\nWhat if photos don't matter? What if hosts reject photographer intrusions? What if guests don't care?\n\nTest cheaply first, then scale what works.\n\nThis is why Airbnb founders went door-to-door themselves—they needed to see the problem up close, understand host psychology, and learn whether this was THE bottleneck or just ONE bottleneck.\n\nAlways de-risk before you deploy capital."
+                                feedback: "You're solving the right problem but skipping the learning phase. With 4 months of runway, you can't afford to spend $50K+ on an unvalidated hypothesis. What if photos don't matter? What if hosts reject photographer intrusions? What if guests don't care? Test cheaply first, then scale what works. This is why Airbnb founders went door-to-door themselves—they needed to see the problem up close, understand host psychology, and learn whether this was THE bottleneck or just ONE bottleneck. Always de-risk before you deploy capital."
                             },
                             {
                                 text: "Add a \"photo quality score\" feature to incentivize hosts to improve their own photos",
                                 points: 6,
-                                feedback: "This is a clever product solution, but it misunderstands the core problem.\n\nHosts aren't lazy—they lack the skill, equipment, and aesthetic sense to take professional photos.\n\nYou can't gamify your way out of a capabilities gap.\n\nAirbnb learned this the hard way: most hosts are teachers, nurses, retirees—not photographers. They don't even know what \"good\" looks like.\n\nThis would've resulted in slightly better amateur photos, not the 2-3x booking increase that professional photography delivered.\n\nProduct features can't fix every problem. Sometimes you need human intervention."
+                                feedback: "This is a clever product solution, but it misunderstands the core problem. Hosts aren't lazy—they lack the skill, equipment, and aesthetic sense to take professional photos. You can't gamify your way out of a capabilities gap. Airbnb learned this the hard way: most hosts are teachers, nurses, retirees—not photographers. They don't even know what \"good\" looks like. This would've resulted in slightly better amateur photos, not the 2-3x booking increase that professional photography delivered. Product features can't fix every problem; sometimes you need human intervention."
                             }
                         ]
                     },
-                    {
+                            {
                         id: 2,
-                        scenario: "**September 2010 – Scaling the Photography Program**\n\n**The Success:**\nThe NYC experiment worked spectacularly. Listings with professional photos are booked 2.5X more frequently. Hosts earn an average of $1,025/month more.\n\n**The Opportunity:**\nYou've just closed a $7.2M Series A from Greylock and Sequoia. The company is finally profitable enough to think beyond survival mode.\n\n**The Proposal:**\nScale the photography program globally. Offer free professional photography to every host.\n\n**The Cost:**\n$100-150 per photoshoot. If half your 10,000 hosts opt in, that's $1M-1.5M annually. That's 15-20% of your entire Series A.\n\n**The Pushback:**\nBoard members: \"We should invest that money in paid acquisition, mobile apps, or international expansion instead. Photography is a nice-to-have, not a must-have.\"\n\n**The Data:**\nHosts who get professional photos are 50% more likely to remain active after 6 months. Professional photos reduce customer support tickets by 30%. Photos improve search ranking and guest trust scores significantly.\n\n**The Competition:**\nVRBO and HomeAway are watching. They could copy this strategy.",
+                        scenario: "It's September 2010, and Airbnb now has ~10,000 listings across dozens of cities. The NYC photography experiment worked spectacularly—listings with professional photos are booked 2.5X more frequently and earn hosts an average of $1,025/month more than those without. You've just closed a $7.2M Series A from Greylock and Sequoia. The company is finally profitable enough to think beyond survival mode.  The founders want to scale the photography program globally, offering free professional photography to every host. The finance team has run the numbers: at $100-150 per photoshoot, this could cost $1M-1.5M annually if half your hosts opt in. That's 15-20% of your entire Series A. Your competitors (VRBO, HomeAway) are watching closely. They've seen your success and could copy this strategy. Some board members argue: \"We should invest that money in paid acquisition, mobile apps, or international expansion instead. Photography is a nice-to-have, not a must-have.\" Meanwhile, data shows: - Hosts who get professional photos are 50% more likely to remain active after 6 months - Professional photos reduce customer support tickets by 30% (fewer \"not as described\" complaints) - Photos improve search ranking and guest trust scores significantly",
                         question: "Should Airbnb invest $1M+ annually in a free global photography program, or is this capital better deployed elsewhere?",
                         options: [
                             {
                                 text: "Invest fully in the photography program—it's a competitive moat disguised as a cost center",
                                 points: 10,
-                                feedback: "Brilliant. You're seeing what others miss: this isn't a marketing expense, it's a growth flywheel.\n\nHere's the unit economics: spend $100 on photos → host earns $1,025 more per month → host stays on platform longer → Airbnb keeps 9-15% of every booking → you're cash-flow positive in month 1 and profitable for years.\n\nBut the real genius is the moat. VRBO and HomeAway can't copy this—they don't have the culture, the host relationships, or the willingness to subsidize quality.\n\nBy 2012, Airbnb had 2,000 freelance photographers doing 13,000 shoots across six continents. Competitors never caught up.\n\nThis is how you win: identify what creates asymmetric value for your platform, then scale it before anyone realizes it's a moat."
+                                feedback: "Brilliant. You're seeing what others miss: this isn't a marketing expense, it's a growth flywheel. Here's the unit economics: spend $100 on photos → host earns $1,025 more per month → host stays on platform longer → Airbnb keeps 9-15% of every booking → you're cash-flow positive in month 1 and profitable for years. But the real genius is the moat. VRBO and HomeAway can't copy this—they don't have the culture, the host relationships, or the willingness to subsidize quality. By 2012, Airbnb had 2,000 freelance photographers doing 13,000 shoots across six continents. Competitors never caught up. This is how you win: identify what creates asymmetric value for your platform, then scale it before anyone realizes it's a moat."
                             },
                             {
                                 text: "Make photography a paid premium service for serious hosts only",
                                 points: 5,
-                                feedback: "You're trying to have it both ways—capture the value without the cost.\n\nProblem is, you've just filtered out exactly the hosts who need help most: first-timers, budget-conscious folks, people in lower-income markets.\n\nThese are the hosts who'll bring authenticity and diversity to your platform.\n\nBy charging for photography, you're creating a two-tier system where rich hosts get better listings and poor hosts get ignored.\n\nThis isn't just bad optics—it's bad business. Your platform's strength is inventory diversity.\n\nKeep it free to keep the marketplace healthy."
+                                feedback: "You're trying to have it both ways—capture the value without the cost. Problem is, you've just filtered out exactly the hosts who need help most: first-timers, budget-conscious folks, people in lower-income markets. These are the hosts who'll bring authenticity and diversity to your platform. By charging for photography, you're creating a two-tier system where rich hosts get better listings and poor hosts get ignored. This isn't just bad optics—it's bad business. Your platform's strength is inventory diversity. Keep it free to keep the marketplace healthy."
                             },
                             {
                                 text: "Allocate the budget to paid acquisition and mobile app development instead",
                                 points: 3,
-                                feedback: "Classic mistake: confusing customer acquisition with customer quality.\n\nSure, you can spend $1M on Facebook ads and get 50,000 new users—but if your listings still have terrible photos, those users won't convert into bookings.\n\nPaid acquisition without conversion rate optimization is like pouring water into a leaky bucket.\n\nAirbnb's genius was realizing that improving supply quality (better photos) automatically improved demand (more bookings), which attracted better supply (higher-earning hosts), which attracted more demand.\n\nThat's a flywheel. Paid ads are linear.\n\nBuild flywheels, not funnels."
+                                feedback: "Classic mistake: confusing customer acquisition with customer quality. Sure, you can spend $1M on Facebook ads and get 50,000 new users—but if your listings still have terrible photos, those users won't convert into bookings. Paid acquisition without conversion rate optimization is like pouring water into a leaky bucket. Airbnb's genius was realizing that improving supply quality (better photos) automatically improved demand (more bookings), which attracted better supply (higher-earning hosts), which attracted more demand. That's a flywheel. Paid ads are linear. Build flywheels, not funnels."
                             },
                             {
                                 text: "Partner with camera companies to provide discounted equipment and training to hosts",
                                 points: 4,
-                                feedback: "This sounds strategic but misses the point entirely.\n\nYou're solving the wrong problem again. Hosts don't need equipment or training—they need results.\n\nThey're busy people who want to rent their space, not become photographers.\n\nEven if you gave them a free DSLR and a 2-hour tutorial, most wouldn't use it correctly.\n\nRemember: Airbnb isn't selling photography—they're selling trust.\n\nThe fastest way to build trust is professional-grade visuals, which requires professional photographers.\n\nSometimes the best product strategy is a service layer, not a software feature."
+                                feedback: "This sounds strategic but misses the point entirely. You're solving the wrong problem again. Hosts don't need equipment or training—they need results. They're busy people who want to rent their space, not become photographers. Even if you gave them a free DSLR and a 2-hour tutorial, most wouldn't use it correctly. Remember: Airbnb isn't selling photography—they're selling trust. The fastest way to build trust is professional-grade visuals, which requires professional photographers. Sometimes the best product strategy is a service layer, not a software feature."
                             }
                         ]
                     },
-                    {
+                            {
                         id: 3,
-                        scenario: "**2011 – Designing the Two-Way Review System**\n\n**The Challenge:**\nAirbnb is built on trust between strangers. You need a review system that's honest but doesn't discourage participation.\n\n**The Problem:**\nIf guests review first, hosts might retaliate with negative reviews. If hosts review first, guests might sugarcoat feedback to avoid conflict.\n\n**The Options:**\nYou're designing the review mechanism. This decision will shape trust dynamics for years.\n\n**The Considerations:**\nPsychology matters. People behave differently when they know they're being judged. Your system needs to encourage honest feedback without creating a toxic environment.\n\n**The Stakes:**\nGet this wrong, and your marketplace becomes either too lenient (fake reviews) or too harsh (people afraid to participate).\n\n**The Data:**\nPlatforms with one-way reviews see 30% fake positive reviews. Platforms with transparent reviews see 40% lower participation.\n\n**The Goal:**\nMaximize honesty while minimizing retaliation.",
-                        question: "How should Airbnb's review system work?",
+                        scenario: "It's April 2011. Airbnb has launched its two-way review system—both guests and hosts rate each other. The idea was simple: mutual accountability keeps everyone honest. But you're seeing a disturbing pattern in user research interviews and support tickets. Hosts are terrified to leave honest negative reviews because they fear retaliation. Here's how it plays out: **Real example from support tickets:** - Guest damages property, violates house rules, or is disrespectful - Host considers leaving an honest negative review - Host realizes: \"If I leave a bad review, the guest will see it before they write theirs, and they'll retaliate with a 1-star review of my property\" - Host either (a) leaves no review, or (b) leaves a fake positive review hoping the guest reciprocates - Result: The review system becomes meaningless. Bad actors keep getting good reviews. Your data analytics team confirms this: - 78% of host reviews are 5-stars, even though private host feedback reveals 30% of guests have \"minor issues\" - Hosts with recent damage claims are 3X less likely to leave reviews - When hosts do leave negative reviews, 65% of those guests immediately retaliate with 1-star host reviews - The platform is developing a reputation problem: \"Too many 5-star reviews feel fake\" Current system: Reviews are posted immediately when submitted. Both parties can see each other's reviews in real-time.",
+                        question: "How do you redesign the review system to encourage honest feedback while preventing retaliation?",
                         options: [
                             {
-                                text: "Guests review first, then hosts respond—guests have more power as customers",
-                                points: 20,
-                                feedback: "This seems customer-centric, but it creates an imbalanced marketplace.\n\nIf guests always review first, hosts are incentivized to please guests at all costs—even when guests violate house rules.\n\nThis leads to host burnout and supply-side churn.\n\nRemember: Airbnb is a two-sided marketplace. Both sides need equal power, or the marketplace breaks.\n\nThe best platforms treat both sides as customers.\n\nAlso, guests who know hosts can't retaliate might leave unfairly harsh reviews, knowing there's no consequence."
+                                text: "Switch to anonymous reviews where neither party knows who wrote what",
+                                points: 3,
+                                feedback: "You're treating the symptom, not the disease. Yes, anonymity prevents retaliation—but it also removes accountability, which is the whole point of a two-sided marketplace. Airbnb's brand promise is personal connection and trust. Anonymous reviews would turn it into a Yelp-style free-for-all where anyone can say anything without consequence. You'd trade retaliation for trolling. Neither is good, but at least retaliation is rational behavior you can design around. Anonymity is just chaos."
                             },
                             {
-                                text: "Hosts review first, then guests respond—hosts take the risk so they should review first",
-                                points: 15,
-                                feedback: "This protects hosts but creates the opposite problem.\n\nGuests who know they'll be reviewed first might sugarcoat their feedback to avoid conflict with the host.\n\nThis leads to grade inflation—everyone gets 5 stars, and the review system becomes meaningless.\n\nYou need a mechanism that prevents retaliation while encouraging honest feedback from both sides.\n\nSequencing alone doesn't solve the problem."
-                            },
-                            {
-                                text: "Both review simultaneously—reviews are hidden until both submit or 14 days pass",
-                                points: 45,
-                                feedback: "Perfect. This is the double-blind mechanism Airbnb actually implemented.\n\nHere's why it's genius: neither party knows what the other wrote until both reviews are submitted (or 14 days pass).\n\nThis removes retaliation fear—you can be honest because you don't know what they'll say about you.\n\nIt also creates urgency—if you don't review within 14 days, the other person's review goes live anyway.\n\nThis is game theory in action. You've designed incentives so that honesty is the optimal strategy for both parties.\n\nAirbnb still uses this system today. It's one of the best examples of mechanism design in tech."
-                            },
-                            {
-                                text: "Make reviews optional—only serious issues get flagged",
+                                text: "Implement a \"double-blind\" review system—reviews are hidden until both submit OR 14 days pass",
                                 points: 10,
-                                feedback: "This seems low-friction, but it kills the trust infrastructure.\n\nOptional reviews mean only people with extreme experiences (very good or very bad) will leave feedback.\n\nYou'll get a bimodal distribution—5 stars or 1 star, nothing in between.\n\nThis doesn't help future users make informed decisions.\n\nTrust-based marketplaces need consistent, normalized feedback.\n\nMake it easy, but make it expected."
+                                feedback: "This is exactly what Airbnb did, and it's a masterclass in mechanism design. By blinding reviews until both parties submit (or the window closes), you eliminate the retaliation incentive without sacrificing transparency. Here's the genius: both parties know they'll be reviewed, so they behave well. But neither party can see the other's review before submitting their own, so they can't game it. The result? Review honesty went up ~40%, and the system became self-enforcing. This is a textbook example of incentive alignment—when you make honesty the Nash equilibrium, honest behavior emerges naturally. As a PM, your job isn't just building features—it's designing systems where good behavior is the easiest path forward."
+                            },
+                            {
+                                text: "Only allow guests to review hosts, not vice versa—remove the two-way system entirely",
+                                points: 2,
+                                feedback: "You just solved one problem (host retaliation) by creating a bigger one (guest accountability). In two-sided marketplaces, balanced accountability is essential. Without host reviews, bad guests have zero consequences—they can trash properties, violate rules, and leave nasty fake reviews with impunity. Airbnb learned this early: hosts need protection from bad guests just as much as guests need protection from bad hosts. The answer isn't removing accountability—it's redesigning how accountability works (see the double-blind system). Removing mechanisms rarely solves problems; fixing mechanisms does."
+                            },
+                            {
+                                text: "Create a \"verified resolution\" process where disputes are resolved before reviews are posted",
+                                points: 6,
+                                feedback: "You're adding process overhead to solve a design problem. Here's what would happen: every contentious stay becomes a he-said-she-said mediation nightmare, burning hours of customer support time and creating delays. Most disputes aren't black-and-white—they're subjective disagreements about cleanliness, noise, or expectations. Who decides who's right? What if hosts dispute every negative review to delay its publication? This doesn't scale, and it doesn't fix the incentive misalignment. The double-blind system is elegant because it solves the problem without adding process. Always prefer simple mechanisms over complex processes when possible."
                             }
                         ]
                     },
-                    {
+                            {
                         id: 4,
-                        scenario: "**2013 – San Francisco's Regulatory Threat**\n\n**The Crisis:**\nSan Francisco is proposing legislation to ban short-term rentals under 30 days. If passed, Airbnb's second-largest market disappears overnight.\n\n**The Context:**\nSF housing activists blame Airbnb for rising rents. Hotels lobby for regulation. The Board of Supervisors is listening.\n\n**The Options:**\nYour legal and policy teams present three strategies.\n\n**The Pressure:**\nThis isn't just about SF. How you respond here sets precedent for NYC, Paris, London, Barcelona—every major city will watch.\n\n**The Data:**\nAirbnb hosts in SF earn an average of $14,000/year. 52% use the income to stay in their homes. 78% of listings are primary residences.\n\n**The Politics:**\nSome politicians are open to compromise. Others want to kill the company to make a statement.\n\n**The Long Game:**\nYou need to win this fight without alienating every city government globally.",
-                        question: "How should Airbnb respond to San Francisco's regulatory threat?",
+                        scenario: "It's November 2011. Airbnb just reached 1 million bookings worldwide, and San Francisco—your hometown—is your densest market. But there's trouble brewing. You've started receiving angry emails from SF residents: \"Airbnb is turning my apartment building into a hotel.\" \"My landlord is evicting long-term tenants to convert units into full-time Airbnb rentals.\" \"I can't afford rent anymore because landlords make more money on Airbnb.\" Local media is picking up the story. Housing advocates are organizing. The SF Board of Supervisors is holding hearings. Some supervisors are calling for an outright ban on short-term rentals. Your data team presents concerning findings: - 15% of SF Airbnb hosts are renting out multiple properties (not their primary residence) - Some landlords are buying buildings specifically to convert them into Airbnb-only properties - Average SF rents have increased 12% in the past year (correlation unclear) - Hotels and hotel unions are funding anti-Airbnb campaigns, framing this as an existential housing crisis Your legal team warns: \"If SF bans us, New York, Seattle, and other cities will follow. We could lose 40% of our revenue.\" Your options, as debated in the exec team meeting: - **Lobby aggressively** to block any regulations: \"We're being scapegoated for a housing crisis we didn't create\" - **Work with the city** to create rules (e.g., 90-day annual rental limits, registration requirements) - **Ignore the issue** until forced to act: \"It's still early, they may not follow through\" - **Shift focus** to markets with fewer regulatory concerns",
+                        question: "You're running PM for Growth and Policy. What's your strategic recommendation?",
                         options: [
                             {
-                                text: "Fight aggressively—lobby hard, threaten to pull out of SF, run ads attacking the legislation",
-                                points: 20,
-                                feedback: "This approach is confrontational and short-sighted.\n\nWhile Uber successfully used this playbook in some markets, it also made Uber a villain in the eyes of regulators globally.\n\nAggressive lobbying works when you have populist support, but Airbnb's impact on housing is legitimately concerning to many SF residents.\n\nFighting every regulation makes you look like you don't care about communities.\n\nYou'll win battles but lose the war. Better to find a middle ground that lets you operate while addressing legitimate concerns."
+                                text: "Fight regulations aggressively through lobbying, PR campaigns, and legal challenges",
+                                points: 3,
+                                feedback: "This is the \"Uber playbook,\" and it'll backfire spectacularly. Here's why: housing affordability is a third-rail political issue, especially in SF. When neighbors feel their community is being destroyed, politicians respond—or they lose elections. By positioning yourself as the enemy of housing affordability, you're painting a target on your back. Airbnb actually tried this approach initially and regretted it. The result? Stricter regulations, worse PR, and a reputation as a bad actor. Contrast this with companies like Stripe who engage proactively with regulators. The best tech companies understand: you don't win by fighting regulation—you win by shaping it."
                             },
                             {
-                                text: "Comply fully—accept the 30-day minimum, pivot to longer-term stays only in SF",
-                                points: 25,
-                                feedback: "This is too passive. You're letting regulators define your business model.\n\nWhile compliance is important, accepting a 30-day minimum kills your core value proposition—short-term travel stays.\n\nYou'd be conceding defeat in your second-largest market without fighting for the hosts who depend on you.\n\nThere's a middle ground between full compliance and full confrontation.\n\nPropose a compromise that addresses legitimate housing concerns while preserving your business."
+                                text: "Proactively partner with cities to co-create regulations that balance growth and housing protection",
+                                points: 10,
+                                feedback: "This is strategic brilliance disguised as compromise. Here's what most founders miss: regulation is inevitable in your industry. The only question is whether you help write the rules or have them written FOR you. By engaging early, Airbnb could have shaped policies that worked for everyone—registration systems, rental-day caps, primary residence requirements. SF eventually passed these in 2014/2016, but because Airbnb fought them initially, the rules were stricter than they needed to be. The lesson: legitimacy is a moat. Companies that work with regulators gain social license to operate. Companies that fight them become targets. This isn't about being nice—it's about survival. As a PM, your job is sustainable growth, not growth-at-all-costs."
                             },
                             {
-                                text: "Propose a compromise—voluntary 90-day annual cap, host registration system, tax collection",
-                                points: 45,
-                                feedback: "Brilliant. This is what Airbnb actually did, and it's a masterclass in regulatory strategy.\n\nBy proactively proposing a 90-day cap on non-primary residences, you address the core concern (commercial operators buying properties purely for Airbnb) while protecting your core users (people renting their primary homes).\n\nThe registration system gives the city visibility and control. Tax collection makes you a revenue partner, not an adversary.\n\nThis is how you turn potential enemies into allies. You're not fighting regulation—you're shaping it.\n\nSF eventually passed a version of this. Other cities followed. You set the precedent."
+                                text: "Pivot away from major cities entirely and focus on vacation markets instead",
+                                points: 4,
+                                feedback: "You're running from the problem instead of solving it. Yes, vacation markets (beach towns, ski resorts) have less regulatory risk—but they also have less demand density. Cities are where your business model thrives: high population, business travel, tourism, events. By abandoning urban markets, you're capping your TAM by 70-80%. Worse, you're signaling to every other city that you'll retreat when pushed. This invites more aggressive regulation everywhere. The right move isn't retreat—it's engagement. Fix the problem in SF, prove you can be a good actor, then use that case study to negotiate with other cities. Territory abandoned is territory lost."
                             },
                             {
-                                text: "Ignore the threat—keep operating, dare the city to shut you down",
-                                points: 15,
-                                feedback: "This is the Uber playbook, and while it worked for them in some markets, it's a huge gamble.\n\nIgnoring regulators makes you look arrogant and reckless. It galvanizes opposition and gives politicians ammunition.\n\nIf SF shuts you down, that precedent cascades globally—every city will think they can ban you.\n\nYou need regulators to see you as a partner, not an enemy.\n\nOperate in legal gray areas when you must, but never openly defy regulation. That's how you lose."
+                                text: "Implement internal rules privately (e.g., multi-property limits) without engaging regulators",
+                                points: 5,
+                                feedback: "You're halfway there, but you're missing the opportunity to build trust. Yes, self-regulation shows good faith—but if you do it quietly, nobody knows or cares. The value of working WITH cities is the PR and legitimacy it generates. When Airbnb finally partnered with SF in 2014, they got credit for being reasonable actors, which bought goodwill for future battles. If you implement rules privately, you still get blamed for housing problems (because the public doesn't know about your changes), and you miss the chance to shape the regulatory conversation. Always negotiate from a position of strength—show your cards when they help you."
                             }
                         ]
                     },
-                    {
+                            {
                         id: 5,
-                        scenario: "**2011 – The EJ Ransacking Incident**\n\n**The Crisis:**\nA host's home was ransacked by a guest. International media picked up the story. \"Airbnb guest destroys home\" is trending.\n\n**The Backstory:**\nHost EJ wrote a blog post detailing the damage. Airbnb's initial response was slow and bureaucratic. She went public. This is now a PR disaster.\n\n**The Immediate Impact:**\nBookings down 20%. Press calling it a \"trust crisis.\" Investors questioning whether the model works.\n\n**The Question:**\nThis is an existential moment. How you respond defines whether Airbnb survives.\n\n**The Options:**\nYour crisis team presents response strategies.\n\n**The Reality:**\nYou can't prevent every bad actor. But you can control how you respond when things go wrong.\n\n**The Stakes:**\nTrust is your only moat. Lose it, and the marketplace collapses.",
-                        question: "How should Airbnb respond to the EJ ransacking crisis?",
+                        scenario: "It's June 2012. Airbnb is growing fast—50,000 listings, millions in bookings. Then disaster strikes. A host named EJ rents her San Francisco home to a guest. When she returns, her apartment has been ransacked—heirlooms stolen, walls vandalized, her home completely destroyed. She blogs about it. The story goes viral: \"Airbnb won't help. They told me to use my renter's insurance.\" Tech blogs pick it up: \"Airbnb's Dark Side: The Trust Crisis.\" Suddenly, millions of people are asking: \"What if this happens to me?\" Bookings drop 15% overnight. Hosts are deleting their listings. Investors are panicking. The press is calling Airbnb \"dangerous.\" Brian Chesky personally apologizes and announces: 1. A $50,000 \"Host Guarantee\" to cover property damage 2. 24/7 customer support hotline for emergencies 3. Verified ID requirements for all users But you're the PM in charge of the longer-term product response. You need to rebuild trust systemically, not just with PR. Your job: design product features that make this scenario less likely AND less damaging when it does happen. Your options: - Host insurance program (expanded coverage) - Mandatory security deposits for all bookings - Host vetting tools to screen guests before accepting - Post-booking check-in verification (guests must provide ID/selfie on day of arrival) - Shift all liability to the platform via a \"Host Protection\" plan",
+                        question: "What product features should Airbnb prioritize to rebuild trust without killing the growth flywheel?",
                         options: [
                             {
-                                text: "Apologize privately, settle with EJ, move on quietly—don't amplify the story",
-                                points: 20,
-                                feedback: "This is damage control, not trust building.\n\nQuiet settlements might protect your reputation in the short term, but they don't address the systemic issue.\n\nEvery potential host is now wondering: \"If this happens to me, will Airbnb help?\"\n\nYour silence is an answer. And it's the wrong one.\n\nCrises are opportunities to show your values. Hiding makes you look like you have something to hide."
+                                text: "Implement mandatory security deposits ($500-1000) for all bookings to deter bad actors",
+                                points: 4,
+                                feedback: "You're solving for deterrence, but you're creating massive friction in the booking flow. Here's the unintended consequence: guests will balk at a $1,000 hold on their credit card, especially for casual weekend trips. Conversion rates will tank. Worse, you're treating all guests like potential criminals, which undermines the \"trust and belonging\" brand Airbnb has built. The right approach is risk-based deposits—high-value homes, first-time guests, or flagged accounts pay deposits. Everyone else doesn't. Always think in segments, not one-size-fits-all."
                             },
                             {
-                                text: "Launch a $1M Host Guarantee, offer 24/7 customer support, implement ID verification",
-                                points: 45,
-                                feedback: "Perfect. This is exactly what Airbnb did, and it saved the company.\n\nThe $1M Host Guarantee was symbolic—it told hosts \"we've got your back.\" The actual cost was minimal because incidents are rare, but the psychological impact was huge.\n\n24/7 support showed you were serious about safety. ID verification addressed the root cause (anonymous bad actors).\n\nBut here's the genius: you didn't just fix EJ's problem—you built a scalable trust infrastructure that made every future incident easier to handle.\n\nThis is how you turn a crisis into a competitive advantage."
+                                text: "Build robust host insurance + verified ID requirements + 24/7 support (what Airbnb actually did)",
+                                points: 10,
+                                feedback: "Perfect. This is the layered defense strategy. You can't prevent 100% of bad actors—but you can reduce likelihood (verified ID), detect early (check-in verification), respond fast (24/7 support), and mitigate damage (insurance). Notice the order: first you prevent, then you detect, then you respond, then you cover. Each layer catches what the previous layer missed. The $50K host guarantee became $1M over time, which sounds expensive—but it's a drop in the bucket compared to lost trust. Airbnb learned: insurance isn't a cost center, it's a growth enabler. When hosts feel protected, they list more. When guests trust the platform, they book more. The crisis became an opportunity to build the trust infrastructure that competitors couldn't match."
                             },
                             {
-                                text: "Suspend all new bookings until you implement better screening",
-                                points: 25,
-                                feedback: "This seems responsible, but it's an overreaction.\n\nSuspending bookings signals panic. It also punishes millions of good users for one bad actor.\n\nThe problem isn't that you need to screen everyone perfectly—that's impossible. The problem is you didn't have a safety net for when things go wrong.\n\nThe better response: keep operating, but add protections (guarantees, insurance, support).\n\nDon't let one incident define the platform. Show you can handle adversity while moving forward."
+                                text: "Shut down growth temporarily and vet every host manually before approving new listings",
+                                points: 2,
+                                feedback: "This is panic-driven decision-making, and it'll kill your business. Manual vetting doesn't scale—you'd need hundreds of employees to review thousands of weekly signups, and you still wouldn't catch sophisticated bad actors. Meanwhile, your growth stops, your competitors don't, and you lose market share permanently. The right mental model here is \"trust infrastructure,\" not \"trust gatekeeping.\" Build systems that scale trust (ID verification, reviews, algorithms), not processes that bottleneck growth. Airbnb's recovery wasn't about slowing down—it was about building better safety rails while moving fast."
                             },
                             {
-                                text: "Blame EJ for not vetting the guest properly—this is a host responsibility issue",
-                                points: 5,
-                                feedback: "This is PR suicide and morally wrong.\n\nBlaming the victim destroys trust faster than any incident ever could.\n\nYour hosts are your partners, not your customers. If you don't protect them, they'll leave.\n\nYes, hosts should vet guests. But Airbnb positioned itself as the platform making peer-to-peer trust possible. When that fails, it's your responsibility to make it right.\n\nOwn the problem. Then solve it systematically."
+                                text: "Transfer all liability to Airbnb with a platform-wide insurance model (no host involvement)",
+                                points: 6,
+                                feedback: "You're trying to buy trust with money—which works, but it's inefficient. If Airbnb assumes 100% liability, hosts have zero incentive to screen guests carefully or maintain their properties. You'd see a surge in fraudulent claims, careless behavior, and moral hazard everywhere. The better model is shared responsibility: hosts still care because they're partially at risk, but they're protected against catastrophic loss. This keeps incentives aligned. Think of it like car insurance—you pay a deductible (skin in the game), but you're covered for big accidents (catastrophic protection). Balance risk-sharing, don't eliminate it."
                             }
                         ]
                     },
-                    {
+                            {
                         id: 6,
-                        scenario: "**2014 – The Mobile-First Inflection Point**\n\n**The Data:**\nMobile bookings are growing fast. You're at 25% of total bookings. Competitors are at 40%+. This is a trend, not a blip.\n\n**The Reality:**\nYour mobile app is functional but not great. It's a shrunk-down version of the website. Users complain it's clunky.\n\n**The Proposal:**\nEngineering wants to completely rebuild the mobile experience from scratch. This means pausing new features for 6 months.\n\n**The Debate:**\nCEO: \"Mobile is the future, but can we afford to stop shipping features for half a year?\"\n\nCTO: \"If we don't go mobile-first now, we'll be playing catchup forever.\"\n\nCFO: \"We just went public. Investors expect growth, not engineering rewrites.\"\n\n**The Stakes:**\nThis isn't just about mobile. It's about whether you lead or follow.",
-                        question: "Should Airbnb commit to a mobile-first redesign, pausing other features for 6 months?",
+                        scenario: "It's July 2013. Your internal data shows a concerning trend: 40% of Airbnb traffic now comes from mobile devices, but only 10% of bookings happen on mobile. Your mobile conversion rate is 75% lower than desktop. User research reveals why: - Browsing listings on mobile is easy - Booking requires entering payment info, addresses, personal details—on a tiny keyboard - Users abandon at checkout and \"come back later on desktop\" (50% never do) - Younger users (18-25) are almost mobile-only but not converting Meanwhile, your data science team discovers: - Mobile users book more spontaneously (same-day/next-day trips) - Mobile-first users have 30% higher lifetime value (they travel more frequently) - The travel industry is shifting mobile: Hotels.com, Booking.com, and Kayak are all investing heavily in mobile apps But here's the tension: - Your engineering team is stretched thin on web features, international expansion, and core platform stability - Building a world-class mobile app will take 6-12 months and require a dedicated team of 15-20 engineers - Your CFO argues: \"Mobile will come eventually. Why rush it?\"",
+                        question: "Should Airbnb treat mobile as an urgent strategic priority or an incremental improvement?",
                         options: [
                             {
-                                text: "Yes—go mobile-first immediately, even if it means pausing desktop features",
-                                points: 45,
-                                feedback: "Correct. This is what Airbnb did, and by 2015, 50% of bookings were on mobile.\n\nHere's why this was the right call: mobile isn't a channel—it's a behavior shift. Users book differently on mobile (more spontaneous, more last-minute, more local).\n\nIf you just shrink your desktop experience, you miss the unique value mobile creates.\n\nYes, you'll sacrifice 6 months of new features. But you'll gain a platform advantage that lasts years.\n\nThe companies that won mobile (Instagram, Snap, Uber) went mobile-first early. The companies that hesitated (Facebook, Google) had to play catchup.\n\nWhen platforms shift, you need to move fast, even if it hurts short-term metrics."
+                                text: "Treat mobile as mission-critical and reallocate 30% of engineering resources to mobile immediately",
+                                points: 10,
+                                feedback: "You're seeing what others miss: mobile isn't a channel, it's a behavior shift. When 40% of traffic is mobile but only 10% of revenue, that's not a conversion problem—it's an opportunity signal. The users who will define the next decade of travel are already mobile-first. If you don't capture them now, competitors will. Airbnb went all-in on mobile in 2013-2014, and by 2016, mobile accounted for 50%+ of bookings. They even introduced \"Instant Book\" specifically for mobile users. The lesson here: distribution shifts are existential. Web-to-mobile, desktop-to-cloud, offline-to-online—when the platform shifts, you shift with it or die. As a PM, your job is recognizing infection points before they're obvious."
                             },
                             {
-                                text: "No—improve mobile incrementally, don't pause other work",
-                                points: 25,
-                                feedback: "This seems pragmatic, but it's strategically weak.\n\nIncremental improvements on a fundamentally flawed architecture rarely work. You end up with technical debt and a mediocre experience.\n\nBy 2016, mobile-first competitors (Booking.com, Hotels.com) had better apps than you. You lost market share.\n\nThe problem with incrementalism is it optimizes for short-term metrics (keep shipping features, keep investors happy) while missing the platform shift.\n\nSometimes you need to stop building the house and fix the foundation."
-                            },
-                            {
-                                text: "Hire a separate mobile team so you can do both simultaneously",
-                                points: 35,
-                                feedback: "This sounds efficient, but it creates organizational problems.\n\nSeparate teams mean diverging priorities, duplicated code, and platform fragmentation.\n\nYou'll end up with a mobile app and a desktop app that feel like different products.\n\nAirbnb actually tried this initially, and it created chaos. They eventually unified teams around mobile-first.\n\nThe better approach: one team, mobile-first for everyone. Short-term pain, long-term alignment."
-                            },
-                            {
-                                text: "Wait and see—if mobile bookings keep growing, you can pivot later",
-                                points: 15,
-                                feedback: "This is the \"wait and see\" trap that kills companies.\n\nBy the time you're certain about a trend, it's too late. Your competitors have already moved.\n\nMobile bookings are at 25% and growing. That's not a weak signal—that's a clear inflection point.\n\nStrong PMs make bets on probable trends before they become obvious. Waiting for certainty means waiting to lose.\n\nAct on strong signals, not perfect information."
-                            }
-                        ]
-                    },
-                    {
-                        id: 7,
-                        scenario: "**2012 – The Craigslist Growth Hack Dilemma**\n\n**The Opportunity:**\nYour growth team discovered that Craigslist doesn't secure its posting endpoints. You can build a bot that automatically cross-posts Airbnb listings to Craigslist.\n\n**The Upside:**\nCraigslist has 60M monthly users looking for housing. This could 10x your traffic overnight.\n\n**The Catch:**\nThis violates Craigslist's Terms of Service. It's technically possible but legally and ethically gray.\n\n**The Debate:**\nGrowth team: \"Everyone does this. It's a victimless hack. Craigslist doesn't enforce their ToS anyway.\"\n\nLegal: \"If Craigslist sues, we could lose. This could damage our reputation.\"\n\nCEO: \"We need growth. But not at any cost.\"\n\n**The Precedent:**\nOther startups used aggressive tactics and succeeded. But some got shut down or sued.\n\n**The Question:**\nWhere's the line between clever growth hacking and unethical behavior?",
-                        question: "Should Airbnb automatically post to Craigslist despite violating their ToS?",
-                        options: [
-                            {
-                                text: "Yes—do it until Craigslist stops you, growth is everything at this stage",
-                                points: 15,
-                                feedback: "This is short-term thinking that ignores long-term consequences.\n\nYes, this could drive growth. But you're building your company on a foundation of violating other platforms' rules.\n\nWhat happens when Craigslist shuts you down? What happens when this becomes public?\n\n\"Airbnb built by spamming Craigslist\" is not the narrative you want.\n\nAlso: if you'll violate Craigslist's ToS for growth, what other rules will you break? This sets a cultural precedent.\n\nGrowth at any cost is how you end up like Uber—winning but hated."
-                            },
-                            {
-                                text: "No—build a Craigslist integration that respects their ToS and adds value",
-                                points: 45,
-                                feedback: "Perfect. This is the ethical and strategic approach.\n\nInstead of spamming Craigslist, build a tool that helps hosts post to both platforms manually. You're adding value (convenience) without breaking rules.\n\nAirbnb actually did this—they created a \"Post to Craigslist\" button that hosts could use. It wasn't automated spam; it was a helpful feature.\n\nThis approach is slower than automated posting, but it's sustainable and doesn't risk a lawsuit or reputation damage.\n\nThe best growth strategies don't rely on exploiting loopholes. They create genuine value that's defensible."
-                            },
-                            {
-                                text: "Do it secretly—use VPNs and fake accounts so it's not traceable to Airbnb",
+                                text: "Improve mobile web experience instead of building native apps—faster and more efficient",
                                 points: 5,
-                                feedback: "This is worse than the obvious spam approach.\n\nNow you're not just violating ToS—you're actively trying to hide it. If this gets discovered, the narrative becomes: \"Airbnb secretly spammed Craigslist using fake accounts.\"\n\nThat's fraud territory. It also shows a pattern of deception that could haunt you in future regulatory battles.\n\nIf you wouldn't do something publicly, don't do it secretly. The coverup is always worse than the crime."
+                                feedback: "You're optimizing for shipping speed, not user experience. Mobile web is fine for browsing, but booking requires trust—and native apps signal permanence, quality, and commitment in ways mobile web doesn't. Plus, native apps give you push notifications (huge for re-engagement), offline functionality, and better performance. The real issue: mobile web says \"we're testing this,\" native apps say \"we're committed.\" Users feel that difference viscerally. If you're serious about mobile users, build the first-class experience they deserve. Half-measures rarely win."
                             },
                             {
-                                text: "Partner with Craigslist officially—offer them a revenue share for integration",
-                                points: 35,
-                                feedback: "This is a creative approach, but Craigslist historically doesn't partner.\n\nThey've turned down every acquisition offer and partnership proposal. Their founder, Craig Newmark, is famously anti-commercial.\n\nSo while this is the right instinct (create a win-win instead of exploiting), it's not realistic with Craigslist specifically.\n\nHowever, this thinking is valuable. Always ask: \"Can we align incentives instead of exploiting loopholes?\"\n\nThat mindset leads to sustainable partnerships, not legal battles."
+                                text: "Wait until mobile conversion rates improve organically before investing heavily",
+                                points: 2,
+                                feedback: "This is backwards causality. Mobile conversion rates won't improve UNTIL you invest in mobile. You're waiting for market validation that you yourself need to create. Here's the trap: mobile users are telling you they want mobile experiences by showing up in droves—but you're not listening because they're not converting. Of course they're not converting! Your checkout flow is a desktop-optimized nightmare on a 4-inch screen. Fix the experience, then measure conversion. Don't wait for conversion to justify fixing the experience. This is a common founder mistake: under-investing in platforms until they're already mature. By then, competitors own the space."
+                            },
+                            {
+                                text: "Build a basic mobile app but keep the focus on desktop web (where most revenue comes from)",
+                                points: 3,
+                                feedback: "You're managing decline instead of building the future. Yes, most revenue comes from desktop today—but that's a trailing indicator. The leading indicator is traffic, and traffic has already shifted. If you optimize for today's revenue, you'll miss tomorrow's market. Kodak made this mistake: they delayed digital cameras because film was profitable. Netflix avoided this: they invested in streaming even though DVDs were profitable. The pattern is consistent: winners invest in the future, losers defend the past. As a PM, your north star should be \"where is user behavior headed?\" not \"where is revenue today?\" Revenue follows behavior with a lag."
                             }
                         ]
                     },
-                    {
+                            {
+                        id: 7,
+                        scenario: "It's October 2014. Airbnb has grown to 800,000 listings, but growth is slowing. Your Growth team has discovered something controversial: Craigslist has millions of apartment/room listings. Every week, thousands of landlords post rentals there. What if Airbnb could automatically email these landlords saying: \"Hey, we saw your Craigslist listing. Why not also list it on Airbnb?\" The engineering feasibility is there: you can scrape Craigslist for rental listings, extract contact info, and automate outreach emails. Early tests show a 5-10% conversion rate—hundreds of new listings per week. But there are problems: 1. Craigslist's Terms of Service explicitly prohibit automated scraping and unsolicited commercial email 2. Some landlords will be annoyed (\"How did you get my email?\") 3. Craigslist could ban Airbnb users/listings in retaliation 4. Ethically, it's a gray area—you're using Craigslist's data to compete with them Your Growth PM argues: \"Every tech company does this. It's guerrilla marketing. We'll be nice about it.\" Your Legal team warns: \"This violates ToS. Craigslist could sue us.\" Your CEO is ambivalent: \"Do what you think is right, but we need growth.\"",
+                        question: "Do you approve this growth tactic?",
+                        options: [
+                            {
+                                text: "Approve the tactic—aggressive growth hacking is how startups win",
+                                points: 3,
+                                feedback: "You're confusing \"growth at any cost\" with \"sustainable growth,\" and that distinction matters more than you think. Yes, Airbnb actually did this around 2010-2011, and yes, it worked—but it also damaged their reputation and invited retaliation. Growth hacks are fine when they're clever use of existing systems (Dropbox's referral program), but they're toxic when they violate trust or ToS. Here's the rule: if your growth tactic would make users trust you less if they knew about it, don't do it. Long-term brand value > short-term growth."
+                            },
+                            {
+                                text: "Decline—violating ToS and spamming users is ethically wrong, even if it works",
+                                points: 10,
+                                feedback: "This is principled product management, and it's harder than it looks. When growth is slowing and investors are pushing for numbers, saying \"no\" to a tactic that works takes courage. But here's what's at stake: your reputation. Every shortcut you take compounds. Airbnb's early Craigslist spam came back to haunt them in regulatory battles—cities pointed to it as evidence of bad-actor behavior. The lesson: integrity isn't a luxury, it's an investment. Users remember how you treated them. Regulators remember how you played the game. Competitors remember your tactics. Build a company you'd be proud to defend in the New York Times. If you wouldn't want it on the front page, don't do it."
+                            },
+                            {
+                                text: "Approve it but only for hosts who've already listed on both platforms (less spammy)",
+                                points: 6,
+                                feedback: "You're trying to split the difference—get some growth, avoid some guilt. But this is still ethically murky. You're still scraping data without permission, still contacting people unsolicited, still violating ToS. It's just less egregious. The problem with \"ethical gray areas\" is they normalize bad behavior. Once you justify this, you'll justify the next thing, and the next. Draw bright lines early. The answer isn't \"spam people less,\" it's \"don't spam people at all.\" Find growth tactics that don't require ethical compromises—referral programs, partnerships, content marketing, paid ads. They're harder, but they're honest."
+                            },
+                            {
+                                text: "Partner with Craigslist officially instead of exploiting them",
+                                points: 8,
+                                feedback: "This is creative and ethical—but unlikely to work. Craigslist is famously anti-corporate and anti-commercialization. They've refused acquisition offers from Google, eBay, and others. They don't do partnerships. That said, asking is always better than stealing. If they say no, you've still acted in good faith. The broader lesson: always look for cooperative solutions before adversarial ones. Sometimes your \"competitor\" could be your partner. Uber and Lyft both integrate with Google Maps. Spotify integrates with Facebook. Find the win-win before you go to war."
+                            }
+                        ]
+                    },
+                            {
                         id: 8,
-                        scenario: "**2016 – Addressing Discrimination**\n\n**The Problem:**\nA Harvard study reveals that Black guests are 16% less likely to be accepted by hosts than identical white guests. This is racial discrimination.\n\n**The Backlash:**\n#AirbnbWhileBlack is trending. Civil rights groups threaten lawsuits. This is a systemic problem, not a few bad hosts.\n\n**The Root Cause:**\nYour system requires guests to upload photos. Hosts see the photo before accepting. Implicit bias affects decisions.\n\n**The Proposals:**\nYour team presents several solutions.\n\n**The Trade-offs:**\nTrust and safety require knowing who's staying. But transparency enables discrimination. How do you balance both?\n\n**The Stakes:**\nThis isn't just PR. It's about whether your platform is inclusive or perpetuates societal bias.",
-                        question: "How should Airbnb reduce discrimination on the platform?",
+                        scenario: "It's December 2015. A Harvard study drops a bombshell: guests with \"African-American sounding names\" are 16% less likely to have their booking requests accepted compared to identical guests with \"white-sounding names.\" The study goes viral. #AirbnbWhileBlack trends on Twitter. Hosts are canceling reservations when they see guests' profile photos. The press is brutal: \"Airbnb's Racism Problem.\" Your data team confirms: discrimination is happening. Some hosts are rejecting guests based on race, age, gender, or perceived economic status. It's illegal in many jurisdictions, and it's destroying your brand. The tension: - Airbnb's model is built on host autonomy: \"Your home, your rules\" - But if hosts discriminate, the platform becomes complicit - Removing host photos/names would help—but would undermine the \"community\" feel - Forcing hosts to accept all guests would make hosts leave the platform Your product options: 1. Hide guest names/photos until after booking is confirmed (reduces discrimination but feels impersonal) 2. Penalize discriminatory hosts with lower search ranking or suspension (enforcement is hard—how do you prove intent?) 3. Move more listings to \"Instant Book\" (no host approval needed—bypasses discrimination) 4. Do nothing and let the community self-regulate (risky for brand reputation)",
+                        question: "How do you redesign the platform to combat discrimination without killing the host community?",
                         options: [
                             {
-                                text: "Remove all guest photos—hosts can't discriminate if they don't see race",
-                                points: 30,
-                                feedback: "This addresses discrimination but creates new problems.\n\nHosts rely on photos for trust and safety. Removing photos entirely might reduce bookings or increase host anxiety.\n\nAlso, hosts can still infer race from names in many cases.\n\nThe better approach: reduce the visibility of photos during the booking process, not eliminate them entirely.\n\nAirbnb eventually de-emphasized photos on listings while keeping them in profiles (visible after booking confirmation)."
+                                text: "Mandate Instant Book for all listings—remove host approval discretion entirely",
+                                points: 5,
+                                feedback: "You're solving discrimination by removing choice, which is a blunt instrument. Yes, Instant Book eliminates the approval step where discrimination happens—but it also removes the human connection that makes Airbnb special. Many hosts will leave rather than accept bookings blindly, especially in shared-home situations where personal compatibility matters. The better approach is making Instant Book the default but not mandatory, and heavily incentivizing it (better search ranking, \"Instant Book\" badge, higher visibility). This nudges behavior without forcing it. As a PM, coercion should be your last resort, not your first."
                             },
                             {
-                                text: "Expand Instant Book—guests can book without host approval, bypassing bias",
-                                points: 45,
-                                feedback: "Brilliant. This is what Airbnb actually did, and it's a masterclass in designing out discrimination.\n\nInstant Book removes the \"host approval\" step where bias occurs. Hosts still set their criteria (dates, price, house rules), but they can't reject guests based on photos.\n\nThis isn't perfect—some hosts disable Instant Book. But by making it the default and incentivizing it (higher search ranking), you dramatically reduce discrimination.\n\nThis is product design as social justice. You didn't try to change hearts and minds. You changed the system that enables bias.\n\nThis is how great PMs think: behavior follows design."
+                                text: "Hide guest photos and reduce name visibility until after booking is confirmed",
+                                points: 8,
+                                feedback: "This is mechanically sound—you're eliminating the signal hosts use to discriminate. Airbnb eventually implemented a version of this, and it helped. But there's a tradeoff: you're also eliminating the trust signal that makes P2P platforms work. When hosts can't see who they're letting into their home, anxiety goes up. Some hosts leave. The right version of this is \"progressive disclosure\": show limited info upfront (reviews, verification status), then full info after commitment. This balances trust-building with discrimination-prevention. The lesson: when you remove information, you also remove trust. Design carefully."
                             },
                             {
-                                text: "Train hosts on unconscious bias—education is the long-term solution",
-                                points: 25,
-                                feedback: "This is well-intentioned but insufficient.\n\nUnconscious bias training has limited effectiveness. Studies show people's behavior changes minimally after training.\n\nThe problem isn't that hosts are consciously racist (most aren't). It's that implicit bias affects decisions.\n\nYou can't train away bias. But you can design systems that don't activate bias.\n\nUse training as a supplement to structural changes (like Instant Book), not a replacement."
+                                text: "Aggressively promote Instant Book + penalize discriminatory hosts with data-driven enforcement",
+                                points: 10,
+                                feedback: "This is the multi-layered solution Airbnb eventually adopted, and it's a masterclass in behavior change. Here's how it works: (1) Heavily promote Instant Book to remove approval friction, (2) Use ML to detect discriminatory patterns (e.g., hosts who reject certain names at higher rates), (3) Penalize bad actors with lower rankings, warnings, or suspension, (4) Educate hosts on fair housing laws. Notice the strategy: you're not banning discrimination outright (hard to enforce), you're making discrimination harder, less profitable, and more visible. Over time, discriminatory hosts self-select out. The lesson: systemic behavior change requires multiple levers—incentives, enforcement, education, and design. Use all of them."
                             },
                             {
-                                text: "Ban hosts who show patterns of discrimination based on acceptance rates",
-                                points: 35,
-                                feedback: "This is a strong enforcement mechanism, but it's reactive, not preventive.\n\nBy the time you ban a host for discrimination, many guests have already been harmed.\n\nAlso, proving discrimination is hard. Hosts can claim other reasons for rejections.\n\nBanning is a necessary tool for egregious cases, but the better strategy is designing a system that prevents discrimination from happening in the first place.\n\nUse bans as a backstop, not a primary solution."
+                                text: "Accept that some discrimination will happen and focus on growth in other markets",
+                                points: 1,
+                                feedback: "This is moral and strategic bankruptcy. Ignoring discrimination doesn't make it go away—it makes it your brand. Once Airbnb is known as \"the platform where discrimination happens,\" that reputation sticks forever. Worse, it invites regulation, lawsuits, and boycotts. You can't build a global community platform while tolerating exclusion. This isn't about political correctness—it's about market viability. Discrimination shrinks your TAM (fewer guests feel safe), fragments your supply (discriminatory hosts attract only certain guests), and invites intervention (governments will regulate you). Fix it or die slowly."
                             }
                         ]
                     },
-                    {
+                            {
                         id: 9,
-                        scenario: "**November 2016 – Launching Airbnb Experiences**\n\n**The Plateau:**\nAccommodations growth is slowing. You've saturated many markets. What's next?\n\n**The Idea:**\nExpand beyond stays into activities. Let locals host tours, classes, workshops. \"Experiences\" as a new revenue stream.\n\n**The Opportunity:**\nThe global tours and activities market is $150B. Airbnb has brand trust and distribution.\n\n**The Risk:**\nThis is a new marketplace. You'll need to recruit hosts, ensure quality, handle safety, deal with new regulations.\n\n**The Debate:**\nCEO: \"We're a stays company. Experiences dilutes our focus.\"\n\nStrategy team: \"Experiences is a natural extension. Guests want more than a place to stay.\"\n\nFinance: \"Experiences has lower margins than stays. Is this the best use of resources?\"\n\n**The Precedent:**\nViator, GetYourGuide already own this space. You're late.",
-                        question: "Should Airbnb launch Experiences as a new product line?",
+                        scenario: "It's March 2016. Airbnb has 2 million listings in 191 countries. Revenue is $1.5 billion annually. You're printing money from accommodations. Life is good. But Brian Chesky has a new vision: \"Airbnb should be about the entire trip—not just where you stay, but what you do.\" He wants to launch \"Airbnb Experiences\"—a platform where local hosts offer activities: cooking classes, street art tours, surf lessons, meditation sessions. The idea is to expand beyond accommodations into tours, activities, and local experiences. The case for Experiences: - Guests ask for local recommendations constantly—this productizes that demand - Experiences increase customer lifetime value (more ways to spend money on Airbnb) - It aligns with brand mission: \"Belong Anywhere\" through authentic local connections - Tours/activities market is $1.4 trillion globally (huge TAM) The case against: - Airbnb has zero experience in the tours/activities space - Competitors (Viator, GetYourGuide, Klook) already dominate this market - Building Experiences will distract from core business (accommodations) - Success is unproven—this could be a huge distraction for minimal revenue Your data: - 60% of surveyed guests say they'd book Experiences if available - Early beta test in 12 cities shows strong engagement (4.8-star average rating) - But only 3% of accommodation guests also book Experiences (low cross-sell)",
+                        question: "Should Airbnb invest significantly in Experiences, or is this a distraction from the core business?",
                         options: [
                             {
-                                text: "Yes—launch Experiences, it's a natural extension of the Airbnb brand",
-                                points: 45,
-                                feedback: "Correct. Airbnb launched Experiences in 2016, and by 2019 had 40,000+ globally.\n\nHere's why this worked: Experiences isn't just another product—it's a strategic moat.\n\nGuests who book both a stay AND an experience have 3x higher lifetime value. They're more loyal, book more often, and refer friends.\n\nExperiences also differentiates Airbnb from Booking.com and Hotels.com. They can copy your stays, but your Experiences network is unique.\n\nThe key was starting small (500 experiences in 12 cities), validating demand, then scaling. You didn't bet the company—you ran an experiment.\n\nThis is how you expand: find adjacencies with high synergy, test, scale what works."
+                                text: "Launch Experiences aggressively—it's the logical extension of the brand and increases LTV",
+                                points: 10,
+                                feedback: "You're thinking like Brian Chesky, and it shows. Here's the strategic insight: Airbnb isn't in the accommodations business—they're in the \"authentic travel\" business. Experiences is the natural evolution of that mission. Yes, it's a new market, yes there's competition, but here's what competitors don't have: Airbnb's distribution (millions of travelers already on platform), trust infrastructure (reviews, payments, insurance), and brand equity (\"live like a local\"). By 2019, Airbnb had 40,000 Experiences in 1,000+ cities. Revenue is still small relative to accommodations, but that's not the point. The point is ecosystem lock-in. When guests book both stays AND activities on Airbnb, they're less likely to switch platforms. This is the Amazon playbook: expand into adjacent categories, bundle them, create switching costs. Strategic thinking isn't about defending what you have—it's about building what comes next."
                             },
                             {
-                                text: "No—stay focused on accommodations where you have proven product-market fit",
-                                points: 25,
-                                feedback: "You're playing not to lose instead of playing to win.\n\nYes, focus is important—but adjacent expansion isn't distraction, it's growth strategy.\n\nHere's the trap: if Airbnb only does accommodations, they're leaving money on the table for competitors.\n\nGuests will book stays on Airbnb, then book activities on Viator. You're training users to use multiple platforms, which weakens your lock-in.\n\nThe better strategy: expand into high-synergy adjacencies (Experiences) while avoiding low-synergy ones (e.g., Airbnb Airlines would be dumb).\n\nTest, learn, scale what works. Airbnb did exactly this—launched small, validated demand, then scaled. They didn't bet the company; they ran an experiment."
+                                text: "Decline—stay focused on accommodations where you have proven product-market fit",
+                                points: 4,
+                                feedback: "You're playing not to lose instead of playing to win. Yes, focus is important—but adjacent expansion isn't distraction, it's growth strategy. Here's the trap: if Airbnb only does accommodations, they're leaving money on the table for competitors. Guests will book stays on Airbnb, then book activities on Viator. You're training users to use multiple platforms, which weakens your lock-in. The better strategy: expand into high-synergy adjacencies (Experiences) while avoiding low-synergy ones (e.g., Airbnb Airlines would be dumb). Test, learn, scale what works. Airbnb did exactly this—launched small, validated demand, then scaled. They didn't bet the company; they ran an experiment."
                             },
                             {
                                 text: "Partner with existing tours/activities platforms instead of building in-house",
-                                points: 30,
-                                feedback: "This is a reasonable compromise—you get the benefit (more services for guests) without the cost (building a new marketplace).\n\nBut here's what you lose: margin, control, and differentiation.\n\nIf you partner with Viator, they keep 70% of revenue, dictate the experience quality, and own the customer relationship. You're a referral source, not a platform.\n\nAirbnb's strength is controlling the end-to-end experience—if you outsource Experiences, you're diluting that advantage.\n\nThe right time to partner is when you can't build fast enough; the wrong time is when you're capable but scared to try."
+                                points: 6,
+                                feedback: "This is a reasonable compromise—you get the benefit (more services for guests) without the cost (building a new marketplace). But here's what you lose: margin, control, and differentiation. If you partner with Viator, they keep 70% of revenue, dictate the experience quality, and own the customer relationship. You're a referral source, not a platform. Airbnb's strength is controlling the end-to-end experience—if you outsource Experiences, you're diluting that advantage. The right time to partner is when you can't build fast enough; the wrong time is when you're capable but scared to try."
                             },
                             {
                                 text: "Launch a small pilot but don't commit resources until it proves itself at scale",
-                                points: 35,
-                                feedback: "This is smart de-risking, and it's actually what Airbnb did initially (500 Experiences in 12 cities).\n\nYou're validating demand before scaling supply.\n\nThe only mistake would be under-investing so much that the pilot fails due to poor execution, not lack of market fit.\n\nMake sure your pilot is high-quality—good curation, great hosts, smooth booking UX.\n\nIf you half-ass the test, you'll get half-assed results.\n\nMany new products fail not because the idea was wrong, but because the execution was mediocre. Give your experiment a real chance to succeed."
+                                points: 7,
+                                feedback: "This is smart de-risking, and it's actually what Airbnb did initially (500 Experiences in 12 cities). You're validating demand before scaling supply. The only mistake would be under-investing so much that the pilot fails due to poor execution, not lack of market fit. Make sure your pilot is high-quality—good curation, great hosts, smooth booking UX. If you half-ass the test, you'll get half-assed results. Many new products fail not because the idea was wrong, but because the execution was mediocre. Give your experiment a real chance to succeed."
                             }
                         ]
                     },
-                    {
+                            {
                         id: 10,
-                        scenario: "**Late 2019 – Preparing for the Unthinkable**\n\n**The Context:**\nAirbnb is preparing for IPO in 2020. Revenue is $4.8B, bookings at all-time high. The company is finally profitable.\n\n**The Question:**\nYour Chief Risk Officer raises a concern: \"What if a global crisis shuts down travel entirely? A pandemic, financial crash, major war?\"\n\n**The Dismissal:**\nCFO: \"Travel always bounces back. We survived 2008. We'll survive anything.\"\n\n**The Reality:**\n95% of Airbnb's revenue comes from travel bookings (short-term stays). If travel stops, revenue stops. Fixed costs don't.\n\n**The Math:**\nAirbnb has $3B in cash but burns $200M/month in operating costs.\n\n**The Options:**\nYou have budget to build ONE resilience feature before IPO:\n\n1. Long-term stays (30+ days) - less vulnerable to travel shocks\n2. Local experiences - people can book in their own city\n3. Virtual experiences - online classes, no travel required\n4. Monthly rentals - compete with traditional leases",
+                        scenario: "It's November 2019. Airbnb is preparing for IPO in 2020. Revenue is $4.8 billion, bookings are at an all-time high, and the company is finally profitable. But your Chief Risk Officer raises a question in a strategy meeting: \"What if a global crisis shuts down travel entirely? A pandemic, a financial crash, a major war?\" The CFO dismisses it: \"Travel always bounces back. We survived 2008. We'll survive anything.\" But you're a PM responsible for resilience planning. You've seen the data: - 95% of Airbnb's revenue comes from travel bookings (almost entirely short-term stays) - If travel stops, revenue stops - Fixed costs (employees, support, infrastructure) don't stop - Airbnb has $3 billion in cash, but burns $200M/month in operating costs You have budget to work on \"resilience features\" before IPO: 1. Build \"long-term stays\" (30+ days) as a separate product line (less vulnerable to travel shocks) 2. Create \"local experiences\" for people to book activities in their own city (no travel required) 3. Build \"virtual experiences\" infrastructure (online classes, remote activities) 4. Diversify into \"monthly rentals\" to compete with traditional leases The CEO's guidance: \"Pick one. We can't do everything before IPO.\"",
                         question: "If you could only build ONE resilience feature to hedge against a potential travel shutdown, which would it be?",
                         options: [
                             {
                                 text: "Prioritize long-term stays (30+ days)—a hedge against short-term travel volatility",
-                                points: 40,
-                                feedback: "This is really strong strategic thinking.\n\nLong-term stays are countercyclical to tourism—when short-term travel collapses, demand for temporary housing actually increases (work relocations, housing transitions, remote work).\n\nAirbnb leaned into this during COVID, and it saved the company. Bookings of 28+ days grew 14% even while overall bookings fell 70%.\n\nHere's the insight: duration is diversification. By serving both short-term and long-term stays, you smooth out volatility.\n\nThe only reason this isn't a perfect score is that it doesn't fully solve the supply-side problem—many Airbnb hosts won't rent long-term (they make more on nightly rates).\n\nBut directionally, this is brilliant."
+                                points: 9,
+                                feedback: "This is really strong strategic thinking. Long-term stays are countercyclical to tourism—when short-term travel collapses, demand for temporary housing actually increases (work relocations, housing transitions, remote work). Airbnb leaned into this during COVID, and it saved the company. Bookings of 28+ days grew 14% even while overall bookings fell 70%. Here's the insight: duration is diversification. By serving both short-term and long-term stays, you smooth out volatility. The only reason this isn't a perfect 10 is that it doesn't fully solve the supply-side problem—many Airbnb hosts won't rent long-term (they make more on nightly rates). But directionally, this is brilliant."
                             },
                             {
                                 text: "Build infrastructure for virtual/online experiences—no travel required",
-                                points: 45,
-                                feedback: "This is what Airbnb actually did in March 2020 when COVID hit, and it was a lifeline for hosts.\n\nHere's the genius: virtual experiences require zero marginal cost (no physical space, no insurance, no local regulations), infinite scale (one host can serve 100 attendees), and zero travel friction.\n\nWhen Airbnb launched \"Online Experiences,\" they had yoga classes, cooking lessons, and magic shows—all from hosts' living rooms.\n\nRevenue was tiny, but it kept hosts engaged, maintained brand relevance, and proved Airbnb could pivot fast.\n\nThe strategic lesson: build optionality before you need it.\n\nAirbnb had the infrastructure ready because they'd already launched Experiences in 2016. When crisis hit, they adapted existing tech instead of building from scratch.\n\nThis is what \"resilient platforms\" look like—they have multiple business models that activate under different conditions."
+                                points: 10,
+                                feedback: "This is what Airbnb actually did in March 2020 when COVID hit, and it was a lifeline for hosts. Here's the genius: virtual experiences require zero marginal cost (no physical space, no insurance, no local regulations), infinite scale (one host can serve 100 attendees), and zero travel friction. When Airbnb launched \"Online Experiences,\" they had yoga classes, cooking lessons, and magic shows—all from hosts' living rooms. Revenue was tiny, but it kept hosts engaged, maintained brand relevance, and proved Airbnb could pivot fast. The strategic lesson: build optionality before you need it. Airbnb had the infrastructure ready because they'd already launched Experiences in 2016. When crisis hit, they adapted existing tech instead of building from scratch. This is what \"resilient platforms\" look like—they have multiple business models that activate under different conditions."
                             },
                             {
                                 text: "Focus on monthly rentals to compete with traditional housing leases",
-                                points: 20,
-                                feedback: "You're thinking about diversification, but you're entering a market where Airbnb has no competitive advantage.\n\nTraditional rental platforms (Zillow, Apartments.com, Craigslist) already own this space, and the unit economics are terrible—monthly leases mean 12X fewer transactions per unit per year.\n\nPlus, hosts who rent monthly aren't \"sharing economy\" participants; they're professional landlords.\n\nThis dilutes the brand and invites even more housing-crisis regulation.\n\nThe better move is long-term stays (30-90 days), not annual leases—it's still flexible, still \"travel,\" and still Airbnb's wheelhouse."
+                                points: 5,
+                                feedback: "You're thinking about diversification, but you're entering a market where Airbnb has no competitive advantage. Traditional rental platforms (Zillow, Apartments.com, Craigslist) already own this space, and the unit economics are terrible—monthly leases mean 12X fewer transactions per unit per year. Plus, hosts who rent monthly aren't \"sharing economy\" participants; they're professional landlords. This dilutes the brand and invites even more housing-crisis regulation. The better move is long-term stays (30-90 days), not annual leases—it's still flexible, still \"travel,\" and still Airbnb's wheelhouse."
                             },
                             {
                                 text: "Expand \"local experiences\" so users book activities in their own city without travel",
-                                points: 30,
-                                feedback: "This is clever—you're trying to decouple revenue from travel by making Airbnb useful even at home.\n\nAirbnb did experiment with this (\"local experiences\"), and it got some traction—but it's fundamentally fighting an uphill battle.\n\nMost people don't think of Airbnb for local activities; they think of Yelp, Eventbrite, or Google.\n\nYou're asking users to change their mental model, which is really hard.\n\nThe better strategy is doubling down on what users already associate you with (travel, stays) but expanding the definition (long-term stays, virtual experiences).\n\nDon't fight user psychology—work with it."
+                                points: 7,
+                                feedback: "This is clever—you're trying to decouple revenue from travel by making Airbnb useful even at home. Airbnb did experiment with this (\"local experiences\"), and it got some traction—but it's fundamentally fighting an uphill battle. Most people don't think of Airbnb for local activities; they think of Yelp, Eventbrite, or Google. You're asking users to change their mental model, which is really hard. The better strategy is doubling down on what users already associate you with (travel, stays) but expanding the definition (long-term stays, virtual experiences). Don't fight user psychology—work with it."
                             }
                         ]
                     }
@@ -507,12 +491,15 @@
             // SNIPPET 5: Enhanced tracking with retry logic
             const retryFailedEvents = async () => {
                 const failed = JSON.parse(localStorage.getItem('pmSimFailedEvents') || '[]');
+                
                 if (failed.length === 0) return;
                 
                 console.log(`🔄 Retrying ${failed.length} failed events...`);
+                
                 const stillFailed = [];
                 
                 for (const event of failed) {
+                    // Don't retry more than 3 times
                     if (event.retryCount >= 3) {
                         console.warn('⚠️ Giving up on event after 3 retries:', event);
                         continue;
@@ -522,16 +509,22 @@
                         await fetch(GOOGLE_SCRIPT_URL, {
                             method: 'POST',
                             mode: 'no-cors',
-                            headers: { 'Content-Type': 'application/json' },
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
                             body: JSON.stringify(event)
                         });
+                        
                         console.log('✅ Retry successful:', event.status || event.action);
+                        
                     } catch (error) {
+                        // Still failing, keep for next retry
                         event.retryCount = (event.retryCount || 0) + 1;
                         stillFailed.push(event);
                     }
                 }
                 
+                // Update failed events list
                 if (stillFailed.length > 0) {
                     localStorage.setItem('pmSimFailedEvents', JSON.stringify(stillFailed));
                 } else {
@@ -545,12 +538,19 @@
                     await fetch(GOOGLE_SCRIPT_URL, {
                         method: 'POST',
                         mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
                         body: JSON.stringify(data)
                     });
+                    
+                    // On success, retry any failed events
                     await retryFailedEvents();
+                    
                     console.log('✅ Tracked:', data.status || data.action);
+                    
                 } catch (error) {
+                    // Store failed event for later retry
                     const failedEvents = JSON.parse(localStorage.getItem('pmSimFailedEvents') || '[]');
                     failedEvents.push({ 
                         ...data, 
@@ -558,6 +558,7 @@
                         retryCount: (data.retryCount || 0)
                     });
                     localStorage.setItem('pmSimFailedEvents', JSON.stringify(failedEvents));
+                    
                     console.error('❌ Tracking failed (saved for retry):', error);
                 }
             };
@@ -565,17 +566,21 @@
             const handleEmailSubmit = (e) => {
                 e.preventDefault();
                 if (email && email.includes('@')) {
+                    // SNIPPET 1: Save to localStorage for session persistence
                     localStorage.setItem('pmSimEmail', email);
                     localStorage.setItem('pmSimStartTime', new Date().toISOString());
+                    
                     sendToGoogleSheets({ email, simulation: 'Week 1 - PM Fundamentals', status: 'started' });
                     setHasStarted(true);
                 }
             };
 
             const handleAnswer = (optionIndex) => {
+                console.log('Answer clicked:', optionIndex); // Debug
                 setSelectedAnswerIndex(optionIndex);
             };
 
+            // SNIPPET 1: Clear stored data on completion
             const clearStoredProgress = () => {
                 localStorage.removeItem('pmSimEmail');
                 localStorage.removeItem('pmSimStartTime');
@@ -586,9 +591,10 @@
                 
                 const currentQ = simulation.questions[currentQuestion];
                 const selectedOption = currentQ.options[selectedAnswerIndex];
+                
                 const newAnswers = [...answers, { question: currentQuestion, points: selectedOption.points, feedback: selectedOption.feedback }];
                 setAnswers(newAnswers);
-                setSelectedAnswerIndex(null);
+                setSelectedAnswerIndex(null); // Reset selection for next question
 
                 // SNIPPET 2: Track progress every 3 questions
                 if ((currentQuestion + 1) % 3 === 0 && currentQuestion < simulation.questions.length - 1) {
@@ -624,7 +630,7 @@
                     
                     setShowResults(true);
                     localStorage.setItem('pm_simulation_week1_attempted', 'true');
-                    clearStoredProgress();
+                    clearStoredProgress(); // SNIPPET 1: Clear after completion
                 }
             };
 
@@ -662,7 +668,7 @@
                 }
             };
 
-            // Helper function to format text with proper paragraph breaks
+            // READABILITY: Helper function to format text with paragraphs
             const formatText = (text) => {
                 if (!text) return '';
                 const paragraphs = text.split('\n\n').filter(p => p.trim());
@@ -678,112 +684,403 @@
                 const score = calculateScore();
                 const narrative = getNarrative(score.percentage);
                 
-                const linkedInText = `I just completed Week 1 of the PM Simulation Series: Airbnb Platform Evolution! 🚀\n\nScore: ${score.totalPoints}/${score.maxPoints} (${score.percentage}%)\nTier: ${narrative.tier}\n\nThis deep-dive case study tested real decisions from Airbnb's journey (2009-2019)—from the NYC photo crisis to scaling globally.\n\nKey lessons: When to do things that don't scale, how to turn costs into moats, and why mechanism design matters for marketplace trust.\n\n#ProductManagement #Airbnb #PMSimulation`;
-                
-                navigator.clipboard.writeText(linkedInText);
+                // Track share event in Google Sheets
                 sendToGoogleSheets({ 
                     email, 
-                    simulation: 'Week 1 - PM Fundamentals', 
+                    simulation: 'Week 1 - PM Fundamentals',
                     score: score.totalPoints,
                     percentage: score.percentage,
                     tier: narrative.tier,
                     action: 'SHARED_ON_LINKEDIN'
                 });
-                alert('Copied to clipboard! Paste this into LinkedIn.');
+                
+                // Create shareable text with simulation URL
+                const simulationUrl = window.location.href.split('?')[0];
+                
+                const shareText = `🎯 I just completed PM Simulation 1/20!
+
+My Result: ${score.percentage}% - ${narrative.tier}
+
+Challenge: "${simulation.title}"
+
+What I was tested on:
+• PM vs Project Manager role clarity
+• Stakeholder management & prioritization
+• Data-driven decision making
+• Defining product success metrics
+
+This simulation tests real-world PM thinking through Airbnb's early-stage growth decisions.
+
+Think you can beat my score?
+Take the free simulation: ${simulationUrl}
+
+#ProductManagement #PMSkills #CareerGrowth #Leadership
+#ProductStrategy #TechCareers
+
+👉 Follow for 20 PM simulations: linkedin.com/in/mohansimham`;
+
+                // Show modal with instructions
+                const modal = document.createElement('div');
+                modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px;';
+                
+                const card = document.createElement('div');
+                card.style.cssText = 'background: white; border-radius: 16px; padding: 32px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;';
+                
+                const previewText = shareText.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                
+                card.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
+                        <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 16px; color: #1f2937;">Ready to Share Your Achievement!</h2>
+                        <p style="color: #6b7280; margin-bottom: 24px; line-height: 1.6;">Share your PM assessment results on LinkedIn in 3 easy steps:</p>
+                        <ol style="text-align: left; color: #6b7280; margin-bottom: 24px; line-height: 1.8; padding-left: 24px;">
+                            <li><strong>Click</strong> the button below (copies text + opens LinkedIn)</li>
+                            <li><strong>Click "Start a post"</strong> on LinkedIn</li>
+                            <li><strong>Paste</strong> (Ctrl+V or Cmd+V) and click Post! 🚀</li>
+                        </ol>
+                        <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left; max-height: 250px; overflow-y: auto; font-size: 13px; line-height: 1.6; white-space: pre-wrap; color: #374151; font-family: monospace;">${previewText}</div>
+                        <button id="copyShareBtn" style="width: 100%; background: #0A66C2; color: white; padding: 16px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 12px; transition: all 0.3s;">
+                            📋 Copy & Open LinkedIn
+                        </button>
+                        <button id="cancelBtn" style="width: 100%; background: #e5e7eb; color: #374151; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;">
+                            Cancel
+                        </button>
+                    </div>
+                `;
+                
+                modal.appendChild(card);
+                document.body.appendChild(modal);
+                
+                // Add event listeners
+                const copyBtn = document.getElementById('copyShareBtn');
+                const cancelBtn = document.getElementById('cancelBtn');
+                
+                copyBtn.addEventListener('click', () => {
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        window.open('https://www.linkedin.com/feed/', '_blank');
+                        copyBtn.innerHTML = '✅ Copied! LinkedIn Opening...';
+                        copyBtn.style.background = '#10b981';
+                        setTimeout(() => {
+                            if (modal.parentElement) {
+                                document.body.removeChild(modal);
+                            }
+                        }, 2000);
+                    }).catch(() => {
+                        alert('Please copy manually:\n\n' + shareText);
+                        window.open('https://www.linkedin.com/feed/', '_blank');
+                    });
+                });
+                
+                cancelBtn.addEventListener('click', () => {
+                    if (modal.parentElement) {
+                        document.body.removeChild(modal);
+                    }
+                });
+                
+                // Close on background click
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        document.body.removeChild(modal);
+                    }
+                });
             };
 
             const downloadBadge = () => {
                 const score = calculateScore();
                 const narrative = getNarrative(score.percentage);
+                
+                // Track badge download event in Google Sheets
+                sendToGoogleSheets({ 
+                    email, 
+                    simulation: 'Week 1 - PM Fundamentals',
+                    score: score.totalPoints,
+                    percentage: score.percentage,
+                    tier: narrative.tier,
+                    action: 'DOWNLOADED_BADGE'
+                });
+                
+                // Create professional achievement badge
                 const canvas = document.createElement('canvas');
-                canvas.width = 800;
-                canvas.height = 600;
+                canvas.width = 1200;
+                canvas.height = 675;
                 const ctx = canvas.getContext('2d');
                 
-                ctx.fillStyle = '#1e40af';
-                ctx.fillRect(0, 0, 800, 600);
+                // Background - Clean white with professional gradient accent
                 ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 32px Arial';
-                ctx.fillText('PM Simulation Certificate', 50, 100);
-                ctx.font = '24px Arial';
-                ctx.fillText('Week 1: Airbnb Platform Evolution', 50, 150);
-                ctx.font = '20px Arial';
-                ctx.fillText(email, 50, 250);
-                ctx.font = 'bold 28px Arial';
-                ctx.fillText(`${narrative.tier}`, 50, 320);
-                ctx.font = '24px Arial';
-                ctx.fillText(`Score: ${score.totalPoints}/${score.maxPoints} (${score.percentage}%)`, 50, 380);
-                ctx.font = '18px Arial';
-                ctx.fillText('Completed: ' + new Date().toLocaleDateString(), 50, 450);
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
+                // Left accent bar - Navy blue gradient
+                const leftGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                leftGradient.addColorStop(0, '#1e40af');
+                leftGradient.addColorStop(1, '#3b82f6');
+                ctx.fillStyle = leftGradient;
+                ctx.fillRect(0, 0, 20, canvas.height);
+                
+                // Top header section - Light blue background
+                ctx.fillStyle = '#eff6ff';
+                ctx.fillRect(20, 0, canvas.width - 20, 120);
+                
+                // Logo/Brand area top left
+                ctx.fillStyle = '#1e40af';
+                ctx.font = 'bold 24px Arial, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('PRODUCT MANAGEMENT', 60, 50);
+                ctx.fillStyle = '#3b82f6';
+                ctx.font = '18px Arial, sans-serif';
+                ctx.fillText('Professional Assessment Certificate', 60, 80);
+                
+                // Badge indicator top right
+                ctx.fillStyle = '#1e40af';
+                ctx.fillRect(950, 30, 200, 50);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 16px Arial, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('SIMULATION 1/20', 1050, 60);
+                
+                // Main content area
+                ctx.textAlign = 'center';
+                
+                // Achievement title
+                ctx.fillStyle = '#1f2937';
+                ctx.font = 'bold 48px Arial, sans-serif';
+                ctx.fillText('ACHIEVEMENT CERTIFICATE', 600, 200);
+                
+                // Divider line
+                ctx.strokeStyle = '#e5e7eb';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(300, 230);
+                ctx.lineTo(900, 230);
+                ctx.stroke();
+                
+                // Score section - Large and prominent
+                ctx.fillStyle = '#1e40af';
+                ctx.font = 'bold 96px Arial, sans-serif';
+                ctx.fillText(score.percentage + '%', 600, 340);
+                
+                // Tier badge
+                const tierWidth = ctx.measureText(narrative.tier.toUpperCase()).width + 60;
+                ctx.fillStyle = '#dbeafe';
+                ctx.fillRect((canvas.width - tierWidth) / 2, 360, tierWidth, 50);
+                ctx.fillStyle = '#1e40af';
+                ctx.font = 'bold 28px Arial, sans-serif';
+                ctx.fillText(narrative.tier.toUpperCase(), 600, 395);
+                
+                // Challenge name
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '24px Arial, sans-serif';
+                ctx.fillText('Airbnb Platform Evolution', 600, 450);
+                ctx.font = '20px Arial, sans-serif';
+                ctx.fillText('PM Fundamentals • Strategic Decision Making', 600, 480);
+                
+                // Bottom section - Curator and branding
+                ctx.fillStyle = '#f9fafb';
+                ctx.fillRect(20, 530, canvas.width - 20, 145);
+                
+                // Divider
+                ctx.strokeStyle = '#e5e7eb';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(60, 530);
+                ctx.lineTo(1140, 530);
+                ctx.stroke();
+                
+                // Certificate text
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'italic 18px Arial, sans-serif';
+                ctx.fillText('This certificate validates completion of a comprehensive product management', 600, 570);
+                ctx.fillText('assessment testing strategic thinking, prioritization, and decision-making skills.', 600, 595);
+                
+                // Curator info
+                ctx.fillStyle = '#1f2937';
+                ctx.font = 'bold 22px Arial, sans-serif';
+                ctx.fillText('Curated by Mohan Simham', 600, 635);
+                
+                ctx.fillStyle = '#2563eb';
+                ctx.font = 'bold 20px Arial, sans-serif';
+                ctx.fillText('linkedin.com/in/mohansimham', 600, 660);
+                
+                // Decorative corner elements
+                ctx.strokeStyle = '#3b82f6';
+                ctx.lineWidth = 3;
+                
+                // Top right corner
+                ctx.beginPath();
+                ctx.moveTo(1140, 140);
+                ctx.lineTo(1180, 140);
+                ctx.lineTo(1180, 180);
+                ctx.stroke();
+                
+                // Bottom left corner
+                ctx.beginPath();
+                ctx.moveTo(60, 510);
+                ctx.lineTo(20, 510);
+                ctx.lineTo(20, 550);
+                ctx.stroke();
+                
+                // Download
                 canvas.toBlob((blob) => {
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = 'PM-Simulation-Certificate.png';
+                    const timestamp = new Date().toISOString().split('T')[0];
+                    a.download = `PM-Simulation-Certificate-${score.percentage}pct-${timestamp}.png`;
+                    document.body.appendChild(a);
                     a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
                     
-                    sendToGoogleSheets({ 
-                        email, 
-                        simulation: 'Week 1 - PM Fundamentals', 
-                        score: score.totalPoints,
-                        percentage: score.percentage,
-                        tier: narrative.tier,
-                        action: 'DOWNLOADED_BADGE'
-                    });
+                    // Show success message
+                    const successMsg = document.createElement('div');
+                    successMsg.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 16px 24px; border-radius: 8px; font-weight: 600; z-index: 10000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); animation: slideIn 0.3s ease;';
+                    successMsg.innerHTML = '✅ Certificate downloaded!<br><span style="font-size: 14px; font-weight: normal;">Ready to share on LinkedIn</span>';
+                    document.body.appendChild(successMsg);
+                    
+                    setTimeout(() => {
+                        successMsg.style.animation = 'slideOut 0.3s ease';
+                        setTimeout(() => {
+                            if (successMsg.parentElement) {
+                                document.body.removeChild(successMsg);
+                            }
+                        }, 300);
+                    }, 3000);
                 });
             };
 
-            if (hasAttempted) {
+            if (hasAttempted && !hasStarted) {
                 return h('div', { className: 'min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-6' },
-                    h('div', { className: 'max-w-md bg-white rounded-2xl shadow-xl p-8 text-center' },
-                        h('div', { className: 'w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6' },
+                    h('div', { className: 'max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center' },
+                        h('div', { className: 'w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4' },
                             h(TrophyIcon)
                         ),
-                        h('h2', { className: 'text-2xl font-bold text-gray-900 mb-4' }, 'Already Completed'),
-                        h('p', { className: 'text-gray-600 mb-6' }, 'You can only attempt this simulation once to maintain data integrity. Thank you for participating!'),
-                        h('p', { className: 'text-sm text-gray-500' }, 'Check your email for results or share your achievement on LinkedIn.')
+                        h('h2', { className: 'text-2xl font-bold text-gray-900 mb-4' }, 'Already Completed!'),
+                        h('p', { className: 'text-gray-600 mb-6' }, "You've already taken this simulation. Each learner gets one attempt to ensure thoughtful decision-making and fair competition."),
+                        h('p', { className: 'text-sm text-gray-500' }, 'Want more PM simulations? Follow the course for upcoming modules!')
                     )
                 );
             }
 
             if (!hasStarted) {
                 return h('div', { className: 'min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-6' },
-                    h('div', { className: 'max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden' },
-                        h('div', { className: 'bg-gradient-to-r from-indigo-600 to-blue-600 p-8 text-white' },
-                            h('h1', { className: 'text-3xl font-bold mb-2' }, simulation.title),
-                            h('p', { className: 'text-blue-100' }, `${simulation.week} • ${simulation.company} • ${simulation.year}`)
+                    h('div', { className: 'max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden' },
+                        h('div', { className: 'bg-gradient-to-r from-blue-600 to-blue-700 p-8 text-white' },
+                            h('p', { className: 'text-sm font-semibold text-blue-100 mb-3 tracking-wide uppercase' }, '✨ Test Your Product Management Superpower'),
+                            h('p', { className: 'text-xs text-blue-100 mb-4' }, 'Inspired by real product management business cases'),
+                            h('div', { className: 'flex items-center gap-3 mb-4' },
+                                h('div', { className: 'w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center' },
+                                    h(TrendingUpIcon)
+                                ),
+                                h('div', null,
+                                    h('div', { className: 'text-sm text-blue-100 mb-1' }, 'Simulation 1/20 • ' + simulation.year),
+                                    h('h1', { className: 'text-2xl font-bold' }, simulation.title),
+                                    h('p', { className: 'text-blue-100' }, simulation.company + ' Case Study')
+                                )
+                            ),
+                            h('p', { className: 'text-xs text-blue-100' }, 
+                                'Curated by Mohan Simham • ',
+                                h('a', { 
+                                    href: 'https://linkedin.com/in/mohansimham', 
+                                    target: '_blank',
+                                    className: 'underline hover:text-white transition-colors'
+                                }, 'LinkedIn: /mohansimham')
+                            )
                         ),
                         h('div', { className: 'p-8' },
-                            h('p', { className: 'text-gray-700 text-lg mb-6 leading-relaxed' }, simulation.description),
-                            h('div', { className: 'bg-blue-50 border-l-4 border-blue-600 p-4 mb-6' },
-                                h('h3', { className: 'font-semibold text-blue-900 mb-2' }, 'What You\'ll Learn:'),
-                                h('ul', { className: 'text-blue-800 space-y-2 text-sm' },
-                                    h('li', null, '✓ When to do things that don\'t scale'),
-                                    h('li', null, '✓ How to turn costs into competitive moats'),
-                                    h('li', null, '✓ Mechanism design for marketplace trust'),
-                                    h('li', null, '✓ Proactive regulatory strategy'),
-                                    h('li', null, '✓ Crisis management and resilience planning')
+                            h('p', { className: 'text-lg text-gray-700 mb-6' }, simulation.description),
+                            
+                            h('div', { className: 'bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl p-6 mb-6' },
+                                h('div', { className: 'flex items-start gap-4' },
+                                    h('div', { className: 'flex-shrink-0' },
+                                        h('div', { className: 'w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center' },
+                                            h(TrophyIcon, { className: 'w-8 h-8 text-white' })
+                                        )
+                                    ),
+                                    h('div', { className: 'flex-1' },
+                                        h('h3', { className: 'text-lg font-bold text-gray-900 mb-2' }, '🎯 Earn Your Achievement Badge'),
+                                        h('p', { className: 'text-sm text-gray-600 mb-3' }, 'Complete this simulation and share your personalized achievement badge on LinkedIn. Stand out as a certified PM professional!'),
+                                        h('div', { className: 'bg-white rounded-lg p-4 border border-purple-200 shadow-sm' },
+                                            h('div', { className: 'flex items-center gap-3 mb-2' },
+                                                h('div', { className: 'w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded flex items-center justify-center flex-shrink-0' },
+                                                    h('span', { className: 'text-white font-bold text-sm' }, '1/20')
+                                                ),
+                                                h('div', null,
+                                                    h('div', { className: 'text-xs font-semibold text-blue-600' }, 'ACHIEVED'),
+                                                    h('div', { className: 'text-sm font-bold text-gray-900' }, 'PM Fundamentals Master')
+                                                )
+                                            ),
+                                            h('div', { className: 'text-xs text-gray-500 border-t border-gray-100 pt-2' }, 
+                                                'Score: 92% • Strategic Mastery',
+                                                h('div', { className: 'text-blue-600 font-medium mt-1' }, 'Curated by Mohan Simham')
+                                            )
+                                        ),
+                                        h('p', { className: 'text-xs text-gray-500 mt-2 italic' }, '👆 Preview of what you\'ll share on LinkedIn')
+                                    )
+                                )
+                            ),
+
+                            h('div', { className: 'bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 rounded-xl p-5 mb-6' },
+                                h('div', { className: 'flex items-center gap-3 mb-3' },
+                                    h('div', { className: 'w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0' },
+                                        h('svg', { className: 'w-7 h-7 text-white', viewBox: '0 0 24 24', fill: 'currentColor' },
+                                            h('path', { d: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z' })
+                                        )
+                                    ),
+                                    h('div', { className: 'flex-1' },
+                                        h('h3', { className: 'text-base font-bold text-gray-900' }, '👨‍💼 Follow Mohan Simham on LinkedIn'),
+                                        h('p', { className: 'text-sm text-gray-600' }, 'Get access to 20 PM simulations, case studies, and career insights')
+                                    )
+                                ),
+                                h('a', {
+                                    href: 'https://linkedin.com/in/mohansimham',
+                                    target: '_blank',
+                                    className: 'block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2.5 rounded-lg font-semibold transition-all text-sm'
+                                }, '→ Connect on LinkedIn: /mohansimham')
+                            ),
+                            
+                            h('div', { className: 'bg-amber-50 border-l-4 border-amber-500 p-4 mb-6' },
+                                h('p', { className: 'text-sm text-amber-800' },
+                                    h('strong', null, '⚡ Learning Focus: '),
+                                    'PM vs Project Manager, stakeholder management, prioritization frameworks, data-driven decisions, and defining success metrics.'
+                                )
+                            ),
+                            h('div', { className: 'grid grid-cols-3 gap-4 mb-8' },
+                                h('div', { className: 'text-center p-4 bg-gray-50 rounded-lg' },
+                                    h(UsersIcon, { className: 'w-6 h-6 text-indigo-600 mx-auto mb-2' }),
+                                    h('div', { className: 'text-sm text-gray-600' }, 'Questions'),
+                                    h('div', { className: 'text-xl font-bold text-gray-900' }, simulation.questions.length)
+                                ),
+                                h('div', { className: 'text-center p-4 bg-gray-50 rounded-lg' },
+                                    h(TrophyIcon, { className: 'w-6 h-6 text-indigo-600 mx-auto mb-2' }),
+                                    h('div', { className: 'text-sm text-gray-600' }, 'One Attempt'),
+                                    h('div', { className: 'text-xl font-bold text-gray-900' }, 'Only')
+                                ),
+                                h('div', { className: 'text-center p-4 bg-gray-50 rounded-lg' },
+                                    h(Share2Icon, { className: 'w-6 h-6 text-indigo-600 mx-auto mb-2' }),
+                                    h('div', { className: 'text-sm text-gray-600' }, 'Shareable'),
+                                    h('div', { className: 'text-xl font-bold text-gray-900' }, 'Results')
                                 )
                             ),
                             h('form', { onSubmit: handleEmailSubmit, className: 'space-y-4' },
                                 h('div', null,
-                                    h('label', { className: 'block text-sm font-medium text-gray-700 mb-2' }, 'Enter your email to begin:'),
-                                    h('input', {
-                                        type: 'email',
-                                        value: email,
-                                        onChange: (e) => setEmail(e.target.value),
-                                        placeholder: 'your.email@example.com',
-                                        className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent',
-                                        required: true
-                                    })
+                                    h('label', { className: 'block text-sm font-medium text-gray-700 mb-2' }, 'Your Email (Required for Certificate & Results)'),
+                                    h('div', { className: 'relative' },
+                                        h(MailIcon, { className: 'absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400' }),
+                                        h('input', {
+                                            type: 'email',
+                                            value: email,
+                                            onChange: (e) => setEmail(e.target.value),
+                                            placeholder: 'your.email@company.com',
+                                            required: true,
+                                            className: 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
+                                        })
+                                    )
                                 ),
                                 h('button', {
                                     type: 'submit',
-                                    className: 'w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-indigo-700 hover:to-blue-700 transition-all duration-200 shadow-lg'
-                                }, 'Start Simulation →')
-                            ),
-                            h('p', { className: 'text-xs text-gray-500 mt-4 text-center' }, '⏱️ Estimated time: 20-25 minutes • 💡 One attempt per user')
+                                    className: 'w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-purple-500 hover:to-pink-500 transition-all shadow-lg hover:shadow-xl'
+                                }, 'Start Simulation 1 →'),
+                                h('p', { className: 'text-xs text-gray-500 text-center' }, "Your email is used only for results delivery and course notifications. No spam.")
+                            )
                         )
                     )
                 );
@@ -792,68 +1089,144 @@
             if (showResults) {
                 const score = calculateScore();
                 const narrative = getNarrative(score.percentage);
-                
+
                 return h('div', { className: 'min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6' },
                     h('div', { className: 'max-w-4xl mx-auto' },
                         h('div', { className: 'bg-white rounded-2xl shadow-xl overflow-hidden mb-6' },
-                            h('div', { className: 'bg-gradient-to-r from-indigo-600 to-blue-600 p-8 text-white text-center' },
-                                h('div', { className: 'w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-6' },
-                                    h(TrophyIcon, { className: 'text-indigo-600' })
-                                ),
-                                h('h1', { className: 'text-4xl font-bold mb-2' }, narrative.title),
-                                h('p', { className: 'text-3xl font-bold mb-2' }, `${score.percentage}%`),
-                                h('p', { className: 'text-xl text-blue-100' }, `${score.totalPoints} / ${score.maxPoints} points`)
+                            h('div', { className: 'bg-gradient-to-r from-blue-600 to-blue-700 p-8 text-white text-center' },
+                                h(TrophyIcon, { className: 'w-16 h-16 mx-auto mb-4' }),
+                                h('div', { className: 'text-sm text-blue-100 mb-2' }, 'Simulation 1/20 Complete'),
+                                h('h2', { className: 'text-3xl font-bold mb-2' }, narrative.tier),
+                                h('div', { className: 'text-5xl font-bold mb-2' }, `${score.percentage}%`),
+                                h('div', { className: 'text-blue-100' }, `Score: ${score.totalPoints} / ${score.maxPoints} points`)
                             ),
                             h('div', { className: 'p-8' },
-                                h('p', { className: 'text-lg text-gray-700 mb-8 leading-relaxed' }, narrative.text),
-                                h('div', { className: 'flex gap-4 justify-center mb-8' },
+                                h('h3', { className: 'text-xl font-bold text-gray-900 mb-3' }, narrative.title),
+                                h('p', { className: 'text-gray-700 mb-6 leading-relaxed' }, narrative.text),
+                                
+                                h('div', { className: 'space-y-3' },
                                     h('button', {
                                         onClick: shareToLinkedIn,
-                                        className: 'flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors'
-                                    }, h(Share2Icon), 'Share on LinkedIn'),
+                                        className: 'w-full bg-[#0A66C2] text-white py-4 rounded-lg font-semibold hover:bg-[#004182] transition-all flex items-center justify-center gap-2 shadow-lg'
+                                    },
+                                        h(Share2Icon),
+                                        'Share Achievement on LinkedIn'
+                                    ),
                                     h('button', {
                                         onClick: downloadBadge,
-                                        className: 'flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors'
-                                    }, h(TrophyIcon), 'Download Certificate')
-                                ),
-                                h('div', { className: 'space-y-6' },
-                                    answers.map((answer, idx) => {
-                                        const q = simulation.questions[idx];
-                                        const correctAnswer = q.options.reduce((best, opt) => opt.points > best.points ? opt : best);
-                                        const userAnswer = q.options.find((opt, i) => opt.points === answer.points);
-                                        const isCorrect = userAnswer.points === correctAnswer.points;
-                                        
-                                        return h('div', { key: idx, className: 'border-l-4 ' + (isCorrect ? 'border-green-500 bg-green-50' : 'border-yellow-500 bg-yellow-50') + ' p-6 rounded-r-lg' },
-                                            h('div', { className: 'flex justify-between items-start mb-3' },
-                                                h('h3', { className: 'font-bold text-lg text-gray-900' }, `Question ${idx + 1}`),
-                                                h('span', { className: 'text-sm font-semibold px-3 py-1 rounded-full ' + (isCorrect ? 'bg-green-600 text-white' : 'bg-yellow-600 text-white') },
-                                                    `${answer.points}/${correctAnswer.points} points`
-                                                )
-                                            ),
-                                            h('div', { className: 'bg-white border border-gray-200 p-4 rounded mb-4' },
-                                                h('p', { className: 'text-sm font-semibold text-gray-900 mb-2' }, 'Your answer:'),
-                                                h('p', { className: 'text-gray-700' }, userAnswer.text)
-                                            ),
-                                            h('div', { className: 'bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r' },
-                                                h('div', { className: 'text-xs font-bold text-blue-900 uppercase tracking-wide mb-2' }, '💬 Feedback'),
-                                                h('div', { className: 'feedback-content' }, formatText(userAnswer.feedback)),
-                                                !isCorrect && h('div', { className: 'mt-4 pt-4 border-t border-blue-200' },
-                                                    h('p', { className: 'text-xs font-semibold text-blue-800 mb-2' }, 'Why the optimal answer is better:'),
-                                                    h('div', { className: 'feedback-content' }, formatText(correctAnswer.feedback))
-                                                )
-                                            )
-                                        );
-                                    })
+                                        className: 'w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-lg font-semibold hover:from-purple-500 hover:to-pink-500 transition-all flex items-center justify-center gap-2 shadow-lg'
+                                    },
+                                        h('svg', { className: 'w-5 h-5', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' },
+                                            h('path', { strokeLinecap: 'round', strokeLinejoin: 'round', strokeWidth: 2, d: 'M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4' })
+                                        ),
+                                        'Download Achievement Badge Image'
+                                    ),
+                                    h('p', { className: 'text-center text-sm text-gray-500 mt-2' }, '💡 Pro tip: Download the badge image to add to your LinkedIn post for extra impact!')
                                 )
                             )
                         ),
-                        h('div', { className: 'text-center mt-6 text-sm text-gray-500' }, '💡 This was Week 1 of 20 in the PM Simulation Series')
+                        h('div', { className: 'bg-white rounded-2xl shadow-xl p-8' },
+                            h('h3', { className: 'text-2xl font-bold text-gray-900 mb-6' }, 'Detailed Answer Analysis'),
+                            simulation.questions.map((q, idx) => {
+                                const userAnswer = answers[idx];
+                                const correctAnswer = q.options.reduce((max, opt) => opt.points > max.points ? opt : max, q.options[0]);
+                                const selectedOption = q.options.find(opt => opt.feedback === userAnswer.feedback);
+                                const isCorrect = selectedOption.points === correctAnswer.points;
+                                
+                                return h('div', { key: q.id, className: 'mb-8 pb-8 border-b-2 border-gray-200 last:border-0' },
+                                    // Question number and score
+                                    h('div', { className: 'flex items-start justify-between mb-4' },
+                                        h('div', { className: 'flex items-center gap-3' },
+                                            h('div', { className: 'w-10 h-10 bg-blue-600 text-white rounded-lg flex items-center justify-center flex-shrink-0 font-bold text-lg' }, 
+                                                idx + 1
+                                            ),
+                                            h('div', null,
+                                                h('div', { className: 'text-sm text-gray-500' }, 'Question ' + (idx + 1) + ' of ' + simulation.questions.length),
+                                                h('div', { className: 'flex items-center gap-2 mt-1' },
+                                                    h('span', { className: 'text-lg font-bold text-gray-900' }, userAnswer.points + ' / ' + correctAnswer.points + ' points'),
+                                                    isCorrect 
+                                                        ? h('span', { className: 'text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-semibold' }, '✓ Optimal Choice')
+                                                        : h('span', { className: 'text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full font-semibold' }, 'Room for Improvement')
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    
+                                    // Scenario
+                                    h('div', { className: 'bg-slate-50 border-l-4 border-slate-300 p-4 mb-4 rounded-r' },
+                                        h('div', { className: 'text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2' }, 'Scenario'),
+                                        h('p', { className: 'text-sm text-slate-700 leading-relaxed' }, q.scenario)
+                                    ),
+                                    
+                                    // Question
+                                    h('div', { className: 'mb-4' },
+                                        h('p', { className: 'font-semibold text-gray-900 text-base mb-3' }, q.question)
+                                    ),
+                                    
+                                    // Your Answer
+                                    h('div', { className: isCorrect ? 'bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-3' : 'bg-red-50 border-2 border-red-200 rounded-lg p-4 mb-3' },
+                                        h('div', { className: 'flex items-start gap-3' },
+                                            h('div', { className: isCorrect ? 'text-2xl' : 'text-2xl' }, isCorrect ? '✓' : '✗'),
+                                            h('div', { className: 'flex-1' },
+                                                h('div', { className: isCorrect ? 'text-xs font-bold text-green-700 uppercase tracking-wide mb-2' : 'text-xs font-bold text-red-700 uppercase tracking-wide mb-2' }, 
+                                                    'Your Answer'
+                                                ),
+                                                h('p', { className: 'text-sm text-gray-800 font-medium mb-2' }, selectedOption.text),
+                                                h('p', { className: isCorrect ? 'text-xs text-green-700 font-medium' : 'text-xs text-red-700 font-medium' }, 
+                                                    userAnswer.points + ' points earned'
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    
+                                    // Correct Answer (only show if user didn't select it)
+                                    !isCorrect && h('div', { className: 'bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-4' },
+                                        h('div', { className: 'flex items-start gap-3' },
+                                            h('div', { className: 'text-2xl' }, '★'),
+                                            h('div', { className: 'flex-1' },
+                                                h('div', { className: 'text-xs font-bold text-green-700 uppercase tracking-wide mb-2' }, 
+                                                    'Optimal Answer'
+                                                ),
+                                                h('p', { className: 'text-sm text-gray-800 font-medium mb-2' }, correctAnswer.text),
+                                                h('p', { className: 'text-xs text-green-700 font-medium' }, 
+                                                    correctAnswer.points + ' points (maximum)'
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    
+                                    // Explanation and Learning
+                                    h('div', { className: 'bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r' },
+                                        h('div', { className: 'text-xs font-bold text-blue-900 uppercase tracking-wide mb-2' }, 
+                                            '💬 Mohan Simham\'s Comments'
+                                        ),
+                                        h('div', { className: 'feedback-content' }, formatText(userAnswer.feedback)),
+                                        !isCorrect && h('div', { className: 'mt-3 pt-3 border-t border-blue-200' },
+                                            h('p', { className: 'text-xs font-semibold text-blue-800 mb-2' }, 'Why the optimal answer is better:'),
+                                            h('div', { className: 'feedback-content' }, formatText(correctAnswer.feedback))
+                                        )
+                                    )
+                                );
+                            })
+                        ),
+                        h('div', { className: 'text-center mt-8' },
+                            h('p', { className: 'text-gray-600 mb-2' }, 'Ready for Simulation 2/20? Continue the PM course to master product discovery & validation!'),
+                            h('p', { className: 'text-sm text-gray-500 mb-1' }, '© 2025 Mohan Simham. All Rights Reserved.'),
+                            h('p', { className: 'text-xs text-gray-400' }, 
+                                'Curated by Mohan Simham • ',
+                                h('a', { 
+                                    href: 'https://linkedin.com/in/mohansimham', 
+                                    target: '_blank',
+                                    className: 'text-blue-400 hover:text-blue-500 underline'
+                                }, 'LinkedIn: /mohansimham')
+                            )
+                        )
                     )
                 );
             }
 
             const currentQ = simulation.questions[currentQuestion];
-            
+
             return h('div', { className: 'min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6' },
                 h('div', { className: 'max-w-3xl mx-auto' },
                     h('div', { className: 'mb-8' },
@@ -869,38 +1242,44 @@
                         )
                     ),
                     h('div', { className: 'bg-white rounded-2xl shadow-xl overflow-hidden' },
-                        h('div', { className: 'bg-gradient-to-r from-gray-50 to-gray-100 p-8 border-b border-gray-200' },
-                            h('div', { className: 'flex items-start gap-4' },
-                                h('div', { className: 'w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0' },
-                                    h('span', { className: 'text-white font-bold text-lg' }, currentQuestion + 1)
+                        h('div', { className: 'bg-gradient-to-r from-gray-50 to-gray-100 p-6 border-b border-gray-200' },
+                            h('div', { className: 'flex items-start gap-3' },
+                                h('div', { className: 'w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0' },
+                                    h('span', { className: 'text-white font-bold' }, currentQuestion + 1)
                                 ),
-                                h('div', { className: 'flex-1' },
-                                    h('div', { className: 'section-label mb-2' }, 'Scenario'),
+                                h('div', null,
+                                    h('div', { className: 'section-label' }, 'SCENARIO'),
                                     h('div', { className: 'scenario-content' }, formatText(currentQ.scenario))
                                 )
                             )
                         ),
-                        h('div', { className: 'p-8' },
+                        h('div', { className: 'p-6' },
                             h('div', { className: 'question-text mb-6' }, currentQ.question),
-                            h('div', { className: 'space-y-3 mb-8' },
+                            h('div', { className: 'space-y-3 mb-6' },
                                 currentQ.options.map((option, idx) => {
                                     const isSelected = selectedAnswerIndex === idx;
+                                    const buttonClass = isSelected 
+                                        ? 'w-full text-left p-4 border-2 rounded-lg transition-all border-blue-600 bg-blue-50' 
+                                        : 'w-full text-left p-4 border-2 rounded-lg transition-all border-gray-200 hover:border-blue-500 hover:bg-blue-50';
+                                    
+                                    const radioClass = isSelected
+                                        ? 'w-6 h-6 border-2 rounded-full flex items-center justify-center flex-shrink-0 transition-all border-blue-600 bg-blue-600'
+                                        : 'w-6 h-6 border-2 rounded-full flex items-center justify-center flex-shrink-0 transition-all border-gray-400 bg-white';
+                                    
+                                    const textClass = isSelected 
+                                        ? 'option-text text-gray-900 font-medium' 
+                                        : 'option-text text-gray-700';
+                                    
                                     return h('button', {
                                         key: idx,
                                         onClick: () => handleAnswer(idx),
-                                        className: `w-full text-left p-5 rounded-xl border-2 transition-all duration-200 ${
-                                            isSelected 
-                                            ? 'border-indigo-600 bg-indigo-50 shadow-md' 
-                                            : 'border-gray-200 hover:border-indigo-300 hover:bg-gray-50'
-                                        }`
+                                        className: buttonClass
                                     },
                                         h('div', { className: 'flex items-start gap-3' },
-                                            h('div', { className: `w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                                                isSelected ? 'border-indigo-600 bg-indigo-600' : 'border-gray-300'
-                                            }` },
-                                                isSelected && h('div', { className: 'w-2.5 h-2.5 bg-white rounded-full' })
+                                            h('div', { className: radioClass },
+                                                isSelected ? h('div', { className: 'w-2.5 h-2.5 bg-white rounded-full' }) : null
                                             ),
-                                            h('span', { className: 'option-text' }, option.text)
+                                            h('p', { className: textClass }, option.text)
                                         )
                                     );
                                 })
@@ -908,12 +1287,10 @@
                             h('button', {
                                 onClick: handleNextChallenge,
                                 disabled: selectedAnswerIndex === null,
-                                className: `w-full py-4 px-6 rounded-xl font-semibold transition-all duration-200 ${
-                                    selectedAnswerIndex === null
-                                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                                    : 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:from-indigo-700 hover:to-blue-700 shadow-lg hover:shadow-xl'
-                                }`
-                            }, currentQuestion < simulation.questions.length - 1 ? 'Next Question →' : 'See Results →')
+                                className: selectedAnswerIndex !== null
+                                    ? 'w-full py-4 px-6 rounded-lg font-bold text-lg transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-xl cursor-pointer'
+                                    : 'w-full py-4 px-6 rounded-lg font-bold text-lg transition-all bg-gray-200 text-gray-400 cursor-not-allowed'
+                            }, currentQuestion === simulation.questions.length - 1 ? 'Complete Assessment →' : 'Next Challenge →')
                         )
                     ),
                     h('div', { className: 'text-center mt-6 text-sm text-gray-500' }, '💡 Choose carefully - you only get one attempt at this module')
@@ -921,6 +1298,7 @@
             );
         }
 
+        // Render the app
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(React.createElement(PMSimulation));
 
