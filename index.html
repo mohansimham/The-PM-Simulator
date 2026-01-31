@@ -666,12 +666,43 @@
             const formatText = (text) => {
                 if (!text) return '';
                 const paragraphs = text.split('\n\n').filter(p => p.trim());
-                return paragraphs.map((para, index) => 
-                    h('p', { 
-                        key: index,
+                
+                return paragraphs.map((para, paraIndex) => {
+                    // Check if paragraph contains **bold** markdown
+                    if (para.includes('**')) {
+                        const parts = [];
+                        const regex = /(\*\*[^*]+\*\*)/g;
+                        let lastIndex = 0;
+                        let match;
+                        
+                        while ((match = regex.exec(para)) !== null) {
+                            // Add text before the bold
+                            if (match.index > lastIndex) {
+                                parts.push(para.substring(lastIndex, match.index));
+                            }
+                            // Add bold text (remove ** markers)
+                            const boldText = match[0].replace(/\*\*/g, '');
+                            parts.push(h('strong', { key: `bold-${paraIndex}-${match.index}` }, boldText));
+                            lastIndex = match.index + match[0].length;
+                        }
+                        
+                        // Add remaining text
+                        if (lastIndex < para.length) {
+                            parts.push(para.substring(lastIndex));
+                        }
+                        
+                        return h('p', { 
+                            key: paraIndex,
+                            className: 'mb-4 last:mb-0'
+                        }, parts.length > 0 ? parts : para.trim());
+                    }
+                    
+                    // No bold markdown, return plain paragraph
+                    return h('p', { 
+                        key: paraIndex,
                         className: 'mb-4 last:mb-0'
-                    }, para.trim())
-                );
+                    }, para.trim());
+                });
             };
 
             const shareToLinkedIn = () => {
