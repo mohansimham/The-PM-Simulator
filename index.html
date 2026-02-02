@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 1: PM Fundamentals - Airbnb Platform Evolution</title>
+    <title>Week 1: Product Manager Fundamentals - Airbnb Platform Evolution</title>
     <meta name="description" content="Test your product management fundamentals with this Airbnb case study simulation.">
     
     <!-- Open Graph for LinkedIn sharing -->
-    <meta property="og:title" content="Week 1: PM Fundamentals - Airbnb Simulation">
-    <meta property="og:description" content="Can you navigate Airbnb's early growth decisions? Test your PM skills.">
+    <meta property="og:title" content="Week 1: Product Manager Fundamentals - Airbnb Simulation">
+    <meta property="og:description" content="Can you navigate Airbnb's early growth decisions? Test your Product Manager skills.">
     <meta property="og:type" content="website">
     
     <!-- Tailwind CSS -->
@@ -32,7 +32,7 @@
         /* READABILITY OPTIMIZATION */
         .scenario-content {
             font-size: 16px;
-            line-height: 1.6;
+            line-height: 1.7;
             max-width: 65ch;
             color: #1f2937;
         }
@@ -48,6 +48,33 @@
             font-size: 15px;
             margin-top: 1.5em;
             margin-bottom: 0.5em;
+        }
+        
+        /* POST-ANALYSIS SCENARIO FORMATTING */
+        .analysis-scenario {
+            font-size: 15px;
+            line-height: 1.65;
+            color: #374151;
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+        
+        .analysis-scenario .emoji {
+            font-size: 18px;
+            margin-right: 8px;
+            vertical-align: middle;
+            font-style: normal;
+        }
+        
+        .analysis-scenario .context-quote {
+            font-style: italic;
+            color: #4b5563;
+            display: block;
+            margin-top: 8px;
         }
         
         .feedback-content {
@@ -196,11 +223,11 @@
                 
                 if (resetMode) {
                     // Creator mode: Clear the attempt flag and allow retaking
-                    localStorage.removeItem('pm_simulation_week1_attempted');
+                    localStorage.removeItem('product_manager_simulation_week1_attempted');
                     setHasAttempted(false);
                 } else {
                     // Normal mode: Check if already attempted
-                    const attempted = localStorage.getItem('pm_simulation_week1_attempted');
+                    const attempted = localStorage.getItem('product_manager_simulation_week1_attempted');
                     if (attempted) {
                         setHasAttempted(true);
                     }
@@ -208,16 +235,16 @@
             }, []);
 
             const simulation = {
-                title: "Airbnb's Platform Evolution: PM Fundamentals",
+                title: "Airbnb's Platform Evolution: Product Manager Fundamentals",
                 company: "Airbnb",
                 week: "Week 1",
                 year: "2026",
-                description: "You're a PM at early-stage Airbnb. The company started by renting air mattresses during a design conference. Now you need to scale to a global platform. Make critical decisions that will define what product management means at Airbnb.",
+                description: "Step into real business situations that define successful Product Manager careers. These scenarios are drawn from actual companies facing growth, competition, and strategic crossroads. Every decision tests core Product Manager skills: strategic thinking, stakeholder management, data-driven prioritization, and building products users love. No theoretical frameworks—just the real challenges that separate exceptional Product Managers from the rest. Each simulation sharpens the skills that matter: turning ambiguity into clarity, balancing competing priorities, and making decisions with incomplete information.",
                 questions: 
 [
                     {
                         id: 1,
-                        scenario: "**July 2009 – The NYC Photo Crisis**\n\n**The Situation:**\nYou're a PM at Airbnb with 4 months of runway left. Revenue is $200/week. The team is eating leftover cereal from a desperate fundraising stunt.\n\n**The Discovery:**\nBrian Chesky just visited 24 NYC listings. Every single one has terrible photos—blurry shots, bad lighting, cropped furniture.\n\n**The Reality:**\nHosts aren't photographers. They're teachers and nurses trying to make rent.\n\n**Paul Graham's Proposal:**\n\"Fly to NYC, rent a $5,000 camera, photograph every listing yourselves. It won't scale, but it might save the company.\"\n\n**The Conflict:**\nNathan (CTO): \"This is a waste of time. We should build scalable features—algorithms, better search, payment improvements.\"\n\nThe burn rate calculator blinks: 4 months left.",
+                        scenario: "**July 2009 – The NYC Photo Crisis**\n\n**The Situation:**\nYou're a Product Manager at Airbnb with 4 months of runway left. Revenue is $200/week. The team is eating leftover cereal from a desperate fundraising stunt.\n\n**The Discovery:**\nBrian Chesky just visited 24 NYC listings. Every single one has terrible photos—blurry shots, bad lighting, cropped furniture.\n\n**The Reality:**\nHosts aren't photographers. They're teachers and nurses trying to make rent.\n\n**Paul Graham's Proposal:**\n\"Fly to NYC, rent a $5,000 camera, photograph every listing yourselves. It won't scale, but it might save the company.\"\n\n**The Conflict:**\nNathan (CTO): \"This is a waste of time. We should build scalable features—algorithms, better search, payment improvements.\"\n\nThe burn rate calculator blinks: 4 months left.",
                         question: "How do you make the case for or against this \"unscalable\" photography intervention?",
                         options: [
                             {
@@ -299,7 +326,7 @@
                             {
                         id: 4,
                         scenario: "**November 2011 – The San Francisco Housing Crisis**\n\n**The Growth:**\nAirbnb just reached 1 million bookings worldwide. San Francisco is your densest market.\n\n**The Backlash:**\nAngry resident emails are piling up: \"Airbnb is turning my building into a hotel.\" \"My landlord is evicting long-term tenants.\" \"I can't afford rent anymore.\"\n\n**The Data:**\n15% of SF hosts are renting multiple properties—not their primary residence. Some landlords are buying buildings specifically to convert them to Airbnb. Average SF rents are up 12% in the past year.\n\n**The Political Reality:**\nThe SF Board of Supervisors is holding hearings. Some are calling for an outright ban. Hotels and hotel unions are funding anti-Airbnb campaigns.\n\n**The Warning:**\nLegal team: \"If SF bans us, New York, Seattle, and other cities will follow. We could lose 40% of our revenue.\"",
-                        question: "You're running PM for Growth and Policy. What's your strategic recommendation?",
+                        question: "You're running Product Manager for Growth and Policy. What's your strategic recommendation?",
                         options: [
                             {
                                 text: "Fight regulations aggressively through lobbying, PR campaigns, and legal challenges",
@@ -309,7 +336,7 @@
                             {
                                 text: "Proactively partner with cities to co-create regulations that balance growth and housing protection",
                                 points: 10,
-                                feedback: "This is strategic brilliance disguised as compromise.\n\nRegulation is inevitable in your industry. The only question is whether you help write the rules or have them written FOR you.\n\nBy engaging early, Airbnb could have shaped policies that worked for everyone—registration systems, rental-day caps, primary residence requirements. SF eventually passed these, but because Airbnb fought them initially, the rules were stricter than needed.\n\nLegitimacy is a moat. Companies that work with regulators gain social license to operate. Companies that fight them become targets.\n\nAs a PM, your job is sustainable growth, not growth-at-all-costs."
+                                feedback: "This is strategic brilliance disguised as compromise.\n\nRegulation is inevitable in your industry. The only question is whether you help write the rules or have them written FOR you.\n\nBy engaging early, Airbnb could have shaped policies that worked for everyone—registration systems, rental-day caps, primary residence requirements. SF eventually passed these, but because Airbnb fought them initially, the rules were stricter than needed.\n\nLegitimacy is a moat. Companies that work with regulators gain social license to operate. Companies that fight them become targets.\n\nAs a Product Manager, your job is sustainable growth, not growth-at-all-costs."
                             },
                             {
                                 text: "Pivot away from major cities entirely and focus on vacation markets instead",
@@ -325,7 +352,7 @@
                     },
                             {
                         id: 5,
-                        scenario: "**June 2012 – The EJ Ransacking Crisis**\n\n**The Disaster:**\nA host named EJ rents her San Francisco home. She returns to find it ransacked—heirlooms stolen, walls vandalized, her home completely destroyed.\n\n**The Viral Fallout:**\nEJ blogs about it. The story goes viral: \"Airbnb won't help. They told me to use my renter's insurance.\" Tech blogs pick it up: \"Airbnb's Dark Side: The Trust Crisis.\"\n\n**The Impact:**\nBookings drop 15% overnight. Hosts are deleting listings. Investors are panicking. The press is calling Airbnb \"dangerous.\"\n\n**Brian Chesky's Response:**\nPersonal apology. $50,000 Host Guarantee. 24/7 emergency support hotline. Verified ID requirements for all users.\n\n**Your Job:**\nYou're the PM for the longer-term product response. Design features that make this scenario less likely AND less damaging when it does happen.\n\n**The Options:**\nHost insurance (expanded coverage). Mandatory security deposits. Guest vetting tools. Post-booking check-in verification. Full platform liability via a Host Protection plan.",
+                        scenario: "**June 2012 – The EJ Ransacking Crisis**\n\n**The Disaster:**\nA host named EJ rents her San Francisco home. She returns to find it ransacked—heirlooms stolen, walls vandalized, her home completely destroyed.\n\n**The Viral Fallout:**\nEJ blogs about it. The story goes viral: \"Airbnb won't help. They told me to use my renter's insurance.\" Tech blogs pick it up: \"Airbnb's Dark Side: The Trust Crisis.\"\n\n**The Impact:**\nBookings drop 15% overnight. Hosts are deleting listings. Investors are panicking. The press is calling Airbnb \"dangerous.\"\n\n**Brian Chesky's Response:**\nPersonal apology. $50,000 Host Guarantee. 24/7 emergency support hotline. Verified ID requirements for all users.\n\n**Your Job:**\nYou're the Product Manager for the longer-term product response. Design features that make this scenario less likely AND less damaging when it does happen.\n\n**The Options:**\nHost insurance (expanded coverage). Mandatory security deposits. Guest vetting tools. Post-booking check-in verification. Full platform liability via a Host Protection plan.",
                         question: "What product features should Airbnb prioritize to rebuild trust without killing the growth flywheel?",
                         options: [
                             {
@@ -373,13 +400,13 @@
                             {
                                 text: "Build a basic mobile app but keep the focus on desktop web (where most revenue comes from)",
                                 points: 3,
-                                feedback: "You're managing decline instead of building the future.\n\nMost revenue comes from desktop today—but that's a trailing indicator. The leading indicator is traffic, and traffic has already shifted.\n\nKodak delayed digital cameras because film was profitable. Netflix invested in streaming even though DVDs were profitable.\n\nWinners invest in the future. Losers defend the past.\n\nAs a PM, your north star should be \"where is user behavior headed?\" not \"where is revenue today?\" Revenue follows behavior with a lag."
+                                feedback: "You're managing decline instead of building the future.\n\nMost revenue comes from desktop today—but that's a trailing indicator. The leading indicator is traffic, and traffic has already shifted.\n\nKodak delayed digital cameras because film was profitable. Netflix invested in streaming even though DVDs were profitable.\n\nWinners invest in the future. Losers defend the past.\n\nAs a Product Manager, your north star should be \"where is user behavior headed?\" not \"where is revenue today?\" Revenue follows behavior with a lag."
                             }
                         ]
                     },
                             {
                         id: 7,
-                        scenario: "**October 2014 – The Craigslist Growth Hack**\n\n**The Opportunity:**\nCraigslist has millions of rental listings. Every week, thousands of landlords post there. What if Airbnb could automatically email them: \"Hey, we saw your listing. Why not also list on Airbnb?\"\n\n**The Feasibility:**\nEngineering can scrape Craigslist, extract contact info, and automate outreach. Early tests show 5-10% conversion—hundreds of new listings per week.\n\n**The Problems:**\nCraigslist's ToS explicitly prohibits automated scraping and unsolicited commercial email. Some landlords will be annoyed. Craigslist could retaliate. Ethically, it's a gray area—you're using their data to compete with them.\n\n**The Internal Debate:**\nGrowth PM: \"Every tech company does this. It's guerrilla marketing.\"\nLegal: \"This violates ToS. Craigslist could sue us.\"\nCEO: \"Do what you think is right, but we need growth.\"",
+                        scenario: "**October 2014 – The Craigslist Growth Hack**\n\n**The Opportunity:**\nCraigslist has millions of rental listings. Every week, thousands of landlords post there. What if Airbnb could automatically email them: \"Hey, we saw your listing. Why not also list on Airbnb?\"\n\n**The Feasibility:**\nEngineering can scrape Craigslist, extract contact info, and automate outreach. Early tests show 5-10% conversion—hundreds of new listings per week.\n\n**The Problems:**\nCraigslist's ToS explicitly prohibits automated scraping and unsolicited commercial email. Some landlords will be annoyed. Craigslist could retaliate. Ethically, it's a gray area—you're using their data to compete with them.\n\n**The Internal Debate:**\nGrowth Product Manager: \"Every tech company does this. It's guerrilla marketing.\"\nLegal: \"This violates ToS. Craigslist could sue us.\"\nCEO: \"Do what you think is right, but we need growth.\"",
                         question: "Do you approve this growth tactic?",
                         options: [
                             {
@@ -412,7 +439,7 @@
                             {
                                 text: "Mandate Instant Book for all listings—remove host approval discretion entirely",
                                 points: 5,
-                                feedback: "You're solving discrimination by removing choice—a blunt instrument.\n\nInstant Book eliminates the approval step where discrimination happens. But it also removes the human connection that makes Airbnb special. Many hosts will leave rather than accept bookings blindly.\n\nThe better approach: make Instant Book the default but not mandatory. Heavily incentivize it—better search ranking, an Instant Book badge, higher visibility.\n\nThis nudges behavior without forcing it. As a PM, coercion should be your last resort, not your first."
+                                feedback: "You're solving discrimination by removing choice—a blunt instrument.\n\nInstant Book eliminates the approval step where discrimination happens. But it also removes the human connection that makes Airbnb special. Many hosts will leave rather than accept bookings blindly.\n\nThe better approach: make Instant Book the default but not mandatory. Heavily incentivize it—better search ranking, an Instant Book badge, higher visibility.\n\nThis nudges behavior without forcing it. As a Product Manager, coercion should be your last resort, not your first."
                             },
                             {
                                 text: "Hide guest photos and reduce name visibility until after booking is confirmed",
@@ -570,7 +597,7 @@
                     localStorage.setItem('pmSimEmail', email);
                     localStorage.setItem('pmSimStartTime', new Date().toISOString());
                     
-                    sendToGoogleSheets({ email, simulation: 'Week 1 - PM Fundamentals', status: 'started' });
+                    sendToGoogleSheets({ email, simulation: 'Week 1 - Product Manager Fundamentals', status: 'started' });
                     setHasStarted(true);
                 }
             };
@@ -600,7 +627,7 @@
                 if ((currentQuestion + 1) % 3 === 0 && currentQuestion < simulation.questions.length - 1) {
                     sendToGoogleSheets({
                         email,
-                        simulation: 'Week 1 - PM Fundamentals',
+                        simulation: 'Week 1 - Product Manager Fundamentals',
                         status: 'progress',
                         questionNumber: currentQuestion + 1,
                         totalQuestions: simulation.questions.length
@@ -622,14 +649,14 @@
                     
                     sendToGoogleSheets({ 
                         email, 
-                        simulation: 'Week 1 - PM Fundamentals',
+                        simulation: 'Week 1 - Product Manager Fundamentals',
                         score: totalPoints,
                         percentage,
                         tier
                     });
                     
                     setShowResults(true);
-                    localStorage.setItem('pm_simulation_week1_attempted', 'true');
+                    localStorage.setItem('product_manager_simulation_week1_attempted', 'true');
                     clearStoredProgress(); // SNIPPET 1: Clear after completion
                 }
             };
@@ -644,25 +671,25 @@
                 if (percentage >= 90) {
                     return {
                         title: "Strategic Mastery",
-                        text: "Outstanding! You demonstrated exceptional understanding of PM fundamentals. Your answers show you grasp the strategic nature of product management - balancing user needs, business goals, and team dynamics. You understand that PMs are decision-makers who use frameworks, data, and judgment to drive outcomes. You're thinking like a seasoned PM who knows when to lead, when to listen, and when to dig deeper. This level of product intuition typically takes years to develop.",
+                        text: "Outstanding! You demonstrated exceptional understanding of Product Manager fundamentals. Your answers show you grasp the strategic nature of product management - balancing user needs, business goals, and team dynamics. You understand that Product Managers are decision-makers who use frameworks, data, and judgment to drive outcomes. You're thinking like a seasoned Product Manager who knows when to lead, when to listen, and when to dig deeper. This level of product intuition typically takes years to develop.",
                         tier: "Strategic Mastery"
                     };
                 } else if (percentage >= 75) {
                     return {
                         title: "Applied Proficiency",
-                        text: "Strong performance! You showed solid grasp of PM core competencies. You understand the PM role is about making tough trade-off decisions with incomplete information. Your answers reflect good judgment on prioritization, stakeholder management, and user-centric thinking. A few decisions leaned too heavily on one dimension (execution vs strategy, or data vs intuition). The best PMs balance all aspects. Keep practicing framework-driven decision making and study real PM case studies to sharpen your instincts.",
+                        text: "Strong performance! You showed solid grasp of Product Manager core competencies. You understand the Product Manager role is about making tough trade-off decisions with incomplete information. Your answers reflect good judgment on prioritization, stakeholder management, and user-centric thinking. A few decisions leaned too heavily on one dimension (execution vs strategy, or data vs intuition). The best Product Managers balance all aspects. Keep practicing framework-driven decision making and study real Product Manager case studies to sharpen your instincts.",
                         tier: "Applied Proficiency"
                     };
                 } else if (percentage >= 60) {
                     return {
                         title: "Core Competency",
-                        text: "You're building a solid foundation in product management. You understand some key concepts - PMs make decisions, use data, balance stakeholders - but missed opportunities to apply structured thinking. Several answers confused PM with Project Manager or Product Owner roles, or showed tactical thinking where strategic thinking was needed. Focus on learning frameworks like RICE prioritization, Jobs-to-be-Done, and the distinction between outputs (features) and outcomes (user value). Read 'Inspired' by Marty Cagan and study how top PMs think.",
+                        text: "You're building a solid foundation in product management. You understand some key concepts - Product Managers make decisions, use data, balance stakeholders - but missed opportunities to apply structured thinking. Several answers confused Product Manager with Project Manager or Product Owner roles, or showed tactical thinking where strategic thinking was needed. Focus on learning frameworks like RICE prioritization, Jobs-to-be-Done, and the distinction between outputs (features) and outcomes (user value). Read 'Inspired' by Marty Cagan and study how top Product Managers think.",
                         tier: "Core Competency"
                     };
                 } else {
                     return {
                         title: "Foundational Understanding",
-                        text: "You're at the beginning of your PM journey. Several answers suggest you're still learning what product management fundamentally is - it's not project management, not product ownership, and not just shipping features. PMs are strategic decision-makers who discover what users need, prioritize ruthlessly, and drive business outcomes. Start with fundamentals: Read 'Inspired' by Marty Cagan, study the product lifecycle, and learn prioritization frameworks. Watch PM interviews and case study breakdowns. The good news: These are all learnable skills. Keep studying and practicing!",
+                        text: "You're at the beginning of your Product Manager journey. Several answers suggest you're still learning what product management fundamentally is - it's not project management, not product ownership, and not just shipping features. Product Managers are strategic decision-makers who discover what users need, prioritize ruthlessly, and drive business outcomes. Start with fundamentals: Read 'Inspired' by Marty Cagan, study the product lifecycle, and learn prioritization frameworks. Watch Product Manager interviews and case study breakdowns. The good news: These are all learnable skills. Keep studying and practicing!",
                         tier: "Foundational Understanding"
                     };
                 }
@@ -674,30 +701,56 @@
                 const paragraphs = text.split('\n\n').filter(p => p.trim());
                 return paragraphs.map((para, index) => {
                     const trimmed = para.trim();
+                    
                     // Check if the entire paragraph is a **bold header**
                     const headerMatch = trimmed.match(/^\*\*(.+)\*\*$/);
                     if (headerMatch) {
                         return h('p', { 
                             key: index,
-                            className: 'mb-1 mt-4 first:mt-0',
-                            style: { fontWeight: 600, color: '#1e40af', fontSize: '15px' }
+                            className: 'mb-2 mt-4 first:mt-0',
+                            style: { fontWeight: 700, color: '#1e40af', fontSize: '16px' }
                         }, headerMatch[1]);
                     }
+                    
+                    // Check for emoji-prefixed scenario lines (common in scenarios)
+                    const emojiMatch = trimmed.match(/^([🎯🏠📊🔥⚡⚠️🎊💡🚀]+)\s(.+)$/);
+                    if (emojiMatch) {
+                        return h('p', { 
+                            key: index,
+                            className: 'mb-3 flex items-start gap-2'
+                        },
+                            h('span', { className: 'emoji text-xl flex-shrink-0' }, emojiMatch[1]),
+                            h('span', { className: 'context-text flex-1' }, emojiMatch[2])
+                        );
+                    }
+                    
                     // Check for lines like "**Label:**\nBody text"
                     const labelMatch = trimmed.match(/^\*\*(.+?)\*\*\n(.+)$/s);
                     if (labelMatch) {
                         return h('p', { 
                             key: index,
-                            className: 'mb-4 last:mb-0'
+                            className: 'mb-3 last:mb-0'
                         },
-                            h('span', { style: { fontWeight: 600, color: '#1e40af', fontSize: '15px' } }, labelMatch[1]),
-                            h('span', null, ' ' + labelMatch[2])
+                            h('strong', { style: { fontWeight: 600, color: '#1e40af', fontSize: '15px', display: 'block', marginBottom: '4px' } }, labelMatch[1] + ':'),
+                            h('span', { style: { color: '#4b5563' } }, labelMatch[2])
                         );
                     }
+                    
+                    // Check for quoted dialogue (common in scenarios)
+                    const quoteMatch = trimmed.match(/^"(.+)"$/);
+                    if (quoteMatch) {
+                        return h('p', { 
+                            key: index,
+                            className: 'mb-3 italic pl-4 border-l-2 border-blue-300',
+                            style: { color: '#475569', fontStyle: 'italic', fontSize: '15px' }
+                        }, `"${quoteMatch[1]}"`);
+                    }
+                    
                     // Plain paragraph
                     return h('p', { 
                         key: index,
-                        className: 'mb-4 last:mb-0'
+                        className: 'mb-3 last:mb-0',
+                        style: { lineHeight: '1.6' }
                     }, trimmed);
                 });
             };
@@ -709,7 +762,7 @@
                 // Track share event in Google Sheets
                 sendToGoogleSheets({ 
                     email, 
-                    simulation: 'Week 1 - PM Fundamentals',
+                    simulation: 'Week 1 - Product Manager Fundamentals',
                     score: score.totalPoints,
                     percentage: score.percentage,
                     tier: narrative.tier,
@@ -719,27 +772,25 @@
                 // Create shareable text with simulation URL
                 const simulationUrl = window.location.href.split('?')[0];
                 
-                const shareText = `🎯 I just completed PM Simulation 1/20!
+                const shareText = `I completed Product Manager Simulation 1/20 today.
 
-My Result: ${score.percentage}% - ${narrative.tier}
+My assessment: ${score.percentage}% - ${narrative.tier}
 
-Challenge: "${simulation.title}"
+The scenario: "${simulation.title}"
 
-What I was tested on:
-• PM vs Project Manager role clarity
-• Stakeholder management & prioritization
+Key areas evaluated:
+• Product Manager vs Project Manager role clarity
+• Stakeholder management under pressure
 • Data-driven decision making
-• Defining product success metrics
+• Defining success metrics
 
-This simulation tests real-world PM thinking through Airbnb's early-stage growth decisions.
+Working through Airbnb's early growth decisions reminded me why Product Manager thinking requires balancing strategy, execution, and stakeholder needs simultaneously.
 
-Think you can beat my score?
-Take the free simulation: ${simulationUrl}
+Simulation link: ${simulationUrl}
 
-#ProductManagement #PMSkills #CareerGrowth #Leadership
-#ProductStrategy #TechCareers
+#ProductManagement #ProductManager #PMSkills #ProfessionalDevelopment #Leadership #ProductStrategy #ContinuousLearning
 
-👉 Follow for 20 PM simulations: linkedin.com/in/mohansimham`;
+Connect with Mohan Simham for the complete Product Manager simulation series: linkedin.com/in/mohansimham`;
 
                 // Show modal with instructions
                 const modal = document.createElement('div');
@@ -754,7 +805,7 @@ Take the free simulation: ${simulationUrl}
                     <div style="text-align: center;">
                         <div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
                         <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 16px; color: #1f2937;">Ready to Share Your Achievement!</h2>
-                        <p style="color: #6b7280; margin-bottom: 24px; line-height: 1.6;">Share your PM assessment results on LinkedIn in 3 easy steps:</p>
+                        <p style="color: #6b7280; margin-bottom: 24px; line-height: 1.6;">Share your Product Manager assessment results on LinkedIn in 3 easy steps:</p>
                         <ol style="text-align: left; color: #6b7280; margin-bottom: 24px; line-height: 1.8; padding-left: 24px;">
                             <li><strong>Click</strong> the button below (copies text + opens LinkedIn)</li>
                             <li><strong>Click "Start a post"</strong> on LinkedIn</li>
@@ -814,163 +865,139 @@ Take the free simulation: ${simulationUrl}
                 // Track badge download event in Google Sheets
                 sendToGoogleSheets({ 
                     email, 
-                    simulation: 'Week 1 - PM Fundamentals',
+                    simulation: 'Week 1 - Product Manager Fundamentals',
                     score: score.totalPoints,
                     percentage: score.percentage,
                     tier: narrative.tier,
                     action: 'DOWNLOADED_BADGE'
                 });
                 
-                // Polyfill: draw a rounded rectangle path manually (roundRect not supported everywhere)
-                const drawRoundRect = (ctx, x, y, w, h, r) => {
-                    ctx.beginPath();
-                    ctx.moveTo(x + r, y);
-                    ctx.lineTo(x + w - r, y);
-                    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-                    ctx.lineTo(x + w, y + h - r);
-                    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-                    ctx.lineTo(x + r, y + h);
-                    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-                    ctx.lineTo(x, y + r);
-                    ctx.quadraticCurveTo(x, y, x + r, y);
-                    ctx.closePath();
-                };
-
-                // Helper: hex to rgb object
-                const hexToRgb = (hex) => ({
-                    r: parseInt(hex.slice(1,3), 16),
-                    g: parseInt(hex.slice(3,5), 16),
-                    b: parseInt(hex.slice(5,7), 16)
-                });
-
-                // Quirky shareable card — dark, bold, personality-driven
+                // Create professional achievement badge
                 const canvas = document.createElement('canvas');
                 canvas.width = 1200;
                 canvas.height = 675;
                 const ctx = canvas.getContext('2d');
-
-                // --- Tier config: emoji, quip, accent color ---
-                const tierConfig = {
-                    'Strategic Mastery':        { emoji: '🧠', color: '#a78bfa', glow: '#7c3aed', quip: 'Airbnb wishes you were on their team.' },
-                    'Applied Proficiency':      { emoji: '⚡', color: '#fb923c', glow: '#ea580c', quip: 'Not bad. Not bad at all.' },
-                    'Core Competency':          { emoji: '🎯', color: '#34d399', glow: '#059669', quip: 'The foundation is solid. Build on it.' },
-                    'Foundational Understanding':{ emoji: '📖', color: '#60a5fa', glow: '#2563eb', quip: 'Every expert was once a beginner.' }
-                };
-                const t = tierConfig[narrative.tier] || tierConfig['Core Competency'];
-
-                // --- Background: deep dark slate ---
-                ctx.fillStyle = '#0f172a';
-                ctx.fillRect(0, 0, 1200, 675);
-
-                // --- Subtle grid pattern overlay ---
-                ctx.strokeStyle = 'rgba(148,163,184,0.12)';
-                ctx.lineWidth = 1;
-                for (let x = 0; x <= 1200; x += 60) {
-                    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 675); ctx.stroke();
-                }
-                for (let y = 0; y <= 675; y += 60) {
-                    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1200, y); ctx.stroke();
-                }
-
-                // --- Top-left accent bar (colored, thin) ---
-                ctx.fillStyle = t.color;
-                ctx.fillRect(0, 0, 1200, 5);
-
-                // --- Right side: abstract decorative circles ---
-                const circles = [
-                    { x: 980, y: 120, r: 140, alpha: 0.15 },
-                    { x: 1060, y: 300, r: 90,  alpha: 0.12 },
-                    { x: 920,  y: 420, r: 60,  alpha: 0.18 },
-                    { x: 1100, y: 520, r: 110, alpha: 0.1 }
-                ];
-                circles.forEach(c => {
-                    ctx.beginPath();
-                    ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-                    const rgb = hexToRgb(t.color);
-                    ctx.fillStyle = `rgba(${rgb.r},${rgb.g},${rgb.b},${c.alpha})`;
-                    ctx.fill();
-                });
-
-                // --- Emoji: top-left, large ---
-                ctx.font = '96px sans-serif';
-                ctx.textAlign = 'left';
-                ctx.fillText(t.emoji, 62, 130);
-
-                // --- Score: huge, white, with colored glow behind ---
-                const scoreStr = score.percentage + '%';
-                ctx.font = 'bold 140px Arial, sans-serif';
-                const scoreW = ctx.measureText(scoreStr).width;
-                // glow blob
-                const glowRgb = hexToRgb(t.glow);
-                ctx.fillStyle = `rgba(${glowRgb.r},${glowRgb.g},${glowRgb.b},0.35)`;
-                ctx.beginPath();
-                ctx.ellipse(80 + scoreW * 0.5, 270, scoreW * 0.55, 72, 0, 0, Math.PI * 2);
-                ctx.fill();
-                // score text
+                
+                // Background - Clean white with professional gradient accent
                 ctx.fillStyle = '#ffffff';
-                ctx.fillText(scoreStr, 72, 300);
-
-                // --- Tier pill: colored tag, rounded, below score ---
-                const tierLabel = narrative.tier.toUpperCase();
-                ctx.font = 'bold 22px Arial, sans-serif';
-                const tierW = ctx.measureText(tierLabel).width;
-                const pillX = 72;
-                const pillW = tierW + 36;
-                const pillH = 44;
-                const pillY = 335;
-                // pill background
-                const pillRgb = hexToRgb(t.color);
-                ctx.fillStyle = `rgba(${pillRgb.r},${pillRgb.g},${pillRgb.b},0.25)`;
-                drawRoundRect(ctx, pillX, pillY, pillW, pillH, 22);
-                ctx.fill();
-                // pill border
-                ctx.strokeStyle = t.color;
-                ctx.lineWidth = 2;
-                drawRoundRect(ctx, pillX, pillY, pillW, pillH, 22);
-                ctx.stroke();
-                // pill text
-                ctx.fillStyle = t.color;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Left accent bar - Navy blue gradient
+                const leftGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                leftGradient.addColorStop(0, '#1e40af');
+                leftGradient.addColorStop(1, '#3b82f6');
+                ctx.fillStyle = leftGradient;
+                ctx.fillRect(0, 0, 20, canvas.height);
+                
+                // Top header section - Light blue background
+                ctx.fillStyle = '#eff6ff';
+                ctx.fillRect(20, 0, canvas.width - 20, 120);
+                
+                // Logo/Brand area top left
+                ctx.fillStyle = '#1e40af';
+                ctx.font = 'bold 24px Arial, sans-serif';
                 ctx.textAlign = 'left';
-                ctx.fillText(tierLabel, pillX + 18, pillY + 30);
-
-                // --- Quip: italic, muted, below pill ---
-                ctx.font = 'italic 24px Arial, sans-serif';
-                ctx.fillStyle = 'rgba(203,213,225,0.9)';
-                ctx.fillText('"' + t.quip + '"', 72, 430);
-
-                // --- Divider line: subtle, short ---
-                ctx.strokeStyle = 'rgba(148,163,184,0.25)';
+                ctx.fillText('PRODUCT MANAGEMENT', 60, 50);
+                ctx.fillStyle = '#3b82f6';
+                ctx.font = '18px Arial, sans-serif';
+                ctx.fillText('Professional Assessment Certificate', 60, 80);
+                
+                // Badge indicator top right
+                ctx.fillStyle = '#1e40af';
+                ctx.fillRect(950, 30, 200, 50);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 16px Arial, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('SIMULATION 1/20', 1050, 60);
+                
+                // Main content area
+                ctx.textAlign = 'center';
+                
+                // Achievement title
+                ctx.fillStyle = '#1f2937';
+                ctx.font = 'bold 48px Arial, sans-serif';
+                ctx.fillText('ACHIEVEMENT CERTIFICATE', 600, 200);
+                
+                // Divider line
+                ctx.strokeStyle = '#e5e7eb';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(300, 230);
+                ctx.lineTo(900, 230);
+                ctx.stroke();
+                
+                // Score section - Large and prominent
+                ctx.fillStyle = '#1e40af';
+                ctx.font = 'bold 96px Arial, sans-serif';
+                ctx.fillText(score.percentage + '%', 600, 340);
+                
+                // Tier badge
+                const tierWidth = ctx.measureText(narrative.tier.toUpperCase()).width + 60;
+                ctx.fillStyle = '#dbeafe';
+                ctx.fillRect((canvas.width - tierWidth) / 2, 360, tierWidth, 50);
+                ctx.fillStyle = '#1e40af';
+                ctx.font = 'bold 28px Arial, sans-serif';
+                ctx.fillText(narrative.tier.toUpperCase(), 600, 395);
+                
+                // Challenge name
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '24px Arial, sans-serif';
+                ctx.fillText('Airbnb Platform Evolution', 600, 450);
+                ctx.font = '20px Arial, sans-serif';
+                ctx.fillText('Product Manager Fundamentals • Strategic Decision Making', 600, 480);
+                
+                // Bottom section - Curator and branding
+                ctx.fillStyle = '#f9fafb';
+                ctx.fillRect(20, 530, canvas.width - 20, 145);
+                
+                // Divider
+                ctx.strokeStyle = '#e5e7eb';
                 ctx.lineWidth = 1;
                 ctx.beginPath();
-                ctx.moveTo(72, 475);
-                ctx.lineTo(520, 475);
+                ctx.moveTo(60, 530);
+                ctx.lineTo(1140, 530);
                 ctx.stroke();
-
-                // --- Bottom-left: simulation info ---
-                ctx.font = '20px Arial, sans-serif';
-                ctx.fillStyle = 'rgba(148,163,184,0.8)';
-                ctx.textAlign = 'left';
-                ctx.fillText('Simulation 1 of 20', 72, 520);
-                ctx.font = 'bold 26px Arial, sans-serif';
-                ctx.fillStyle = 'rgba(241,245,249,0.95)';
-                ctx.fillText('Airbnb: Platform Evolution', 72, 555);
-                ctx.font = '18px Arial, sans-serif';
-                ctx.fillStyle = 'rgba(148,163,184,0.7)';
-                ctx.fillText('PM Fundamentals • Strategic Decision Making', 72, 585);
-
-                // --- Bottom-right: subtle handle ---
-                ctx.font = '17px Arial, sans-serif';
-                ctx.fillStyle = 'rgba(148,163,184,0.5)';
-                ctx.textAlign = 'right';
-                ctx.fillText('linkedin.com/in/mohansimham', 1130, 650);
-
+                
+                // Certificate text
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'italic 18px Arial, sans-serif';
+                ctx.fillText('This certificate validates completion of a comprehensive product management', 600, 570);
+                ctx.fillText('assessment testing strategic thinking, prioritization, and decision-making skills.', 600, 595);
+                
+                // Curator info
+                ctx.fillStyle = '#1f2937';
+                ctx.font = 'bold 22px Arial, sans-serif';
+                ctx.fillText('Curated by Mohan Simham', 600, 635);
+                
+                ctx.fillStyle = '#2563eb';
+                ctx.font = 'bold 20px Arial, sans-serif';
+                ctx.fillText('linkedin.com/in/mohansimham', 600, 660);
+                
+                // Decorative corner elements
+                ctx.strokeStyle = '#3b82f6';
+                ctx.lineWidth = 3;
+                
+                // Top right corner
+                ctx.beginPath();
+                ctx.moveTo(1140, 140);
+                ctx.lineTo(1180, 140);
+                ctx.lineTo(1180, 180);
+                ctx.stroke();
+                
+                // Bottom left corner
+                ctx.beginPath();
+                ctx.moveTo(60, 510);
+                ctx.lineTo(20, 510);
+                ctx.lineTo(20, 550);
+                ctx.stroke();
+                
                 // Download
                 canvas.toBlob((blob) => {
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
                     const timestamp = new Date().toISOString().split('T')[0];
-                    a.download = `PM-Sim1-${score.percentage}pct-${timestamp}.png`;
+                    a.download = `Product-Manager-Simulation-Certificate-${score.percentage}pct-${timestamp}.png`;
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
@@ -979,7 +1006,7 @@ Take the free simulation: ${simulationUrl}
                     // Show success message
                     const successMsg = document.createElement('div');
                     successMsg.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 16px 24px; border-radius: 8px; font-weight: 600; z-index: 10000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); animation: slideIn 0.3s ease;';
-                    successMsg.innerHTML = '✅ Card downloaded!<br><span style="font-size: 14px; font-weight: normal;">Ready to drop into your LinkedIn post</span>';
+                    successMsg.innerHTML = '✅ Certificate downloaded!<br><span style="font-size: 14px; font-weight: normal;">Ready to share on LinkedIn</span>';
                     document.body.appendChild(successMsg);
                     
                     setTimeout(() => {
@@ -1001,7 +1028,7 @@ Take the free simulation: ${simulationUrl}
                         ),
                         h('h2', { className: 'text-2xl font-bold text-gray-900 mb-4' }, 'Already Completed!'),
                         h('p', { className: 'text-gray-600 mb-6' }, "You've already taken this simulation. Each learner gets one attempt to ensure thoughtful decision-making and fair competition."),
-                        h('p', { className: 'text-sm text-gray-500' }, 'Want more PM simulations? Follow the course for upcoming modules!')
+                        h('p', { className: 'text-sm text-gray-500' }, 'Want more Product Manager simulations? Follow the challenge series for upcoming modules!')
                     )
                 );
             }
@@ -1010,8 +1037,8 @@ Take the free simulation: ${simulationUrl}
                 return h('div', { className: 'min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-6' },
                     h('div', { className: 'max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden' },
                         h('div', { className: 'bg-gradient-to-r from-blue-600 to-blue-700 p-8 text-white' },
-                            h('p', { className: 'text-sm font-semibold text-blue-100 mb-3 tracking-wide uppercase' }, '✨ Test Your Product Management Superpower'),
-                            h('p', { className: 'text-xs text-blue-100 mb-4' }, 'Inspired by real product management business cases'),
+                            h('p', { className: 'text-sm font-semibold text-blue-100 mb-3 tracking-wide uppercase' }, '✨ Master Real Product Manager Challenges'),
+                            h('p', { className: 'text-xs text-blue-100 mb-4' }, 'Navigate actual business scenarios from high-growth companies'),
                             h('div', { className: 'flex items-center gap-3 mb-4' },
                                 h('div', { className: 'w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center' },
                                     h(TrendingUpIcon)
@@ -1021,14 +1048,6 @@ Take the free simulation: ${simulationUrl}
                                     h('h1', { className: 'text-2xl font-bold' }, simulation.title),
                                     h('p', { className: 'text-blue-100' }, simulation.company + ' Case Study')
                                 )
-                            ),
-                            h('p', { className: 'text-xs text-blue-100' }, 
-                                'Curated by Mohan Simham • ',
-                                h('a', { 
-                                    href: 'https://linkedin.com/in/mohansimham', 
-                                    target: '_blank',
-                                    className: 'underline hover:text-white transition-colors'
-                                }, 'LinkedIn: /mohansimham')
                             )
                         ),
                         h('div', { className: 'p-8' },
@@ -1036,8 +1055,8 @@ Take the free simulation: ${simulationUrl}
                             
                             h('div', { className: 'bg-amber-50 border-l-4 border-amber-500 p-4 mb-6' },
                                 h('p', { className: 'text-sm text-amber-800' },
-                                    h('strong', null, '⚡ Learning Focus: '),
-                                    'PM vs Project Manager, stakeholder management, prioritization frameworks, data-driven decisions, and defining success metrics.'
+                                    h('strong', null, '⚡ Skills Tested: '),
+                                    'Product Manager vs Project Manager clarity, stakeholder management, prioritization frameworks, data-driven decisions, and defining success metrics.'
                                 )
                             ),
                             h('div', { className: 'grid grid-cols-2 gap-4 mb-8' },
@@ -1071,7 +1090,7 @@ Take the free simulation: ${simulationUrl}
                                     type: 'submit',
                                     className: 'w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-purple-500 hover:to-pink-500 transition-all shadow-lg hover:shadow-xl'
                                 }, 'Start Simulation 1 →'),
-                                h('p', { className: 'text-xs text-gray-500 text-center' }, "Your email is used only for results delivery and course notifications. No spam.")
+                                h('p', { className: 'text-xs text-gray-500 text-center' }, "Your email is used only for results delivery and challenge notifications. No spam.")
                             )
                         )
                     )
@@ -1111,9 +1130,9 @@ Take the free simulation: ${simulationUrl}
                                         h('svg', { className: 'w-5 h-5', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' },
                                             h('path', { strokeLinecap: 'round', strokeLinejoin: 'round', strokeWidth: 2, d: 'M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4' })
                                         ),
-                                        'Download Shareable Card'
+                                        'Download Achievement Badge Image'
                                     ),
-                                    h('p', { className: 'text-center text-sm text-gray-500 mt-2' }, '💡 Drop the card into your LinkedIn post — stands out way better than plain text')
+                                    h('p', { className: 'text-center text-sm text-gray-500 mt-2' }, '💡 Pro tip: Download the badge image to add to your LinkedIn post for extra impact!')
                                 )
                             )
                         ),
@@ -1145,9 +1164,9 @@ Take the free simulation: ${simulationUrl}
                                     ),
                                     
                                     // Scenario
-                                    h('div', { className: 'bg-slate-50 border-l-4 border-slate-300 p-4 mb-4 rounded-r' },
-                                        h('div', { className: 'text-xs font-semibold text-slate-600 uppercase tracking-wide mb-2' }, 'Scenario'),
-                                        h('p', { className: 'text-sm text-slate-700 leading-relaxed' }, q.scenario)
+                                    h('div', { className: 'analysis-scenario' },
+                                        h('div', { className: 'text-xs font-semibold text-slate-600 uppercase tracking-wide mb-3' }, 'Scenario Context'),
+                                        h('div', { className: 'scenario-content' }, formatText(q.scenario))
                                     ),
                                     
                                     // Question
@@ -1202,10 +1221,10 @@ Take the free simulation: ${simulationUrl}
                             })
                         ),
                         h('div', { className: 'text-center mt-8' },
-                            h('p', { className: 'text-gray-600 mb-2' }, 'Ready for Simulation 2/20? Continue the PM course to master product discovery & validation!'),
+                            h('p', { className: 'text-gray-600 mb-2' }, 'Ready for Simulation 2/20? Continue the Product Manager challenge series to master product discovery & validation!'),
                             h('p', { className: 'text-sm text-gray-500 mb-1' }, '© 2025 Mohan Simham. All Rights Reserved.'),
                             h('p', { className: 'text-xs text-gray-400' }, 
-                                'Curated by Mohan Simham • ',
+                                'Connect with the creator: ',
                                 h('a', { 
                                     href: 'https://linkedin.com/in/mohansimham', 
                                     target: '_blank',
